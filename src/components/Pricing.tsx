@@ -109,17 +109,26 @@ const Pricing = () => {
               </div>
               
               <div className="mt-6">
-                <Button 
-                  animated={plan.buttonVariant === "default"}
-                  className={
-                    plan.buttonVariant === "default" 
-                      ? "w-full bg-primary text-primary-foreground hover:bg-primary/90" 
-                      : "w-full border-border text-foreground hover:bg-muted"
-                  }
-                  variant={plan.buttonVariant as "default" | "outline"}
-                >
-                  {plan.buttonText}
-                </Button>
+                {/* Only wrap with AnimatedBorder for Professional (popular) plan */}
+                {plan.buttonVariant === "default" ? (
+                  <AnimatedBorder>
+                    <Button
+                      animated={false}
+                      className="w-full bg-primary text-primary-foreground hover:bg-primary/90"
+                      variant="default"
+                    >
+                      {plan.buttonText}
+                    </Button>
+                  </AnimatedBorder>
+                ) : (
+                  <Button
+                    animated={false}
+                    className="w-full border-border text-foreground hover:bg-muted"
+                    variant={plan.buttonVariant as "default" | "outline"}
+                  >
+                    {plan.buttonText}
+                  </Button>
+                )}
               </div>
             </div>
           ))}
