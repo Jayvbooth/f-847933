@@ -1,5 +1,7 @@
+
 import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
+import { StarBorder } from '@/components/ui/star-border';
 import TaskBoard from './TaskBoard';
 import { Loader } from 'lucide-react';
 
@@ -42,9 +44,14 @@ const HeroSection = () => {
         </p>
         
         <div className="flex flex-col sm:flex-row gap-4 justify-center pt-6 items-center">
-          <Button className="bg-primary text-primary-foreground hover:bg-primary/80 hover:text-primary-foreground text-base h-12 px-8 transition-all duration-200 min-h-[48px]">
+          <StarBorder 
+            as="button"
+            className="bg-primary text-primary-foreground hover:bg-primary/80 hover:text-primary-foreground text-base h-12 px-8 transition-all duration-200 min-h-[48px] rounded-md"
+            color="hsl(var(--primary))"
+            speed="4s"
+          >
             Start for free
-          </Button>
+          </StarBorder>
           <Button variant="outline" className="border-border text-foreground hover:bg-accent hover:text-accent-foreground text-base h-12 px-8 transition-all duration-200 min-h-[48px]">
             Book a demo
           </Button>
