@@ -6,6 +6,15 @@ export function Features() {
     return (
         <section className="bg-gray-50 py-16 md:py-32 dark:bg-transparent">
             <div className="mx-auto max-w-3xl lg:max-w-5xl px-6">
+                <div className="text-center space-y-4 max-w-3xl mx-auto mb-16">
+                    <h2 className="text-3xl md:text-4xl font-medium tracking-tighter text-foreground">
+                        Built for modern teams
+                    </h2>
+                    <p className="text-muted-foreground text-lg">
+                        Everything you need to streamline your workflow and boost productivity
+                    </p>
+                </div>
+                
                 <div className="relative">
                     <div className="relative z-10 grid grid-cols-6 gap-3">
                         <Card className="relative col-span-full flex overflow-hidden lg:col-span-2">
