@@ -1,7 +1,6 @@
 
 import React from 'react';
 import { Button } from '@/components/ui/button';
-import { StarBorder } from '@/components/ui/star-border';
 import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card';
 
 const Pricing = () => {
@@ -111,32 +110,16 @@ const Pricing = () => {
               </div>
               
               <div className="mt-6">
-                {plan.buttonVariant === "default" ? (
-                  <StarBorder 
-                    as="button"
-                    className="w-full bg-primary text-primary-foreground hover:bg-primary/90 rounded-md"
-                    color="hsl(var(--primary))"
-                    speed="4s"
-                  >
-                    {plan.buttonText}
-                  </StarBorder>
-                ) : plan.name === "Starter" ? (
-                  <StarBorder 
-                    as="button"
-                    className="w-full border-border text-foreground hover:bg-muted rounded-md"
-                    color="hsl(var(--border))"
-                    speed="5s"
-                  >
-                    {plan.buttonText}
-                  </StarBorder>
-                ) : (
-                  <Button 
-                    className="w-full border-border text-foreground hover:bg-muted"
-                    variant="outline"
-                  >
-                    {plan.buttonText}
-                  </Button>
-                )}
+                <Button 
+                  className={
+                    plan.buttonVariant === "default" 
+                      ? "w-full bg-primary text-primary-foreground hover:bg-primary/90" 
+                      : "w-full border-border text-foreground hover:bg-muted"
+                  }
+                  variant={plan.buttonVariant as "default" | "outline"}
+                >
+                  {plan.buttonText}
+                </Button>
               </div>
             </div>
           ))}

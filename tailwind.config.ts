@@ -1,3 +1,4 @@
+
 import type { Config } from "tailwindcss";
 
 export default {
@@ -25,11 +26,11 @@ export default {
 				background: 'hsl(var(--background))',
 				foreground: 'hsl(var(--foreground))',
 				cosmic: {
-					dark: '#404040',
-					darker: '#303030',
-					light: '#f0f0f0',
-					accent: '#606060',
-					muted: '#909090',
+					dark: '#404040', /* Medium grey for light mode */
+					darker: '#303030', /* Darker grey for light mode */
+					light: '#f0f0f0', /* Light grey for light mode */
+					accent: '#606060', /* Medium-dark grey accent */
+					muted: '#909090', /* Medium grey */
 				},
 				primary: {
 					DEFAULT: 'hsl(var(--primary))',
@@ -96,19 +97,14 @@ export default {
 					'0%': { backgroundPosition: '0% 50%' },
 					'50%': { backgroundPosition: '100% 50%' },
 					'100%': { backgroundPosition: '0% 50%' }
-				},
-				'spin': {
-					'0%': { transform: 'rotate(0deg)' },
-					'100%': { transform: 'rotate(360deg)' }
-				},
+				}
 			},
 			animation: {
 				'accordion-down': 'accordion-down 0.2s ease-out',
 				'accordion-up': 'accordion-up 0.2s ease-out',
 				'float': 'float 6s ease-in-out infinite',
 				'pulse-slow': 'pulse-slow 4s ease-in-out infinite',
-				'gradient-shift': 'gradient-shift 8s ease infinite',
-				'spin': 'spin 1s linear infinite',
+				'gradient-shift': 'gradient-shift 8s ease infinite'
 			},
 			fontFamily: {
 				'inter': ['Inter', 'sans-serif']
