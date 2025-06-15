@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card';
@@ -111,6 +110,7 @@ const Pricing = () => {
               
               <div className="mt-6">
                 <Button 
+                  animated={plan.buttonVariant === "default"}
                   className={
                     plan.buttonVariant === "default" 
                       ? "w-full bg-primary text-primary-foreground hover:bg-primary/90" 
