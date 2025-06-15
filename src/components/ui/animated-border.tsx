@@ -17,43 +17,44 @@ export const AnimatedBorder: React.FC<AnimatedBorderProps> = ({
   const getBorderColor = () => {
     switch (variant) {
       case 'default':
-        return 'text-primary-foreground/30';
+        return 'border-primary-foreground/60';
       case 'destructive':
-        return 'text-destructive-foreground/30';
+        return 'border-destructive-foreground/60';
       case 'outline':
-        return 'text-foreground/30';
+        return 'border-primary/60';
       case 'secondary':
-        return 'text-secondary-foreground/30';
+        return 'border-secondary-foreground/60';
       case 'ghost':
-        return 'text-accent-foreground/30';
+        return 'border-accent-foreground/60';
       case 'link':
-        return 'text-primary/30';
+        return 'border-primary/60';
       default:
-        return 'text-foreground/30';
+        return 'border-foreground/60';
     }
   };
 
   return (
     <div className={cn("relative", className)}>
-      {/* Animated border */}
+      {/* Animated border - rotating gradient */}
       <div className="absolute inset-0 rounded-md overflow-hidden">
         <div 
           className={cn(
-            "absolute inset-0 rounded-md",
-            "before:absolute before:inset-0 before:rounded-md before:p-[1px]",
-            "before:bg-gradient-to-r before:from-transparent before:via-current before:to-transparent",
-            "before:animate-spin before:content-['']",
+            "absolute inset-0 rounded-md border-2",
+            "bg-gradient-to-r from-transparent via-current to-transparent",
+            "animate-spin",
             getBorderColor()
           )}
           style={{
-            mask: 'linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)',
-            maskComposite: 'xor',
-            WebkitMask: 'linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)',
-            WebkitMaskComposite: 'xor',
+            background: `conic-gradient(from 0deg, transparent, currentColor, transparent, transparent)`,
+            animationDuration: '3s'
           }}
         />
       </div>
-      {children}
+      
+      {/* Inner content with slight padding to show border */}
+      <div className="relative z-10">
+        {children}
+      </div>
     </div>
   );
 };
