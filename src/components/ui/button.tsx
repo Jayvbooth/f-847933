@@ -56,7 +56,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     
     if (animated) {
       return (
-        <AnimatedBorder variant={variant}>
+        <AnimatedBorder>
           {button}
         </AnimatedBorder>
       )
