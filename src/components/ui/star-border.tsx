@@ -14,45 +14,34 @@ export function StarBorder<T extends ElementType = "button">({
   as,
   className,
   color,
-  speed = "6s",
+  speed = "3s",
   children,
   ...props
 }: StarBorderProps<T> & Omit<ComponentPropsWithoutRef<T>, keyof StarBorderProps<T>>) {
   const Component = as || "button"
-  const defaultColor = color || "hsl(var(--foreground))"
+  const defaultColor = color || "hsl(var(--primary))"
 
   return (
     <Component 
       className={cn(
-        "relative inline-block py-[1px] overflow-hidden",
+        "relative overflow-hidden",
         className
       )} 
       {...props}
     >
+      {/* Animated border trail */}
       <div
-        className={cn(
-          "absolute w-[300%] h-[50%] bottom-[-11px] right-[-250%] rounded-full animate-star-movement-bottom z-0",
-          "opacity-20 dark:opacity-70" 
-        )}
+        className="absolute inset-0 rounded-[inherit] opacity-75"
         style={{
-          background: `radial-gradient(circle, ${defaultColor}, transparent 10%)`,
-          animationDuration: speed,
+          background: `conic-gradient(from 0deg, transparent, transparent, ${defaultColor}, transparent, transparent)`,
+          animation: `spin ${speed} linear infinite`,
         }}
       />
-      <div
-        className={cn(
-          "absolute w-[300%] h-[50%] top-[-10px] left-[-250%] rounded-full animate-star-movement-top z-0",
-          "opacity-20 dark:opacity-70"
-        )}
-        style={{
-          background: `radial-gradient(circle, ${defaultColor}, transparent 10%)`,
-          animationDuration: speed,
-        }}
-      />
+      
+      {/* Inner content with slight inset to show the border */}
       <div className={cn(
-        "relative z-1 border text-foreground text-center text-base py-4 px-6",
-        "bg-gradient-to-b from-background/90 to-muted/90 border-border/40",
-        "dark:from-background dark:to-muted dark:border-border"
+        "relative bg-inherit rounded-[inherit] m-[1px]",
+        "flex items-center justify-center"
       )}>
         {children}
       </div>

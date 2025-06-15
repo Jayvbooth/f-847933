@@ -25,11 +25,11 @@ export default {
 				background: 'hsl(var(--background))',
 				foreground: 'hsl(var(--foreground))',
 				cosmic: {
-					dark: '#404040', /* Medium grey for light mode */
-					darker: '#303030', /* Darker grey for light mode */
-					light: '#f0f0f0', /* Light grey for light mode */
-					accent: '#606060', /* Medium-dark grey accent */
-					muted: '#909090', /* Medium grey */
+					dark: '#404040',
+					darker: '#303030',
+					light: '#f0f0f0',
+					accent: '#606060',
+					muted: '#909090',
 				},
 				primary: {
 					DEFAULT: 'hsl(var(--primary))',
@@ -97,13 +97,9 @@ export default {
 					'50%': { backgroundPosition: '100% 50%' },
 					'100%': { backgroundPosition: '0% 50%' }
 				},
-				'star-movement-bottom': {
-					'0%': { transform: 'translate(0%, 0%)', opacity: '1' },
-					'100%': { transform: 'translate(-100%, 0%)', opacity: '0' },
-				},
-				'star-movement-top': {
-					'0%': { transform: 'translate(0%, 0%)', opacity: '1' },
-					'100%': { transform: 'translate(100%, 0%)', opacity: '0' },
+				'spin': {
+					'0%': { transform: 'rotate(0deg)' },
+					'100%': { transform: 'rotate(360deg)' }
 				},
 			},
 			animation: {
@@ -112,8 +108,7 @@ export default {
 				'float': 'float 6s ease-in-out infinite',
 				'pulse-slow': 'pulse-slow 4s ease-in-out infinite',
 				'gradient-shift': 'gradient-shift 8s ease infinite',
-				'star-movement-bottom': 'star-movement-bottom linear infinite alternate',
-				'star-movement-top': 'star-movement-top linear infinite alternate',
+				'spin': 'spin 1s linear infinite',
 			},
 			fontFamily: {
 				'inter': ['Inter', 'sans-serif']
