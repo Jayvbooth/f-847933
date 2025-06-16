@@ -81,7 +81,7 @@ const Process = () => {
         {/* Mobile Layout - Single Column */}
         <div className="md:hidden">
           {/* Mobile Header - Sticky */}
-          <div className="sticky top-20 bg-background/95 backdrop-blur-md border-b border-border/50 pb-6 mb-8 z-30">
+          <div className="sticky top-28 bg-background/95 backdrop-blur-md border-b border-border/50 pb-6 mb-12 z-30">
             <h5 className="text-xs uppercase tracking-wide text-muted-foreground">Our Process</h5>
             <h2 className="mb-4 mt-2 text-2xl sm:text-3xl font-bold tracking-tight text-foreground">
               How we fill your{" "}
@@ -93,14 +93,14 @@ const Process = () => {
             </p>
           </div>
 
-          {/* Mobile Cards */}
+          {/* Mobile Cards with Buffer Zone */}
           <div className="relative">
-            <ContainerScroll className="min-h-[150vh] space-y-6 py-8">
+            <ContainerScroll className="min-h-[150vh] space-y-6 pt-24 pb-8">
               {PROCESS_PHASES.map((phase, index) => (
                 <CardSticky
                   key={phase.id}
                   index={index + 1}
-                  incrementY={12}
+                  incrementY={8}
                   incrementZ={4}
                   className="rounded-xl border border-border p-6 shadow-lg backdrop-blur-md bg-card/95 z-10"
                 >
