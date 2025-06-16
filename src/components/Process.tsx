@@ -32,47 +32,94 @@ const PROCESS_PHASES = [
 
 const Process = () => {
   return (
-    <section className="w-full py-12 md:py-20 px-6 md:px-12 bg-background">
+    <section className="w-full pt-24 pb-12 md:pt-32 md:pb-20 px-6 md:px-12 bg-background">
       <div className="max-w-7xl mx-auto">
-        {/* Header section - always visible */}
-        <div className="mb-8 md:mb-12">
-          <h5 className="text-xs uppercase tracking-wide text-muted-foreground">Our Process</h5>
-          <h2 className="mb-6 mt-4 text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-foreground">
-            How we fill your{" "}
-            <span className="text-primary">calendar with qualified leads</span>
-          </h2>
-          <p className="max-w-3xl text-base md:text-lg text-muted-foreground">
-            Our proven 5-step process ensures you get a steady stream of high-quality leads 
-            that are ready to convert. From discovery to delivery, we handle everything 
-            so you can focus on closing deals.
-          </p>
+        {/* Desktop/Tablet Layout - Two Columns */}
+        <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-5 gap-8 xl:gap-12">
+          {/* Left Column - Sticky Header */}
+          <div className="lg:col-span-2 sticky top-32 h-fit">
+            <h5 className="text-xs uppercase tracking-wide text-muted-foreground">Our Process</h5>
+            <h2 className="mb-6 mt-4 text-3xl lg:text-4xl xl:text-5xl font-bold tracking-tight text-foreground">
+              How we fill your{" "}
+              <span className="text-primary">calendar with qualified leads</span>
+            </h2>
+            <p className="text-base lg:text-lg text-muted-foreground leading-relaxed">
+              Our proven 5-step process ensures you get a steady stream of high-quality leads 
+              that are ready to convert. From discovery to delivery, we handle everything 
+              so you can focus on closing deals.
+            </p>
+          </div>
+
+          {/* Right Column - Animated Cards */}
+          <div className="lg:col-span-3 relative">
+            <ContainerScroll className="min-h-[400vh] space-y-8 py-8">
+              {PROCESS_PHASES.map((phase, index) => (
+                <CardSticky
+                  key={phase.id}
+                  index={index + 1}
+                  incrementY={20}
+                  incrementZ={8}
+                  className="rounded-xl border border-border p-6 lg:p-8 shadow-lg backdrop-blur-md bg-card/95"
+                >
+                  <div className="flex items-start justify-between gap-4 mb-4">
+                    <h3 className="text-xl lg:text-2xl xl:text-3xl font-bold tracking-tighter text-foreground flex-1">
+                      {phase.title}
+                    </h3>
+                    <span className="text-lg lg:text-xl xl:text-2xl font-bold text-primary flex-shrink-0 bg-primary/10 rounded-full w-10 h-10 lg:w-12 lg:h-12 xl:w-14 xl:h-14 flex items-center justify-center">
+                      {String(index + 1).padStart(2, "0")}
+                    </span>
+                  </div>
+                  <p className="text-sm lg:text-base xl:text-lg text-muted-foreground leading-relaxed">
+                    {phase.description}
+                  </p>
+                </CardSticky>
+              ))}
+            </ContainerScroll>
+          </div>
         </div>
 
-        {/* Cards section */}
-        <div className="relative">
-          <ContainerScroll className="min-h-[400vh] space-y-6 md:space-y-8 py-8 md:py-12">
-            {PROCESS_PHASES.map((phase, index) => (
-              <CardSticky
-                key={phase.id}
-                index={index + 1}
-                incrementY={15}
-                incrementZ={5}
-                className="rounded-xl border border-border p-6 md:p-8 shadow-lg backdrop-blur-md bg-card/95 max-w-4xl mx-auto"
-              >
-                <div className="flex items-start md:items-center justify-between gap-4 mb-4">
-                  <h3 className="text-xl md:text-2xl lg:text-3xl font-bold tracking-tighter text-foreground flex-1">
-                    {phase.title}
-                  </h3>
-                  <span className="text-xl md:text-2xl lg:text-3xl font-bold text-primary flex-shrink-0 bg-primary/10 rounded-full w-12 h-12 md:w-14 md:h-14 flex items-center justify-center">
-                    {String(index + 1).padStart(2, "0")}
-                  </span>
-                </div>
-                <p className="text-sm md:text-base lg:text-lg text-muted-foreground leading-relaxed">
-                  {phase.description}
-                </p>
-              </CardSticky>
-            ))}
-          </ContainerScroll>
+        {/* Mobile Layout - Single Column */}
+        <div className="md:hidden">
+          {/* Mobile Header - Always Visible */}
+          <div className="mb-8">
+            <h5 className="text-xs uppercase tracking-wide text-muted-foreground">Our Process</h5>
+            <h2 className="mb-6 mt-4 text-2xl sm:text-3xl font-bold tracking-tight text-foreground">
+              How we fill your{" "}
+              <span className="text-primary">calendar with qualified leads</span>
+            </h2>
+            <p className="text-base text-muted-foreground leading-relaxed">
+              Our proven 5-step process ensures you get a steady stream of high-quality leads 
+              that are ready to convert. From discovery to delivery, we handle everything 
+              so you can focus on closing deals.
+            </p>
+          </div>
+
+          {/* Mobile Cards */}
+          <div className="relative">
+            <ContainerScroll className="min-h-[300vh] space-y-6 py-6">
+              {PROCESS_PHASES.map((phase, index) => (
+                <CardSticky
+                  key={phase.id}
+                  index={index + 1}
+                  incrementY={12}
+                  incrementZ={4}
+                  className="rounded-xl border border-border p-6 shadow-lg backdrop-blur-md bg-card/95"
+                >
+                  <div className="flex items-start justify-between gap-4 mb-4">
+                    <h3 className="text-lg sm:text-xl font-bold tracking-tighter text-foreground flex-1">
+                      {phase.title}
+                    </h3>
+                    <span className="text-lg font-bold text-primary flex-shrink-0 bg-primary/10 rounded-full w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center">
+                      {String(index + 1).padStart(2, "0")}
+                    </span>
+                  </div>
+                  <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
+                    {phase.description}
+                  </p>
+                </CardSticky>
+              ))}
+            </ContainerScroll>
+          </div>
         </div>
       </div>
     </section>
