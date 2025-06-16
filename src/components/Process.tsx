@@ -37,7 +37,7 @@ const Process = () => {
         {/* Desktop/Tablet Layout - Two Columns */}
         <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-5 gap-8 xl:gap-12">
           {/* Left Column - Sticky Header */}
-          <div className="lg:col-span-2 sticky top-24 h-fit z-0">
+          <div className="lg:col-span-2 sticky top-24 h-fit z-20">
             <h5 className="text-xs uppercase tracking-wide text-muted-foreground">Our Process</h5>
             <h2 className="mb-6 mt-4 text-3xl lg:text-4xl xl:text-5xl font-bold tracking-tight text-foreground">
               How we fill your{" "}
@@ -80,8 +80,8 @@ const Process = () => {
 
         {/* Mobile Layout - Single Column */}
         <div className="md:hidden">
-          {/* Mobile Header - Fixed but not overlapping */}
-          <div className="mb-8">
+          {/* Mobile Header - Sticky */}
+          <div className="sticky top-20 bg-background/95 backdrop-blur-md border-b border-border/50 pb-6 mb-8 z-30">
             <h5 className="text-xs uppercase tracking-wide text-muted-foreground">Our Process</h5>
             <h2 className="mb-4 mt-2 text-2xl sm:text-3xl font-bold tracking-tight text-foreground">
               How we fill your{" "}
