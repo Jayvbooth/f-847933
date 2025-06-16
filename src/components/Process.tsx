@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { ContainerScroll, CardSticky } from '@/components/ui/cards-stack';
 
@@ -52,14 +51,14 @@ const Process = () => {
 
           {/* Right Column - Animated Cards */}
           <div className="lg:col-span-3 relative">
-            <ContainerScroll className="min-h-[200vh] space-y-8 pt-16 pb-8">
+            <ContainerScroll className="min-h-[160vh] space-y-8 pt-8 pb-8">
               {PROCESS_PHASES.map((phase, index) => (
                 <CardSticky
                   key={phase.id}
                   index={index + 1}
                   incrementY={20}
                   incrementZ={8}
-                  baseOffset={80}
+                  baseOffset={160}
                   className="rounded-xl border border-border p-6 lg:p-8 shadow-lg backdrop-blur-md bg-card/95 z-10"
                 >
                   <div className="flex items-start justify-between gap-4 mb-4">
@@ -97,14 +96,14 @@ const Process = () => {
 
           {/* Right Column - Animated Cards */}
           <div className="relative">
-            <ContainerScroll className="min-h-[200vh] space-y-6 pt-32 pb-8">
+            <ContainerScroll className="min-h-[140vh] space-y-6 pt-8 pb-8">
               {PROCESS_PHASES.map((phase, index) => (
                 <CardSticky
                   key={phase.id}
                   index={index + 1}
                   incrementY={8}
                   incrementZ={4}
-                  baseOffset={150}
+                  baseOffset={300}
                   className="rounded-xl border border-border p-6 shadow-lg backdrop-blur-md bg-card/95 z-10"
                 >
                   <div className="flex items-start justify-between gap-4 mb-4">
@@ -141,14 +140,14 @@ const Process = () => {
 
           {/* Mobile Cards */}
           <div className="relative">
-            <ContainerScroll className="min-h-[120vh] space-y-6 pt-24 pb-4">
+            <ContainerScroll className="min-h-[120vh] space-y-6 pt-40 pb-4">
               {PROCESS_PHASES.map((phase, index) => (
                 <CardSticky
                   key={phase.id}
                   index={index + 1}
                   incrementY={6}
                   incrementZ={3}
-                  baseOffset={200}
+                  baseOffset={400}
                   className="rounded-xl border border-border p-6 shadow-lg backdrop-blur-md bg-card/95 z-10"
                 >
                   <div className="flex items-start justify-between gap-4 mb-4">
