@@ -64,84 +64,84 @@ const HeroSection = () => {
         <div className="cosmic-glow relative rounded-xl overflow-hidden border border-border backdrop-blur-sm bg-card shadow-lg">
           {/* Dashboard Header */}
           <div className="bg-card backdrop-blur-md w-full">
-            <div className="flex items-center justify-between p-4 border-b border-border">
-              <div className="flex items-center gap-4">
-                <div className="h-8 w-8 rounded-md bg-green-500/20 flex items-center justify-center">
-                  <TrendingUp className="h-4 w-4 text-green-600" />
+            <div className="flex flex-col md:flex-row items-start md:items-center justify-between p-3 md:p-4 border-b border-border gap-3 md:gap-4">
+              <div className="flex items-center gap-3 md:gap-4 min-w-0 flex-1">
+                <div className="h-6 w-6 md:h-8 md:w-8 rounded-md bg-green-500/20 flex items-center justify-center flex-shrink-0">
+                  <TrendingUp className="h-3 w-3 md:h-4 md:w-4 text-green-600" />
                 </div>
-                <span className="text-foreground font-medium">Overview of Your Calendar With Us</span>
+                <span className="text-foreground font-medium text-sm md:text-base truncate">Overview of Your Calendar With Us</span>
               </div>
               
-              <div className="flex items-center gap-3">
-                <div className="flex items-center gap-2 text-sm text-muted-foreground">
+              <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2 md:gap-3 w-full md:w-auto">
+                <div className="flex flex-wrap items-center gap-2 text-xs md:text-sm text-muted-foreground">
                   <div className="flex items-center gap-1">
-                    <div className="h-3 w-3 rounded bg-green-500"></div>
-                    <span>Qualified Leads</span>
+                    <div className="h-2 w-2 md:h-3 md:w-3 rounded bg-green-500"></div>
+                    <span className="whitespace-nowrap">Leads From Leadea</span>
                   </div>
                   <div className="flex items-center gap-1">
-                    <div className="h-3 w-3 rounded bg-blue-500"></div>
-                    <span>Referrals</span>
+                    <div className="h-2 w-2 md:h-3 md:w-3 rounded bg-blue-500"></div>
+                    <span className="whitespace-nowrap">Referrals</span>
                   </div>
                 </div>
                 
-                <div className="h-8 px-3 rounded-md bg-green-500/20 border border-green-500/30 flex items-center justify-center text-green-600 text-sm font-medium">
+                <div className="h-6 md:h-8 px-2 md:px-3 rounded-md bg-green-500/20 border border-green-500/30 flex items-center justify-center text-green-600 text-xs md:text-sm font-medium whitespace-nowrap">
                   Active Pipeline
                 </div>
               </div>
             </div>
             
             {/* Dashboard Content */}
-            <div className="flex h-[600px] overflow-hidden">
+            <div className="flex flex-col lg:flex-row h-auto lg:h-[600px] overflow-hidden">
               {/* Sidebar */}
-              <div className="w-64 border-r border-border p-4 space-y-4 hidden md:block bg-card">
+              <div className="w-full lg:w-64 border-b lg:border-b-0 lg:border-r border-border p-3 md:p-4 space-y-3 md:space-y-4 bg-card">
                 <div className="space-y-2">
-                  <div className="text-xs text-muted-foreground uppercase">Lead Sources</div>
+                  <div className="text-xs text-muted-foreground uppercase">Calendar Views</div>
                   <div className="space-y-1">
-                    <div className="flex items-center gap-3 px-3 py-2 rounded-md bg-green-500/10 text-green-600 border border-green-500/20">
+                    <div className="flex items-center gap-2 md:gap-3 px-2 md:px-3 py-1.5 md:py-2 rounded-md bg-green-500/10 text-green-600 border border-green-500/20">
                       <CalendarIcon className="h-3 w-3" />
-                      <span>Calendar View</span>
+                      <span className="text-xs md:text-sm">Calendar View</span>
                     </div>
-                    <div className="flex items-center gap-3 px-3 py-2 rounded-md text-muted-foreground hover:bg-muted/50">
+                    <div className="flex items-center gap-2 md:gap-3 px-2 md:px-3 py-1.5 md:py-2 rounded-md text-muted-foreground hover:bg-muted/50">
                       <Users className="h-3 w-3" />
-                      <span>Lead Pipeline</span>
-                    </div>
-                    <div className="flex items-center gap-3 px-3 py-2 rounded-md text-muted-foreground hover:bg-muted/50">
-                      <TrendingUp className="h-3 w-3" />
-                      <span>Performance</span>
+                      <span className="text-xs md:text-sm">Clients</span>
                     </div>
                   </div>
                 </div>
                 
-                <div className="space-y-2 pt-4">
+                <div className="space-y-2 pt-2 md:pt-4">
                   <div className="text-xs text-muted-foreground uppercase">Lead Quality</div>
                   <div className="space-y-2">
-                    <div className="flex items-center justify-between px-3 py-2 rounded-md bg-green-500/10">
-                      <span className="text-sm text-green-600">Qualified Leads</span>
-                      <span className="text-xs font-medium text-green-600">85%</span>
+                    <div className="flex items-center justify-between px-2 md:px-3 py-1.5 md:py-2 rounded-md bg-green-500/10">
+                      <span className="text-xs md:text-sm text-green-600">Leads From Leadea</span>
+                      <span className="text-xs font-medium text-green-600">80%</span>
                     </div>
-                    <div className="flex items-center justify-between px-3 py-2 rounded-md bg-blue-500/10">
-                      <span className="text-sm text-blue-600">Referrals</span>
-                      <span className="text-xs font-medium text-blue-600">10%</span>
+                    <div className="flex items-center justify-between px-2 md:px-3 py-1.5 md:py-2 rounded-md bg-blue-500/10">
+                      <span className="text-xs md:text-sm text-blue-600">Referrals</span>
+                      <span className="text-xs font-medium text-blue-600">12%</span>
                     </div>
-                    <div className="flex items-center justify-between px-3 py-2 rounded-md bg-purple-500/10">
-                      <span className="text-sm text-purple-600">Organic</span>
+                    <div className="flex items-center justify-between px-2 md:px-3 py-1.5 md:py-2 rounded-md bg-purple-500/10">
+                      <span className="text-xs md:text-sm text-purple-600">Organic</span>
                       <span className="text-xs font-medium text-purple-600">5%</span>
+                    </div>
+                    <div className="flex items-center justify-between px-2 md:px-3 py-1.5 md:py-2 rounded-md bg-orange-500/10">
+                      <span className="text-xs md:text-sm text-orange-600">Social Media</span>
+                      <span className="text-xs font-medium text-orange-600">3%</span>
                     </div>
                   </div>
                 </div>
               </div>
               
               {/* Main Content */}
-              <div className="flex-1 p-4 bg-background overflow-hidden">
+              <div className="flex-1 p-3 md:p-4 bg-background overflow-hidden">
                 {/* Calendar Header */}
-                <div className="flex items-center justify-between mb-6 min-w-0">
+                <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-4 md:mb-6 gap-3 min-w-0">
                   <div className="flex items-center gap-2 flex-shrink-0">
-                    <h3 className="font-medium text-foreground">Your Lead Calendar</h3>
+                    <h3 className="font-medium text-foreground text-sm md:text-base">Your Calendar</h3>
                     <span className="text-xs bg-green-500/20 text-green-600 px-2 py-1 rounded-full border border-green-500/30">Live</span>
                   </div>
                   
-                  <div className="flex items-center gap-2 flex-shrink-0">
-                    <div className="h-8 px-3 rounded-md bg-foreground text-background flex items-center justify-center text-sm font-medium whitespace-nowrap">
+                  <div className="flex items-center gap-2 flex-shrink-0 w-full sm:w-auto">
+                    <div className="h-6 md:h-8 px-2 md:px-3 rounded-md bg-foreground text-background flex items-center justify-center text-xs md:text-sm font-medium whitespace-nowrap w-full sm:w-auto text-center">
                       View All Leads
                     </div>
                   </div>

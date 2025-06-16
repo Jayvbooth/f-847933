@@ -14,6 +14,7 @@ const Calendar = () => {
   const [currentDate, setCurrentDate] = useState(new Date());
   const [selectedEvent, setSelectedEvent] = useState<string | null>(null);
   const [isMobile, setIsMobile] = useState(false);
+  const today = new Date();
 
   useEffect(() => {
     const checkMobile = () => setIsMobile(window.innerWidth < 768);
@@ -23,10 +24,10 @@ const Calendar = () => {
   }, []);
 
   const eventTypes = [
-    { type: 'qualified-lead', title: 'Qualified Lead Call', weight: 70, color: 'bg-green-500/20 border-green-500/40 text-green-600' },
-    { type: 'referral', title: 'Referral Lead', weight: 15, color: 'bg-blue-500/20 border-blue-500/40 text-blue-600' },
-    { type: 'organic-search', title: 'Organic Search Lead', weight: 10, color: 'bg-purple-500/20 border-purple-500/40 text-purple-600' },
-    { type: 'social-media', title: 'Social Media Lead', weight: 5, color: 'bg-orange-500/20 border-orange-500/40 text-orange-600' }
+    { type: 'qualified-lead', title: 'Qualified Lead Call', weight: 80, color: 'bg-green-500/20 border-green-500/40 text-green-600' },
+    { type: 'referral', title: 'Referral Lead', weight: 12, color: 'bg-blue-500/20 border-blue-500/40 text-blue-600' },
+    { type: 'organic-search', title: 'Organic Search Lead', weight: 5, color: 'bg-purple-500/20 border-purple-500/40 text-purple-600' },
+    { type: 'social-media', title: 'Social Media Lead', weight: 3, color: 'bg-orange-500/20 border-orange-500/40 text-orange-600' }
   ];
 
   const getWeightedEventType = () => {
@@ -40,6 +41,13 @@ const Calendar = () => {
       }
     }
     return eventTypes[0];
+  };
+
+  const formatTo12Hour = (hour: number) => {
+    if (hour === 0) return '12:00 AM';
+    if (hour === 12) return '12:00 PM';
+    if (hour < 12) return `${hour}:00 AM`;
+    return `${hour - 12}:00 PM`;
   };
 
   const generateEvents = (): CalendarEvent[] => {
@@ -57,8 +65,8 @@ const Calendar = () => {
       // Skip weekends (Saturday = 6, Sunday = 0)
       if (day.getDay() === 0 || day.getDay() === 6) continue;
       
-      // Add 2-4 events per weekday
-      const numEvents = Math.floor(Math.random() * 3) + 2;
+      // Add 3-5 events per weekday (more qualified leads)
+      const numEvents = Math.floor(Math.random() * 3) + 3;
       const usedTimes = new Set();
       
       for (let i = 0; i < numEvents; i++) {
@@ -68,8 +76,7 @@ const Calendar = () => {
         // Generate unique times between 9 AM and 5 PM
         do {
           hour = Math.floor(Math.random() * 8) + 9; // 9 AM to 4 PM
-          const minute = Math.random() > 0.5 ? '00' : '30';
-          time = `${hour}:${minute} ${hour >= 12 ? 'PM' : 'AM'}`;
+          time = formatTo12Hour(hour);
           attempts++;
         } while (usedTimes.has(time) && attempts < 10);
         
@@ -123,6 +130,10 @@ const Calendar = () => {
     );
   };
 
+  const isToday = (date: Date) => {
+    return date.toDateString() === today.toDateString();
+  };
+
   const previousWeek = () => {
     const newDate = new Date(currentDate);
     newDate.setDate(currentDate.getDate() - 7);
@@ -146,25 +157,25 @@ const Calendar = () => {
   return (
     <div className="w-full h-full bg-background rounded-lg overflow-hidden">
       {/* Calendar Header */}
-      <div className="flex items-center justify-between p-4 border-b border-border bg-card">
-        <div className="flex items-center gap-3">
-          <CalendarIcon className="h-5 w-5 text-foreground" />
-          <h3 className="text-lg font-medium text-foreground">
+      <div className="flex items-center justify-between p-3 md:p-4 border-b border-border bg-card">
+        <div className="flex items-center gap-2 md:gap-3 min-w-0">
+          <CalendarIcon className="h-4 w-4 md:h-5 md:w-5 text-foreground flex-shrink-0" />
+          <h3 className="text-sm md:text-lg font-medium text-foreground truncate">
             Week of {getWeekDays()[0].toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
           </h3>
         </div>
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-1 md:gap-2 flex-shrink-0">
           <button
             onClick={previousWeek}
-            className="p-2 rounded-md hover:bg-muted transition-colors"
+            className="p-1.5 md:p-2 rounded-md hover:bg-muted transition-colors"
           >
-            <ChevronLeft className="h-4 w-4 text-foreground" />
+            <ChevronLeft className="h-3 w-3 md:h-4 md:w-4 text-foreground" />
           </button>
           <button
             onClick={nextWeek}
-            className="p-2 rounded-md hover:bg-muted transition-colors"
+            className="p-1.5 md:p-2 rounded-md hover:bg-muted transition-colors"
           >
-            <ChevronRight className="h-4 w-4 text-foreground" />
+            <ChevronRight className="h-3 w-3 md:h-4 md:w-4 text-foreground" />
           </button>
         </div>
       </div>
@@ -172,13 +183,16 @@ const Calendar = () => {
       {/* Day Headers */}
       <div className={`grid ${isMobile ? 'grid-cols-3' : 'grid-cols-7'} border-b border-border bg-muted/30`}>
         {getWeekDays().map(day => (
-          <div key={day.getTime()} className="p-3 text-center">
-            <div className="text-sm font-medium text-foreground">
+          <div key={day.getTime()} className={`p-2 md:p-3 text-center ${isToday(day) ? 'bg-primary/10' : ''}`}>
+            <div className="text-xs md:text-sm font-medium text-foreground">
               {isMobile ? shortDayNames[day.getDay()] : dayNames[day.getDay()]}
             </div>
-            <div className="text-lg font-semibold text-foreground mt-1">
+            <div className={`text-sm md:text-lg font-semibold mt-1 ${isToday(day) ? 'text-primary' : 'text-foreground'}`}>
               {day.getDate()}
             </div>
+            {isToday(day) && (
+              <div className="w-1.5 h-1.5 bg-primary rounded-full mx-auto mt-1"></div>
+            )}
           </div>
         ))}
       </div>
@@ -191,24 +205,24 @@ const Calendar = () => {
           return (
             <div
               key={day.getTime()}
-              className="border-r border-b border-border min-h-[400px] p-3 bg-background"
+              className={`border-r border-b border-border min-h-[300px] md:min-h-[400px] p-2 md:p-3 bg-background ${isToday(day) ? 'bg-primary/5' : ''}`}
             >
-              <div className="space-y-2">
+              <div className="space-y-1.5 md:space-y-2">
                 {dayEvents.map(event => (
                   <div
                     key={event.id}
                     onClick={() => setSelectedEvent(selectedEvent === event.id ? null : event.id)}
                     className={`
-                      px-3 py-2 rounded-md text-xs border cursor-pointer transition-all duration-200 
+                      px-2 md:px-3 py-1.5 md:py-2 rounded-md text-[10px] md:text-xs border cursor-pointer transition-all duration-200 
                       hover:shadow-md hover:-translate-y-0.5 hover:scale-105
                       ${getEventColor(event.type)}
                       ${selectedEvent === event.id ? 'shadow-lg transform -translate-y-1 scale-105 ring-2 ring-primary/30' : ''}
                     `}
                   >
-                    <div className="font-medium text-[11px] leading-tight">
+                    <div className="font-medium text-[9px] md:text-[11px] leading-tight">
                       {event.title}
                     </div>
-                    <div className="text-[10px] opacity-80 mt-1">
+                    <div className="text-[8px] md:text-[10px] opacity-80 mt-0.5 md:mt-1">
                       {event.time}
                     </div>
                   </div>
