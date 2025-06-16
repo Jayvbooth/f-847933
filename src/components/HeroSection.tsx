@@ -1,6 +1,7 @@
+
 import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
-import TaskBoard from './TaskBoard';
+import Calendar from './Calendar';
 import { Loader } from 'lucide-react';
 
 const HeroSection = () => {
@@ -58,7 +59,7 @@ const HeroSection = () => {
         </div>
       </div>
       
-      {/* Task Manager UI integrated in hero section with glassmorphic effect */}
+      {/* Calendar UI integrated in hero section with glassmorphic effect */}
       <div className={`w-full max-w-7xl mt-12 z-10 transition-all duration-1000 delay-500 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-20'}`}>
         <div className="cosmic-glow relative rounded-xl overflow-hidden border border-border backdrop-blur-sm bg-card shadow-lg">
           {/* Dashboard Header */}
@@ -68,7 +69,7 @@ const HeroSection = () => {
                 <div className="h-8 w-8 rounded-md bg-muted flex items-center justify-center">
                   <div className="h-3 w-3 rounded-sm bg-foreground"></div>
                 </div>
-                <span className="text-foreground font-medium">Payment Processing Pipeline</span>
+                <span className="text-foreground font-medium">Lead Generation Calendar</span>
               </div>
               
               <div className="flex items-center gap-3">
@@ -94,15 +95,15 @@ const HeroSection = () => {
                   <div className="space-y-1">
                     <div className="flex items-center gap-3 px-3 py-2 rounded-md bg-muted text-foreground">
                       <div className="h-3 w-3 rounded-sm bg-foreground"></div>
-                      <span>Payments</span>
+                      <span>Calendar</span>
+                    </div>
+                    <div className="flex items-center gap-3 px-3 py-2 rounded-md text-muted-foreground hover:bg-muted/50">
+                      <div className="h-3 w-3 rounded-sm bg-muted-foreground/30"></div>
+                      <span>Leads</span>
                     </div>
                     <div className="flex items-center gap-3 px-3 py-2 rounded-md text-muted-foreground hover:bg-muted/50">
                       <div className="h-3 w-3 rounded-sm bg-muted-foreground/30"></div>
                       <span>Analytics</span>
-                    </div>
-                    <div className="flex items-center gap-3 px-3 py-2 rounded-md text-muted-foreground hover:bg-muted/50">
-                      <div className="h-3 w-3 rounded-sm bg-muted-foreground/30"></div>
-                      <span>Compliance</span>
                     </div>
                     <div className="flex items-center gap-3 px-3 py-2 rounded-md text-muted-foreground hover:bg-muted/50">
                       <div className="h-3 w-3 rounded-sm bg-muted-foreground/30"></div>
@@ -112,19 +113,19 @@ const HeroSection = () => {
                 </div>
                 
                 <div className="space-y-2 pt-4">
-                  <div className="text-xs text-muted-foreground uppercase">Departments</div>
+                  <div className="text-xs text-muted-foreground uppercase">Teams</div>
                   <div className="space-y-1">
                     <div className="flex items-center gap-3 px-3 py-2 rounded-md text-muted-foreground hover:bg-muted/50">
                       <div className="h-3 w-3 rounded-full bg-muted-foreground/60"></div>
-                      <span>Treasury</span>
+                      <span>Sales</span>
                     </div>
                     <div className="flex items-center gap-3 px-3 py-2 rounded-md text-muted-foreground hover:bg-muted/50">
                       <div className="h-3 w-3 rounded-full bg-muted-foreground/50"></div>
-                      <span>Risk</span>
+                      <span>Marketing</span>
                     </div>
                     <div className="flex items-center gap-3 px-3 py-2 rounded-md text-muted-foreground hover:bg-muted/50">
                       <div className="h-3 w-3 rounded-full bg-muted-foreground/40"></div>
-                      <span>Operations</span>
+                      <span>Support</span>
                     </div>
                   </div>
                 </div>
@@ -132,11 +133,11 @@ const HeroSection = () => {
               
               {/* Main Content */}
               <div className="flex-1 p-4 bg-background overflow-hidden">
-                {/* Board Header */}
+                {/* Calendar Header */}
                 <div className="flex items-center justify-between mb-6 min-w-0">
                   <div className="flex items-center gap-2 flex-shrink-0">
-                    <h3 className="font-medium text-foreground">Transactions</h3>
-                    <span className="text-xs bg-muted px-2 py-1 rounded-full text-muted-foreground">23</span>
+                    <h3 className="font-medium text-foreground">Leads Calendar</h3>
+                    <span className="text-xs bg-muted px-2 py-1 rounded-full text-muted-foreground">Active</span>
                   </div>
                   
                   <div className="flex items-center gap-2 flex-shrink-0">
@@ -153,14 +154,14 @@ const HeroSection = () => {
                       </svg>
                     </div>
                     <div className="h-8 px-3 rounded-md bg-foreground text-background flex items-center justify-center text-sm font-medium whitespace-nowrap">
-                      New Transaction
+                      New Lead
                     </div>
                   </div>
                 </div>
                 
-                {/* Kanban Board */}
+                {/* Calendar Component */}
                 <div className="overflow-hidden">
-                  <TaskBoard />
+                  <Calendar />
                 </div>
               </div>
             </div>
