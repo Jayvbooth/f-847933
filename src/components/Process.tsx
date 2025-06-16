@@ -141,7 +141,7 @@ const Process = () => {
 
           {/* Mobile Cards */}
           <div className="relative">
-            <ContainerScroll className="min-h-[200vh] space-y-6 pt-16 pb-4">
+            <ContainerScroll className="min-h-[120vh] space-y-6 pt-24 pb-4">
               {PROCESS_PHASES.map((phase, index) => (
                 <CardSticky
                   key={phase.id}
