@@ -37,7 +37,7 @@ const Process = () => {
         {/* Desktop/Tablet Layout - Two Columns */}
         <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-5 gap-8 xl:gap-12">
           {/* Left Column - Sticky Header */}
-          <div className="lg:col-span-2 sticky top-32 h-fit">
+          <div className="lg:col-span-2 sticky top-24 h-fit z-10">
             <h5 className="text-xs uppercase tracking-wide text-muted-foreground">Our Process</h5>
             <h2 className="mb-6 mt-4 text-3xl lg:text-4xl xl:text-5xl font-bold tracking-tight text-foreground">
               How we fill your{" "}
@@ -52,7 +52,7 @@ const Process = () => {
 
           {/* Right Column - Animated Cards */}
           <div className="lg:col-span-3 relative">
-            <ContainerScroll className="min-h-[400vh] space-y-8 py-8">
+            <ContainerScroll className="min-h-[200vh] space-y-8 py-32">
               {PROCESS_PHASES.map((phase, index) => (
                 <CardSticky
                   key={phase.id}
@@ -80,23 +80,22 @@ const Process = () => {
 
         {/* Mobile Layout - Single Column */}
         <div className="md:hidden">
-          {/* Mobile Header - Always Visible */}
-          <div className="mb-8">
+          {/* Mobile Header - Sticky */}
+          <div className="sticky top-20 bg-background/95 backdrop-blur-md border-b border-border/50 pb-6 mb-8 z-20">
             <h5 className="text-xs uppercase tracking-wide text-muted-foreground">Our Process</h5>
-            <h2 className="mb-6 mt-4 text-2xl sm:text-3xl font-bold tracking-tight text-foreground">
+            <h2 className="mb-4 mt-2 text-2xl sm:text-3xl font-bold tracking-tight text-foreground">
               How we fill your{" "}
               <span className="text-primary">calendar with qualified leads</span>
             </h2>
             <p className="text-base text-muted-foreground leading-relaxed">
               Our proven 5-step process ensures you get a steady stream of high-quality leads 
-              that are ready to convert. From discovery to delivery, we handle everything 
-              so you can focus on closing deals.
+              that are ready to convert.
             </p>
           </div>
 
           {/* Mobile Cards */}
           <div className="relative">
-            <ContainerScroll className="min-h-[300vh] space-y-6 py-6">
+            <ContainerScroll className="min-h-[150vh] space-y-6 py-8">
               {PROCESS_PHASES.map((phase, index) => (
                 <CardSticky
                   key={phase.id}
