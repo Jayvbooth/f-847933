@@ -59,6 +59,7 @@ const Process = () => {
                   index={index + 1}
                   incrementY={20}
                   incrementZ={8}
+                  baseOffset={160}
                   className="rounded-xl border border-border p-6 lg:p-8 shadow-lg backdrop-blur-md bg-card/95 z-10"
                 >
                   <div className="flex items-start justify-between gap-4 mb-4">
@@ -94,7 +95,7 @@ const Process = () => {
             </p>
           </div>
 
-          {/* Right Column - Animated Cards with Massive Buffer */}
+          {/* Right Column - Animated Cards */}
           <div className="relative">
             <ContainerScroll className="min-h-[200vh] space-y-6 pt-96 pb-16">
               {PROCESS_PHASES.map((phase, index) => (
@@ -103,6 +104,7 @@ const Process = () => {
                   index={index + 1}
                   incrementY={8}
                   incrementZ={4}
+                  baseOffset={300}
                   className="rounded-xl border border-border p-6 shadow-lg backdrop-blur-md bg-card/95 z-10"
                 >
                   <div className="flex items-start justify-between gap-4 mb-4">
@@ -137,7 +139,7 @@ const Process = () => {
             </p>
           </div>
 
-          {/* Mobile Cards with Extremely Large Buffer Zone */}
+          {/* Mobile Cards */}
           <div className="relative">
             <ContainerScroll className="min-h-[200vh] space-y-6 pt-96 pb-8">
               {PROCESS_PHASES.map((phase, index) => (
@@ -146,6 +148,7 @@ const Process = () => {
                   index={index + 1}
                   incrementY={6}
                   incrementZ={3}
+                  baseOffset={400}
                   className="rounded-xl border border-border p-6 shadow-lg backdrop-blur-md bg-card/95 z-10"
                 >
                   <div className="flex items-start justify-between gap-4 mb-4">
