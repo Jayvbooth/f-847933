@@ -94,15 +94,15 @@ const Process = () => {
             </p>
           </div>
 
-          {/* Right Column - Animated Cards */}
+          {/* Right Column - Animated Cards with Massive Buffer */}
           <div className="relative">
-            <ContainerScroll className="min-h-[200vh] space-y-6 pt-16 pb-16">
+            <ContainerScroll className="min-h-[200vh] space-y-6 pt-96 pb-16">
               {PROCESS_PHASES.map((phase, index) => (
                 <CardSticky
                   key={phase.id}
                   index={index + 1}
-                  incrementY={12}
-                  incrementZ={6}
+                  incrementY={8}
+                  incrementZ={4}
                   className="rounded-xl border border-border p-6 shadow-lg backdrop-blur-md bg-card/95 z-10"
                 >
                   <div className="flex items-start justify-between gap-4 mb-4">
@@ -137,15 +137,15 @@ const Process = () => {
             </p>
           </div>
 
-          {/* Mobile Cards with Large Buffer Zone */}
+          {/* Mobile Cards with Extremely Large Buffer Zone */}
           <div className="relative">
-            <ContainerScroll className="min-h-[150vh] space-y-6 pt-40 pb-8">
+            <ContainerScroll className="min-h-[200vh] space-y-6 pt-96 pb-8">
               {PROCESS_PHASES.map((phase, index) => (
                 <CardSticky
                   key={phase.id}
                   index={index + 1}
-                  incrementY={8}
-                  incrementZ={4}
+                  incrementY={6}
+                  incrementZ={3}
                   className="rounded-xl border border-border p-6 shadow-lg backdrop-blur-md bg-card/95 z-10"
                 >
                   <div className="flex items-start justify-between gap-4 mb-4">
