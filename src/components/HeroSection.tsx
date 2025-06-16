@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import Calendar from './Calendar';
-import { Loader } from 'lucide-react';
+import { Loader, TrendingUp, Users, Calendar as CalendarIcon } from 'lucide-react';
 
 const HeroSection = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -66,22 +66,26 @@ const HeroSection = () => {
           <div className="bg-card backdrop-blur-md w-full">
             <div className="flex items-center justify-between p-4 border-b border-border">
               <div className="flex items-center gap-4">
-                <div className="h-8 w-8 rounded-md bg-muted flex items-center justify-center">
-                  <div className="h-3 w-3 rounded-sm bg-foreground"></div>
+                <div className="h-8 w-8 rounded-md bg-green-500/20 flex items-center justify-center">
+                  <TrendingUp className="h-4 w-4 text-green-600" />
                 </div>
-                <span className="text-foreground font-medium">Lead Generation Calendar</span>
+                <span className="text-foreground font-medium">Overview of Your Calendar With Us</span>
               </div>
               
               <div className="flex items-center gap-3">
-                <div className="flex -space-x-2">
-                  <div className="h-8 w-8 rounded-full bg-muted border-2 border-card"></div>
-                  <div className="h-8 w-8 rounded-full bg-muted/80 border-2 border-card"></div>
-                  <div className="h-8 w-8 rounded-full bg-muted/60 border-2 border-card"></div>
-                  <div className="h-8 w-8 rounded-full bg-muted/40 border-2 border-card flex items-center justify-center text-xs text-foreground">+3</div>
+                <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                  <div className="flex items-center gap-1">
+                    <div className="h-3 w-3 rounded bg-green-500"></div>
+                    <span>Qualified Leads</span>
+                  </div>
+                  <div className="flex items-center gap-1">
+                    <div className="h-3 w-3 rounded bg-blue-500"></div>
+                    <span>Referrals</span>
+                  </div>
                 </div>
                 
-                <div className="h-8 px-3 rounded-md bg-muted flex items-center justify-center text-foreground text-sm">
-                  Share
+                <div className="h-8 px-3 rounded-md bg-green-500/20 border border-green-500/30 flex items-center justify-center text-green-600 text-sm font-medium">
+                  Active Pipeline
                 </div>
               </div>
             </div>
@@ -91,41 +95,37 @@ const HeroSection = () => {
               {/* Sidebar */}
               <div className="w-64 border-r border-border p-4 space-y-4 hidden md:block bg-card">
                 <div className="space-y-2">
-                  <div className="text-xs text-muted-foreground uppercase">Navigation</div>
+                  <div className="text-xs text-muted-foreground uppercase">Lead Sources</div>
                   <div className="space-y-1">
-                    <div className="flex items-center gap-3 px-3 py-2 rounded-md bg-muted text-foreground">
-                      <div className="h-3 w-3 rounded-sm bg-foreground"></div>
-                      <span>Calendar</span>
+                    <div className="flex items-center gap-3 px-3 py-2 rounded-md bg-green-500/10 text-green-600 border border-green-500/20">
+                      <CalendarIcon className="h-3 w-3" />
+                      <span>Calendar View</span>
                     </div>
                     <div className="flex items-center gap-3 px-3 py-2 rounded-md text-muted-foreground hover:bg-muted/50">
-                      <div className="h-3 w-3 rounded-sm bg-muted-foreground/30"></div>
-                      <span>Leads</span>
+                      <Users className="h-3 w-3" />
+                      <span>Lead Pipeline</span>
                     </div>
                     <div className="flex items-center gap-3 px-3 py-2 rounded-md text-muted-foreground hover:bg-muted/50">
-                      <div className="h-3 w-3 rounded-sm bg-muted-foreground/30"></div>
-                      <span>Analytics</span>
-                    </div>
-                    <div className="flex items-center gap-3 px-3 py-2 rounded-md text-muted-foreground hover:bg-muted/50">
-                      <div className="h-3 w-3 rounded-sm bg-muted-foreground/30"></div>
-                      <span>Reports</span>
+                      <TrendingUp className="h-3 w-3" />
+                      <span>Performance</span>
                     </div>
                   </div>
                 </div>
                 
                 <div className="space-y-2 pt-4">
-                  <div className="text-xs text-muted-foreground uppercase">Teams</div>
-                  <div className="space-y-1">
-                    <div className="flex items-center gap-3 px-3 py-2 rounded-md text-muted-foreground hover:bg-muted/50">
-                      <div className="h-3 w-3 rounded-full bg-muted-foreground/60"></div>
-                      <span>Sales</span>
+                  <div className="text-xs text-muted-foreground uppercase">Lead Quality</div>
+                  <div className="space-y-2">
+                    <div className="flex items-center justify-between px-3 py-2 rounded-md bg-green-500/10">
+                      <span className="text-sm text-green-600">Qualified Leads</span>
+                      <span className="text-xs font-medium text-green-600">85%</span>
                     </div>
-                    <div className="flex items-center gap-3 px-3 py-2 rounded-md text-muted-foreground hover:bg-muted/50">
-                      <div className="h-3 w-3 rounded-full bg-muted-foreground/50"></div>
-                      <span>Marketing</span>
+                    <div className="flex items-center justify-between px-3 py-2 rounded-md bg-blue-500/10">
+                      <span className="text-sm text-blue-600">Referrals</span>
+                      <span className="text-xs font-medium text-blue-600">10%</span>
                     </div>
-                    <div className="flex items-center gap-3 px-3 py-2 rounded-md text-muted-foreground hover:bg-muted/50">
-                      <div className="h-3 w-3 rounded-full bg-muted-foreground/40"></div>
-                      <span>Support</span>
+                    <div className="flex items-center justify-between px-3 py-2 rounded-md bg-purple-500/10">
+                      <span className="text-sm text-purple-600">Organic</span>
+                      <span className="text-xs font-medium text-purple-600">5%</span>
                     </div>
                   </div>
                 </div>
@@ -136,25 +136,13 @@ const HeroSection = () => {
                 {/* Calendar Header */}
                 <div className="flex items-center justify-between mb-6 min-w-0">
                   <div className="flex items-center gap-2 flex-shrink-0">
-                    <h3 className="font-medium text-foreground">Leads Calendar</h3>
-                    <span className="text-xs bg-muted px-2 py-1 rounded-full text-muted-foreground">Active</span>
+                    <h3 className="font-medium text-foreground">Your Lead Calendar</h3>
+                    <span className="text-xs bg-green-500/20 text-green-600 px-2 py-1 rounded-full border border-green-500/30">Live</span>
                   </div>
                   
                   <div className="flex items-center gap-2 flex-shrink-0">
-                    <div className="h-8 w-8 rounded-md bg-muted flex items-center justify-center text-muted-foreground">
-                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M15 12H9" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-                        <path d="M12 9L12 15" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-                      </svg>
-                    </div>
-                    <div className="h-8 w-8 rounded-md bg-muted flex items-center justify-center text-muted-foreground">
-                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M17 9L17 17H9" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                        <path d="M17 17L7 7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                      </svg>
-                    </div>
                     <div className="h-8 px-3 rounded-md bg-foreground text-background flex items-center justify-center text-sm font-medium whitespace-nowrap">
-                      New Lead
+                      View All Leads
                     </div>
                   </div>
                 </div>

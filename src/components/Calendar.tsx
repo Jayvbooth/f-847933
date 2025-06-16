@@ -1,10 +1,11 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { ChevronLeft, ChevronRight, Calendar as CalendarIcon } from 'lucide-react';
 
 interface CalendarEvent {
   id: string;
   title: string;
+  type: 'qualified-lead' | 'referral' | 'organic-search' | 'social-media';
   date: Date;
   time: string;
 }
@@ -12,81 +13,135 @@ interface CalendarEvent {
 const Calendar = () => {
   const [currentDate, setCurrentDate] = useState(new Date());
   const [selectedEvent, setSelectedEvent] = useState<string | null>(null);
+  const [isMobile, setIsMobile] = useState(false);
 
-  // Generate events for the current month
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
+  const eventTypes = [
+    { type: 'qualified-lead', title: 'Qualified Lead Call', weight: 70, color: 'bg-green-500/20 border-green-500/40 text-green-600' },
+    { type: 'referral', title: 'Referral Lead', weight: 15, color: 'bg-blue-500/20 border-blue-500/40 text-blue-600' },
+    { type: 'organic-search', title: 'Organic Search Lead', weight: 10, color: 'bg-purple-500/20 border-purple-500/40 text-purple-600' },
+    { type: 'social-media', title: 'Social Media Lead', weight: 5, color: 'bg-orange-500/20 border-orange-500/40 text-orange-600' }
+  ];
+
+  const getWeightedEventType = () => {
+    const random = Math.random() * 100;
+    let cumulative = 0;
+    
+    for (const eventType of eventTypes) {
+      cumulative += eventType.weight;
+      if (random <= cumulative) {
+        return eventType;
+      }
+    }
+    return eventTypes[0];
+  };
+
   const generateEvents = (): CalendarEvent[] => {
     const events: CalendarEvent[] = [];
-    const year = currentDate.getFullYear();
-    const month = currentDate.getMonth();
-    const daysInMonth = new Date(year, month + 1, 0).getDate();
+    const startOfWeek = new Date(currentDate);
+    startOfWeek.setDate(currentDate.getDate() - currentDate.getDay());
     
-    for (let day = 1; day <= daysInMonth; day++) {
-      // Add 1-3 events per day randomly
-      const numEvents = Math.floor(Math.random() * 3) + 1;
+    const daysToShow = isMobile ? 3 : 7;
+    const startDay = isMobile ? 1 : 0; // Start from Monday on mobile, Sunday on desktop
+    
+    for (let dayOffset = startDay; dayOffset < startDay + daysToShow; dayOffset++) {
+      const day = new Date(startOfWeek);
+      day.setDate(startOfWeek.getDate() + dayOffset);
+      
+      // Skip weekends (Saturday = 6, Sunday = 0)
+      if (day.getDay() === 0 || day.getDay() === 6) continue;
+      
+      // Add 2-4 events per weekday
+      const numEvents = Math.floor(Math.random() * 3) + 2;
+      const usedTimes = new Set();
+      
       for (let i = 0; i < numEvents; i++) {
-        const hour = Math.floor(Math.random() * 12) + 9; // 9 AM to 8 PM
-        const minute = Math.random() > 0.5 ? '00' : '30';
-        events.push({
-          id: `${year}-${month}-${day}-${i}`,
-          title: 'One new high-quality lead',
-          date: new Date(year, month, day),
-          time: `${hour}:${minute} ${hour >= 12 ? 'PM' : 'AM'}`
-        });
+        let hour, time;
+        let attempts = 0;
+        
+        // Generate unique times between 9 AM and 5 PM
+        do {
+          hour = Math.floor(Math.random() * 8) + 9; // 9 AM to 4 PM
+          const minute = Math.random() > 0.5 ? '00' : '30';
+          time = `${hour}:${minute} ${hour >= 12 ? 'PM' : 'AM'}`;
+          attempts++;
+        } while (usedTimes.has(time) && attempts < 10);
+        
+        if (attempts < 10) {
+          usedTimes.add(time);
+          const eventType = getWeightedEventType();
+          
+          events.push({
+            id: `${day.getTime()}-${i}`,
+            title: eventType.title,
+            type: eventType.type as any,
+            date: new Date(day),
+            time
+          });
+        }
       }
     }
     
-    return events.sort((a, b) => a.date.getTime() - b.date.getTime());
+    return events.sort((a, b) => {
+      const dateCompare = a.date.getTime() - b.date.getTime();
+      if (dateCompare !== 0) return dateCompare;
+      
+      const timeA = parseInt(a.time.split(':')[0]) + (a.time.includes('PM') && !a.time.startsWith('12') ? 12 : 0);
+      const timeB = parseInt(b.time.split(':')[0]) + (b.time.includes('PM') && !b.time.startsWith('12') ? 12 : 0);
+      return timeA - timeB;
+    });
   };
 
   const events = generateEvents();
 
-  const getDaysInMonth = () => {
-    const year = currentDate.getFullYear();
-    const month = currentDate.getMonth();
-    const firstDay = new Date(year, month, 1);
-    const lastDay = new Date(year, month + 1, 0);
-    const daysInMonth = lastDay.getDate();
-    const startingDayOfWeek = firstDay.getDay();
+  const getWeekDays = () => {
+    const startOfWeek = new Date(currentDate);
+    startOfWeek.setDate(currentDate.getDate() - currentDate.getDay());
     
     const days = [];
+    const daysToShow = isMobile ? 3 : 7;
+    const startDay = isMobile ? 1 : 0; // Start from Monday on mobile
     
-    // Add empty cells for days before the first day of the month
-    for (let i = 0; i < startingDayOfWeek; i++) {
-      days.push(null);
-    }
-    
-    // Add days of the month
-    for (let day = 1; day <= daysInMonth; day++) {
+    for (let i = startDay; i < startDay + daysToShow; i++) {
+      const day = new Date(startOfWeek);
+      day.setDate(startOfWeek.getDate() + i);
       days.push(day);
     }
     
     return days;
   };
 
-  const getEventsForDay = (day: number) => {
-    const year = currentDate.getFullYear();
-    const month = currentDate.getMonth();
+  const getEventsForDay = (day: Date) => {
     return events.filter(event => 
-      event.date.getDate() === day &&
-      event.date.getMonth() === month &&
-      event.date.getFullYear() === year
+      event.date.toDateString() === day.toDateString()
     );
   };
 
-  const previousMonth = () => {
-    setCurrentDate(new Date(currentDate.getFullYear(), currentDate.getMonth() - 1));
+  const previousWeek = () => {
+    const newDate = new Date(currentDate);
+    newDate.setDate(currentDate.getDate() - 7);
+    setCurrentDate(newDate);
   };
 
-  const nextMonth = () => {
-    setCurrentDate(new Date(currentDate.getFullYear(), currentDate.getMonth() + 1));
+  const nextWeek = () => {
+    const newDate = new Date(currentDate);
+    newDate.setDate(currentDate.getDate() + 7);
+    setCurrentDate(newDate);
   };
 
-  const monthNames = [
-    'January', 'February', 'March', 'April', 'May', 'June',
-    'July', 'August', 'September', 'October', 'November', 'December'
-  ];
+  const dayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+  const shortDayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
-  const dayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+  const getEventColor = (type: string) => {
+    const eventType = eventTypes.find(et => et.type === type);
+    return eventType?.color || 'bg-primary/10 border-primary/20 text-primary';
+  };
 
   return (
     <div className="w-full h-full bg-background rounded-lg overflow-hidden">
@@ -95,18 +150,18 @@ const Calendar = () => {
         <div className="flex items-center gap-3">
           <CalendarIcon className="h-5 w-5 text-foreground" />
           <h3 className="text-lg font-medium text-foreground">
-            {monthNames[currentDate.getMonth()]} {currentDate.getFullYear()}
+            Week of {getWeekDays()[0].toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
           </h3>
         </div>
         <div className="flex items-center gap-2">
           <button
-            onClick={previousMonth}
+            onClick={previousWeek}
             className="p-2 rounded-md hover:bg-muted transition-colors"
           >
             <ChevronLeft className="h-4 w-4 text-foreground" />
           </button>
           <button
-            onClick={nextMonth}
+            onClick={nextWeek}
             className="p-2 rounded-md hover:bg-muted transition-colors"
           >
             <ChevronRight className="h-4 w-4 text-foreground" />
@@ -115,54 +170,50 @@ const Calendar = () => {
       </div>
 
       {/* Day Headers */}
-      <div className="grid grid-cols-7 border-b border-border bg-muted/30">
-        {dayNames.map(day => (
-          <div key={day} className="p-3 text-center text-sm font-medium text-muted-foreground">
-            {day}
+      <div className={`grid ${isMobile ? 'grid-cols-3' : 'grid-cols-7'} border-b border-border bg-muted/30`}>
+        {getWeekDays().map(day => (
+          <div key={day.getTime()} className="p-3 text-center">
+            <div className="text-sm font-medium text-foreground">
+              {isMobile ? shortDayNames[day.getDay()] : dayNames[day.getDay()]}
+            </div>
+            <div className="text-lg font-semibold text-foreground mt-1">
+              {day.getDate()}
+            </div>
           </div>
         ))}
       </div>
 
       {/* Calendar Grid */}
-      <div className="grid grid-cols-7 h-full">
-        {getDaysInMonth().map((day, index) => {
-          const dayEvents = day ? getEventsForDay(day) : [];
+      <div className={`grid ${isMobile ? 'grid-cols-3' : 'grid-cols-7'} h-full`}>
+        {getWeekDays().map(day => {
+          const dayEvents = getEventsForDay(day);
           
           return (
             <div
-              key={index}
-              className={`border-r border-b border-border min-h-[120px] p-2 ${
-                day ? 'bg-background' : 'bg-muted/20'
-              }`}
+              key={day.getTime()}
+              className="border-r border-b border-border min-h-[400px] p-3 bg-background"
             >
-              {day && (
-                <>
-                  <div className="text-sm font-medium text-foreground mb-2">
-                    {day}
+              <div className="space-y-2">
+                {dayEvents.map(event => (
+                  <div
+                    key={event.id}
+                    onClick={() => setSelectedEvent(selectedEvent === event.id ? null : event.id)}
+                    className={`
+                      px-3 py-2 rounded-md text-xs border cursor-pointer transition-all duration-200 
+                      hover:shadow-md hover:-translate-y-0.5 hover:scale-105
+                      ${getEventColor(event.type)}
+                      ${selectedEvent === event.id ? 'shadow-lg transform -translate-y-1 scale-105 ring-2 ring-primary/30' : ''}
+                    `}
+                  >
+                    <div className="font-medium text-[11px] leading-tight">
+                      {event.title}
+                    </div>
+                    <div className="text-[10px] opacity-80 mt-1">
+                      {event.time}
+                    </div>
                   </div>
-                  <div className="space-y-1">
-                    {dayEvents.map(event => (
-                      <div
-                        key={event.id}
-                        onClick={() => setSelectedEvent(selectedEvent === event.id ? null : event.id)}
-                        className={`
-                          px-2 py-1 rounded text-xs bg-primary/10 border border-primary/20 
-                          cursor-pointer transition-all duration-200 
-                          hover:bg-primary/20 hover:border-primary/40 hover:shadow-md hover:-translate-y-0.5
-                          ${selectedEvent === event.id ? 'bg-primary/30 border-primary/60 shadow-lg transform -translate-y-1' : ''}
-                        `}
-                      >
-                        <div className="font-medium text-primary text-[10px] leading-tight">
-                          {event.title}
-                        </div>
-                        <div className="text-muted-foreground text-[9px]">
-                          {event.time}
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </>
-              )}
+                ))}
+              </div>
             </div>
           );
         })}
