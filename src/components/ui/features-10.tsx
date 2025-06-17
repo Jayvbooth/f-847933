@@ -27,18 +27,9 @@ export function Features() {
     return (
         <section ref={sectionRef} className="bg-background py-16 md:py-32 relative overflow-hidden">
             {/* Subtle grid background with gradient overlay */}
-            <div className="absolute inset-0 opacity-30">
+            <div className="absolute inset-0 opacity-20">
                 <div className="absolute inset-0 bg-gradient-to-b from-transparent via-background/50 to-background"></div>
-                <div 
-                    className="absolute inset-0"
-                    style={{
-                        backgroundImage: `
-                            linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-                            linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px)
-                        `,
-                        backgroundSize: '40px 40px'
-                    }}
-                ></div>
+                <div className="features-grid-subtle absolute inset-0"></div>
             </div>
 
             {/* Animated heading */}
@@ -57,7 +48,8 @@ export function Features() {
             </div>
 
             <div className="mx-auto max-w-2xl px-6 lg:max-w-5xl relative z-10">
-                <div className="mx-auto grid gap-6 lg:grid-cols-2">
+                <div className="mx-auto grid gap-6 lg:grid-cols-2 lg:grid-rows-2">
+                    {/* First card - top left */}
                     <AnimatedFeatureCard delay={200}>
                         <CardHeader className="pb-3">
                             <CardHeading
@@ -81,6 +73,7 @@ export function Features() {
                         </div>
                     </AnimatedFeatureCard>
 
+                    {/* Second card - top right */}
                     <AnimatedFeatureCard delay={400}>
                         <CardHeader className="pb-3">
                             <CardHeading
@@ -106,10 +99,11 @@ export function Features() {
                         </CardContent>
                     </AnimatedFeatureCard>
 
+                    {/* Third card - expanded to span bottom row */}
                     <AnimatedFeatureCard className="p-6 lg:col-span-2" delay={600}>
                         <p className="mx-auto my-6 max-w-md text-balance text-center text-2xl font-semibold">Smart scheduling with automated reminders for maintenance.</p>
 
-                        <div className="flex justify-center gap-6 overflow-hidden">
+                        <div className="flex justify-center gap-4 md:gap-6 overflow-hidden flex-wrap">
                             <CircularUI
                                 label="Inclusion"
                                 circles={[{ pattern: 'border' }, { pattern: 'border' }]}

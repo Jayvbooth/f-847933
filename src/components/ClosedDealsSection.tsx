@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { TiltedScroll } from '@/components/ui/tilted-scroll';
 import { Award, TrendingUp } from 'lucide-react';
@@ -15,12 +16,12 @@ const ClosedDealsSection = () => {
   ];
 
   return (
-    <section className="relative py-20 bg-background overflow-hidden">      
+    <section className="relative py-16 bg-background overflow-hidden">      
       <div className="container mx-auto px-6 relative z-10">
-        <div className="grid lg:grid-cols-2 gap-8 items-center max-w-7xl mx-auto">
+        <div className="grid lg:grid-cols-2 gap-6 items-center max-w-7xl mx-auto">
           {/* Content Side */}
-          <div className="space-y-8">
-            <div className="space-y-6">
+          <div className="space-y-6">
+            <div className="space-y-4">
               <div className="flex items-center gap-3">
                 <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center">
                   <Award className="h-4 w-4 text-primary" />

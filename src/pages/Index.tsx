@@ -8,7 +8,6 @@ import { Features as AdvancedFeatures } from '@/components/ui/features-10';
 import Process from '@/components/Process';
 import ClosedDealsSection from '@/components/ClosedDealsSection';
 import CaseStudiesSection from '@/components/CaseStudiesSection';
-import Testimonials from '@/components/Testimonials';
 import FAQ from '@/components/FAQ';
 import Pricing from '@/components/Pricing';
 import Footer from '@/components/Footer';
@@ -27,7 +26,6 @@ const Index = () => {
         <div id="case-studies">
           <CaseStudiesSection />
         </div>
-        <Testimonials />
         <FAQ />
         <Pricing />
       </main>
