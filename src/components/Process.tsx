@@ -61,7 +61,7 @@ const Process = () => {
                   incrementZ={8}
                   baseOffset={160}
                   className="rounded-xl border border-border p-6 lg:p-8 shadow-lg backdrop-blur-md bg-card/95"
-                  style={{ zIndex: Math.max(1, 40 - index * 5) }}
+                  style={{ zIndex: 10 + index }}
                 >
                   <div className="flex items-start justify-between gap-4 mb-4">
                     <h3 className="text-xl lg:text-2xl xl:text-3xl font-bold tracking-tighter text-foreground flex-1">
@@ -107,7 +107,7 @@ const Process = () => {
                   incrementZ={6}
                   baseOffset={250}
                   className="rounded-xl border border-border p-6 shadow-lg backdrop-blur-md bg-card/95"
-                  style={{ zIndex: Math.max(1, 35 - index * 4) }}
+                  style={{ zIndex: 10 + index }}
                 >
                   <div className="flex items-start justify-between gap-4 mb-4">
                     <h3 className="text-xl font-bold tracking-tighter text-foreground flex-1">
@@ -152,7 +152,7 @@ const Process = () => {
                   incrementZ={4}
                   baseOffset={400}
                   className="rounded-xl border border-border p-6 shadow-lg backdrop-blur-md bg-card/95"
-                  style={{ zIndex: Math.max(1, 30 - index * 3) }}
+                  style={{ zIndex: 10 + index }}
                 >
                   <div className="flex items-start justify-between gap-4 mb-4">
                     <h3 className="text-lg sm:text-xl font-bold tracking-tighter text-foreground flex-1">
