@@ -1,4 +1,3 @@
-
 import { Card, CardContent, CardHeader } from '@/components/ui/card'
 import { cn } from '@/lib/utils'
 import { Calendar, LucideIcon, MapIcon } from 'lucide-react'
@@ -26,12 +25,27 @@ export function Features() {
     }, [])
 
     return (
-        <section ref={sectionRef} className="bg-background py-16 md:py-32 cosmic-grid relative overflow-hidden">
+        <section ref={sectionRef} className="bg-background py-16 md:py-32 relative overflow-hidden">
+            {/* Subtle grid background with gradient overlay */}
+            <div className="absolute inset-0 opacity-30">
+                <div className="absolute inset-0 bg-gradient-to-b from-transparent via-background/50 to-background"></div>
+                <div 
+                    className="absolute inset-0"
+                    style={{
+                        backgroundImage: `
+                            linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                            linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px)
+                        `,
+                        backgroundSize: '40px 40px'
+                    }}
+                ></div>
+            </div>
+
             {/* Animated heading */}
-            <div className="mx-auto max-w-2xl px-6 lg:max-w-5xl mb-16">
+            <div className="mx-auto max-w-2xl px-6 lg:max-w-5xl mb-16 relative z-10">
                 <div className={cn(
                     "text-center transition-all duration-1000 ease-out",
-                    isVisible ? "opacity-100 translate-y-0 blur-0" : "opacity-0 translate-y-8 blur-sm"
+                    isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
                 )}>
                     <h2 className="text-4xl md:text-6xl font-bold text-foreground mb-4 bg-gradient-to-r from-foreground via-primary to-foreground bg-clip-text text-transparent animate-gradient-shift bg-300% leading-tight">
                         Advanced Fleet Management
@@ -42,8 +56,8 @@ export function Features() {
                 </div>
             </div>
 
-            <div className="mx-auto max-w-2xl px-6 lg:max-w-5xl">
-                <div className="mx-auto grid gap-4 lg:grid-cols-2">
+            <div className="mx-auto max-w-2xl px-6 lg:max-w-5xl relative z-10">
+                <div className="mx-auto grid gap-6 lg:grid-cols-2">
                     <AnimatedFeatureCard delay={200}>
                         <CardHeader className="pb-3">
                             <CardHeading
@@ -54,7 +68,7 @@ export function Features() {
                         </CardHeader>
 
                         <div className="relative mb-6 border-t border-dashed sm:mb-0">
-                            <div className="absolute inset-0 [background:radial-gradient(125%_125%_at_50%_0%,transparent_40%,hsl(var(--muted)),white_125%)]"></div>
+                            <div className="absolute inset-0 bg-gradient-to-b from-muted/20 via-muted/10 to-transparent"></div>
                             <div className="aspect-[76/59] p-1 px-6">
                                 <DualModeImage
                                     darkSrc="https://images.unsplash.com/photo-1649972904349-6e44c42644a7?w=1207&h=929&fit=crop"
@@ -78,8 +92,8 @@ export function Features() {
 
                         <CardContent>
                             <div className="relative mb-6 sm:mb-0">
-                                <div className="absolute -inset-6 [background:radial-gradient(50%_50%_at_75%_50%,transparent,hsl(var(--background))_100%)]"></div>
-                                <div className="aspect-[76/59] border">
+                                <div className="absolute -inset-6 bg-gradient-to-br from-background via-transparent to-muted/10"></div>
+                                <div className="aspect-[76/59] border border-border/50 rounded-lg overflow-hidden">
                                     <DualModeImage
                                         darkSrc="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=1207&h=929&fit=crop"
                                         lightSrc="https://images.unsplash.com/photo-1531297484001-80022131f5a1?w=1207&h=929&fit=crop"
@@ -155,11 +169,14 @@ const AnimatedFeatureCard = ({ children, className, delay = 0 }: AnimatedFeature
         <div
             ref={cardRef}
             className={cn(
-                "transition-all duration-700 ease-out",
-                isVisible ? "opacity-100 translate-y-0 blur-0" : "opacity-0 translate-y-8 blur-sm"
+                "transition-all duration-700 ease-out transform",
+                isVisible ? "opacity-100 translate-y-0 scale-100" : "opacity-0 translate-y-12 scale-95"
             )}
         >
-            <Card className={cn('group relative rounded-none shadow-zinc-950/5 hover:scale-105 transition-transform duration-300', className)}>
+            <Card className={cn(
+                'group relative rounded-lg shadow-lg border-border/50 hover:shadow-xl hover:scale-[1.02] transition-all duration-300 ease-out bg-card/80 backdrop-blur-sm', 
+                className
+            )}>
                 <CardDecorator />
                 {children}
             </Card>
@@ -169,10 +186,10 @@ const AnimatedFeatureCard = ({ children, className, delay = 0 }: AnimatedFeature
 
 const CardDecorator = () => (
     <>
-        <span className="border-primary absolute -left-px -top-px block size-2 border-l-2 border-t-2"></span>
-        <span className="border-primary absolute -right-px -top-px block size-2 border-r-2 border-t-2"></span>
-        <span className="border-primary absolute -bottom-px -left-px block size-2 border-b-2 border-l-2"></span>
-        <span className="border-primary absolute -bottom-px -right-px block size-2 border-b-2 border-r-2"></span>
+        <span className="border-primary/60 absolute -left-px -top-px block size-2 border-l-2 border-t-2 transition-colors group-hover:border-primary"></span>
+        <span className="border-primary/60 absolute -right-px -top-px block size-2 border-r-2 border-t-2 transition-colors group-hover:border-primary"></span>
+        <span className="border-primary/60 absolute -bottom-px -left-px block size-2 border-b-2 border-l-2 transition-colors group-hover:border-primary"></span>
+        <span className="border-primary/60 absolute -bottom-px -right-px block size-2 border-b-2 border-r-2 transition-colors group-hover:border-primary"></span>
     </>
 )
 
@@ -205,14 +222,14 @@ const DualModeImage = ({ darkSrc, lightSrc, alt, width, height, className }: Dua
     <>
         <img
             src={darkSrc}
-            className={cn('hidden dark:block', className)}
+            className={cn('hidden dark:block w-full h-full object-cover', className)}
             alt={`${alt} dark`}
             width={width}
             height={height}
         />
         <img
             src={lightSrc}
-            className={cn('shadow dark:hidden', className)}
+            className={cn('dark:hidden w-full h-full object-cover', className)}
             alt={`${alt} light`}
             width={width}
             height={height}
