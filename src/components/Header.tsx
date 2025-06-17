@@ -10,18 +10,21 @@ import { Switch } from '@/components/ui/switch';
 const Header = () => {
   const [activePage, setActivePage] = useState('features');
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [isDarkMode, setIsDarkMode] = useState(false); // Default to light mode
+  const [isDarkMode, setIsDarkMode] = useState(false);
   
   useEffect(() => {
-    // Apply the theme to the document when it changes
-    if (isDarkMode) {
-      document.documentElement.classList.remove('light-mode');
-      document.documentElement.classList.add('dark-mode');
+    // Check for saved theme preference or default to light mode
+    const savedTheme = localStorage.getItem('theme');
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    
+    if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
+      setIsDarkMode(true);
+      document.documentElement.classList.add('dark');
     } else {
-      document.documentElement.classList.remove('dark-mode');
-      document.documentElement.classList.add('light-mode');
+      setIsDarkMode(false);
+      document.documentElement.classList.remove('dark');
     }
-  }, [isDarkMode]);
+  }, []);
   
   const handleNavClick = (page: string) => (e: React.MouseEvent) => {
     e.preventDefault();
@@ -38,7 +41,16 @@ const Header = () => {
   };
 
   const toggleTheme = () => {
-    setIsDarkMode(!isDarkMode);
+    const newTheme = !isDarkMode;
+    setIsDarkMode(newTheme);
+    
+    if (newTheme) {
+      document.documentElement.classList.add('dark');
+      localStorage.setItem('theme', 'dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+      localStorage.setItem('theme', 'light');
+    }
   };
 
   return (
@@ -132,9 +144,8 @@ const Header = () => {
                 <div className="flex items-center gap-2">
                   <Moon size={16} className={`${isDarkMode ? 'text-primary' : 'text-muted-foreground'}`} />
                   <Switch 
-                    checked={!isDarkMode} 
+                    checked={isDarkMode} 
                     onCheckedChange={toggleTheme} 
-                    className="data-[state=checked]:bg-primary"
                   />
                   <Sun size={16} className={`${!isDarkMode ? 'text-primary' : 'text-muted-foreground'}`} />
                 </div>
@@ -148,9 +159,8 @@ const Header = () => {
           <div className="flex items-center gap-2 rounded-full px-3 py-2">
             <Moon size={18} className={`${isDarkMode ? 'text-primary' : 'text-muted-foreground'}`} />
             <Switch 
-              checked={!isDarkMode} 
+              checked={isDarkMode} 
               onCheckedChange={toggleTheme} 
-              className="data-[state=checked]:bg-primary"
             />
             <Sun size={18} className={`${!isDarkMode ? 'text-primary' : 'text-muted-foreground'}`} />
           </div>
