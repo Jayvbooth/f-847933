@@ -16,11 +16,11 @@ const ClosedDealsSection = () => {
   ];
 
   return (
-    <section className="relative py-32 bg-background overflow-hidden">      
+    <section className="relative py-20 bg-background overflow-hidden">      
       <div className="container mx-auto px-6 relative z-10">
-        <div className="grid lg:grid-cols-2 gap-20 items-center max-w-7xl mx-auto">
+        <div className="grid lg:grid-cols-2 gap-16 items-center max-w-7xl mx-auto">
           {/* Content Side */}
-          <div className="space-y-10">
+          <div className="space-y-8">
             <div className="space-y-6">
               <div className="flex items-center gap-3">
                 <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center">
@@ -44,13 +44,13 @@ const ClosedDealsSection = () => {
             </div>
 
             {/* Stats */}
-            <div className="grid grid-cols-2 gap-8 max-w-md">
-              <div className="space-y-3">
+            <div className="grid grid-cols-2 gap-6 max-w-md">
+              <div className="space-y-2">
                 <div className="text-3xl font-medium">$18.4M+</div>
                 <div className="text-sm text-muted-foreground">Total Collected</div>
               </div>
               
-              <div className="space-y-3">
+              <div className="space-y-2">
                 <div className="flex items-baseline gap-1">
                   <span className="text-3xl font-medium">94.7</span>
                   <span className="text-xl text-muted-foreground">%</span>
