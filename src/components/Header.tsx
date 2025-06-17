@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import Logo from './Logo';
@@ -16,12 +15,13 @@ const Header = () => {
     // Check for saved theme preference or default to light mode
     const savedTheme = localStorage.getItem('theme');
     const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const shouldBeDark = savedTheme === 'dark' || (!savedTheme && prefersDark);
     
-    if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
-      setIsDarkMode(true);
+    setIsDarkMode(shouldBeDark);
+    
+    if (shouldBeDark) {
       document.documentElement.classList.add('dark');
     } else {
-      setIsDarkMode(false);
       document.documentElement.classList.remove('dark');
     }
   }, []);
