@@ -4,9 +4,9 @@ import Header from '@/components/Header';
 import HeroSection from '@/components/HeroSection';
 import Features from '@/components/Features';
 import { Features as NewFeatures } from '@/components/ui/features-8';
+import { Features as AdvancedFeatures } from '@/components/ui/features-10';
 import Process from '@/components/Process';
 import ClosedDealsSection from '@/components/ClosedDealsSection';
-import TrustedBrands from '@/components/TrustedBrands';
 import Testimonials from '@/components/Testimonials';
 import FAQ from '@/components/FAQ';
 import Pricing from '@/components/Pricing';
@@ -22,7 +22,7 @@ const Index = () => {
         <NewFeatures />
         <Process />
         <ClosedDealsSection />
-        <TrustedBrands />
+        <AdvancedFeatures />
         <Testimonials />
         <FAQ />
         <Pricing />
