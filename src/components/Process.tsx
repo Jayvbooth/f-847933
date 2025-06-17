@@ -150,7 +150,7 @@ const Process = () => {
                   index={index + 1}
                   incrementY={8}
                   incrementZ={4}
-                  baseOffset={200}
+                  baseOffset={400}
                   className="rounded-xl border border-border p-6 shadow-lg backdrop-blur-md bg-card/95"
                   style={{ zIndex: Math.max(1, 30 - index * 3) }}
                 >
