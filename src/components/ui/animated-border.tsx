@@ -58,7 +58,8 @@ export const AnimatedBorder: React.FC<AnimatedBorderProps> = ({
       </div>
 
       {/* Keyframes */}
-      <style jsx>{`
+      <style>
+        {`
         @keyframes shimmer-rotate {
           0% { 
             transform: rotate(0deg);
@@ -67,7 +68,8 @@ export const AnimatedBorder: React.FC<AnimatedBorderProps> = ({
             transform: rotate(360deg);
           }
         }
-      `}</style>
+      `}
+      </style>
     </div>
   );
 };
