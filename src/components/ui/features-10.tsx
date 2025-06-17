@@ -2,14 +2,49 @@
 import { Card, CardContent, CardHeader } from '@/components/ui/card'
 import { cn } from '@/lib/utils'
 import { Calendar, LucideIcon, MapIcon } from 'lucide-react'
-import { ReactNode } from 'react'
+import { ReactNode, useEffect, useRef, useState } from 'react'
 
 export function Features() {
+    const [isVisible, setIsVisible] = useState(false)
+    const sectionRef = useRef<HTMLElement>(null)
+
+    useEffect(() => {
+        const observer = new IntersectionObserver(
+            ([entry]) => {
+                if (entry.isIntersecting) {
+                    setIsVisible(true)
+                }
+            },
+            { threshold: 0.1 }
+        )
+
+        if (sectionRef.current) {
+            observer.observe(sectionRef.current)
+        }
+
+        return () => observer.disconnect()
+    }, [])
+
     return (
-        <section className="bg-zinc-50 py-16 md:py-32 dark:bg-transparent">
+        <section ref={sectionRef} className="bg-background py-16 md:py-32 cosmic-grid relative overflow-hidden">
+            {/* Animated heading */}
+            <div className="mx-auto max-w-2xl px-6 lg:max-w-5xl mb-16">
+                <div className={cn(
+                    "text-center transition-all duration-1000 ease-out",
+                    isVisible ? "opacity-100 translate-y-0 blur-0" : "opacity-0 translate-y-8 blur-sm"
+                )}>
+                    <h2 className="text-4xl md:text-6xl font-bold text-foreground mb-4 bg-gradient-to-r from-foreground via-primary to-foreground bg-clip-text text-transparent animate-gradient-shift bg-300% leading-tight">
+                        Advanced Fleet Management
+                    </h2>
+                    <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+                        Real-time tracking and intelligent scheduling for modern fleet operations
+                    </p>
+                </div>
+            </div>
+
             <div className="mx-auto max-w-2xl px-6 lg:max-w-5xl">
                 <div className="mx-auto grid gap-4 lg:grid-cols-2">
-                    <FeatureCard>
+                    <AnimatedFeatureCard delay={200}>
                         <CardHeader className="pb-3">
                             <CardHeading
                                 icon={MapIcon}
@@ -30,9 +65,9 @@ export function Features() {
                                 />
                             </div>
                         </div>
-                    </FeatureCard>
+                    </AnimatedFeatureCard>
 
-                    <FeatureCard>
+                    <AnimatedFeatureCard delay={400}>
                         <CardHeader className="pb-3">
                             <CardHeading
                                 icon={Calendar}
@@ -55,9 +90,9 @@ export function Features() {
                                 </div>
                             </div>
                         </CardContent>
-                    </FeatureCard>
+                    </AnimatedFeatureCard>
 
-                    <FeatureCard className="p-6 lg:col-span-2">
+                    <AnimatedFeatureCard className="p-6 lg:col-span-2" delay={600}>
                         <p className="mx-auto my-6 max-w-md text-balance text-center text-2xl font-semibold">Smart scheduling with automated reminders for maintenance.</p>
 
                         <div className="flex justify-center gap-6 overflow-hidden">
@@ -82,24 +117,55 @@ export function Features() {
                                 className="hidden sm:block"
                             />
                         </div>
-                    </FeatureCard>
+                    </AnimatedFeatureCard>
                 </div>
             </div>
         </section>
     )
 }
 
-interface FeatureCardProps {
+interface AnimatedFeatureCardProps {
     children: ReactNode
     className?: string
+    delay?: number
 }
 
-const FeatureCard = ({ children, className }: FeatureCardProps) => (
-    <Card className={cn('group relative rounded-none shadow-zinc-950/5', className)}>
-        <CardDecorator />
-        {children}
-    </Card>
-)
+const AnimatedFeatureCard = ({ children, className, delay = 0 }: AnimatedFeatureCardProps) => {
+    const [isVisible, setIsVisible] = useState(false)
+    const cardRef = useRef<HTMLDivElement>(null)
+
+    useEffect(() => {
+        const observer = new IntersectionObserver(
+            ([entry]) => {
+                if (entry.isIntersecting) {
+                    setTimeout(() => setIsVisible(true), delay)
+                }
+            },
+            { threshold: 0.1 }
+        )
+
+        if (cardRef.current) {
+            observer.observe(cardRef.current)
+        }
+
+        return () => observer.disconnect()
+    }, [delay])
+
+    return (
+        <div
+            ref={cardRef}
+            className={cn(
+                "transition-all duration-700 ease-out",
+                isVisible ? "opacity-100 translate-y-0 blur-0" : "opacity-0 translate-y-8 blur-sm"
+            )}
+        >
+            <Card className={cn('group relative rounded-none shadow-zinc-950/5 hover:scale-105 transition-transform duration-300', className)}>
+                <CardDecorator />
+                {children}
+            </Card>
+        </div>
+    )
+}
 
 const CardDecorator = () => (
     <>
