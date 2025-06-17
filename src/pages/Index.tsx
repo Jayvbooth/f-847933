@@ -5,6 +5,7 @@ import HeroSection from '@/components/HeroSection';
 import Features from '@/components/Features';
 import { Features as NewFeatures } from '@/components/ui/features-8';
 import Process from '@/components/Process';
+import TrustedBrands from '@/components/TrustedBrands';
 import Testimonials from '@/components/Testimonials';
 import Pricing from '@/components/Pricing';
 import Footer from '@/components/Footer';
@@ -18,6 +19,7 @@ const Index = () => {
         <Features />
         <NewFeatures />
         <Process />
+        <TrustedBrands />
         <Testimonials />
         <Pricing />
       </main>
