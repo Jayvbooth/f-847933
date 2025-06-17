@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card';
@@ -73,10 +74,10 @@ const Pricing = () => {
           {plans.map((plan, index) => (
             <div 
               key={index}
-              className={`p-6 rounded-xl border flex flex-col h-full ${
+              className={`p-6 rounded-xl border flex flex-col h-full bg-card ${
                 plan.popular 
-                  ? "border-primary/50 cosmic-glow bg-card" 
-                  : "border-border cosmic-gradient bg-card"
+                  ? "border-primary/50" 
+                  : "border-border"
               } transition-all duration-300 relative`}
             >
               {plan.popular && (
