@@ -1,3 +1,4 @@
+
 import React, { CSSProperties } from "react";
 import { cn } from "@/lib/utils";
 
@@ -14,73 +15,59 @@ export interface AnimatedBorderProps {
 export const AnimatedBorder: React.FC<AnimatedBorderProps> = ({
   children,
   className,
-  shimmerColor = "#fff",
-  shimmerSize = "0.11em", // default = 2px on ~18px text
-  shimmerDuration = "2.8s",
-  borderRadius = "0.5rem",
+  shimmerColor = "rgba(255, 255, 255, 0.8)",
+  shimmerSize = "1px",
+  shimmerDuration = "3s",
+  borderRadius = "0.375rem",
   style,
 }) => {
   return (
     <div
       className={cn("relative inline-block", className)}
       style={{
-        "--spread": "90deg",
         "--shimmer-color": shimmerColor,
         "--radius": borderRadius,
         "--speed": shimmerDuration,
-        "--cut": shimmerSize,
+        "--border-width": shimmerSize,
         borderRadius,
         ...style,
       } as CSSProperties}
     >
-      {/* Outer shimmer border */}
-      <span
-        aria-hidden="true"
-        className={cn(
-          "pointer-events-none absolute z-10 inset-0",
-          "before:absolute before:inset-0 before:rounded-[var(--radius)] before:pointer-events-none",
-          "before:content-['']"
-        )}
+      {/* Shimmer border animation */}
+      <div
+        className="absolute inset-0 rounded-[var(--radius)] overflow-hidden pointer-events-none"
         style={{
-          borderRadius: "var(--radius)",
-          padding: "var(--cut)",
-          inset: 0,
-          display: "block",
+          padding: "var(--border-width)",
         }}
       >
-        <span
-          className="block w-full h-full"
+        <div
+          className="w-full h-full rounded-[var(--radius)]"
           style={{
-            borderRadius: "var(--radius)",
-            background: `conic-gradient(from 0deg, transparent, var(--shimmer-color), transparent 55%, transparent 100%)`,
-            WebkitMask:
-              "linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)",
+            background: `conic-gradient(from 0deg, transparent 0deg, var(--shimmer-color) 60deg, transparent 120deg, transparent 240deg, var(--shimmer-color) 300deg, transparent 360deg)`,
+            animation: `shimmer-rotate var(--speed) linear infinite`,
+            WebkitMask: "linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)",
             WebkitMaskComposite: "xor",
             maskComposite: "exclude",
-            animation: "shimmer-spin var(--speed) linear infinite",
           }}
         />
-      </span>
+      </div>
 
-      {/* Button itself (unchanged, no weird padding/size) */}
-      <div
-        className="relative z-20"
-        style={{
-          borderRadius: "var(--radius)",
-          overflow: "hidden",
-        }}
-      >
+      {/* Content */}
+      <div className="relative z-10 rounded-[var(--radius)]">
         {children}
       </div>
+
       {/* Keyframes */}
-      <style>
-        {`
-          @keyframes shimmer-spin {
-            0% { transform: rotate(0deg);}
-            100%{ transform: rotate(360deg);}
+      <style jsx>{`
+        @keyframes shimmer-rotate {
+          0% { 
+            transform: rotate(0deg);
           }
-        `}
-      </style>
+          100% { 
+            transform: rotate(360deg);
+          }
+        }
+      `}</style>
     </div>
   );
 };

@@ -43,7 +43,7 @@ export interface ButtonProps
 }
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ className, variant, size, asChild = false, animated = false, ...props }, ref) => {
+  ({ className, variant, size, asChild = false, animated = true, ...props }, ref) => {
     const Comp = asChild ? Slot : "button"
     
     const button = (
@@ -56,7 +56,11 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     
     if (animated) {
       return (
-        <AnimatedBorder>
+        <AnimatedBorder
+          shimmerColor={variant === "outline" ? "rgba(255, 255, 255, 0.6)" : "rgba(255, 255, 255, 0.8)"}
+          shimmerDuration="3s"
+          shimmerSize="1px"
+        >
           {button}
         </AnimatedBorder>
       )
