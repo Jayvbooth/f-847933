@@ -79,27 +79,27 @@ const Features = () => {
               key={index}
               open={openFeature === index}
               onOpenChange={() => toggleFeature(index)}
-              className={`rounded-xl border ${openFeature === index ? 'border-cosmic-light/40' : 'border-cosmic-light/20'} cosmic-gradient transition-all duration-300`}
+              className={`rounded-xl border ${openFeature === index ? 'border-border' : 'border-border/50'} bg-card shadow-sm hover:shadow-md transition-all duration-300`}
             >
               <CollapsibleTrigger className="w-full text-left p-6 flex flex-col">
                 <div className="flex justify-between items-start">
-                  <div className="h-16 w-16 rounded-full bg-cosmic-light/10 flex items-center justify-center mb-6">
+                  <div className="h-16 w-16 rounded-full bg-primary/10 flex items-center justify-center mb-6">
                     {feature.icon}
                   </div>
                   <ChevronDown
-                    className={`h-5 w-5 text-cosmic-muted transition-transform duration-200 ${
+                    className={`h-5 w-5 text-muted-foreground transition-transform duration-200 ${
                       openFeature === index ? 'rotate-180' : ''
                     }`}
                   />
                 </div>
                 <h3 className="text-xl font-medium tracking-tighter mb-3">{feature.title}</h3>
-                <p className="text-cosmic-muted">{feature.description}</p>
+                <p className="text-muted-foreground">{feature.description}</p>
               </CollapsibleTrigger>
               <CollapsibleContent className="px-6 pb-6 pt-2">
-                <div className="pt-3 border-t border-cosmic-light/10">
-                  <p className="text-cosmic-muted">{feature.expandedDescription}</p>
+                <div className="pt-3 border-t border-border/50">
+                  <p className="text-muted-foreground">{feature.expandedDescription}</p>
                   <div className="mt-4 flex justify-end">
-                    <button className="text-cosmic-accent hover:text-cosmic-accent/80 text-sm font-medium">
+                    <button className="text-primary hover:text-primary/80 text-sm font-medium">
                       Learn more →
                     </button>
                   </div>
