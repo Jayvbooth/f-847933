@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { ContainerScroll, CardSticky } from '@/components/ui/cards-stack';
 
@@ -31,12 +32,12 @@ const PROCESS_PHASES = [
 
 const Process = () => {
   return (
-    <section className="w-full pt-24 pb-12 md:pt-32 md:pb-20 px-6 md:px-12 bg-background">
+    <section className="w-full pt-24 pb-12 md:pt-32 md:pb-20 px-6 md:px-12 bg-background relative">
       <div className="max-w-7xl mx-auto">
         {/* Desktop Layout - Two Columns */}
         <div className="hidden lg:grid lg:grid-cols-5 gap-8 xl:gap-12">
           {/* Left Column - Sticky Header */}
-          <div className="lg:col-span-2 sticky top-32 h-fit z-20">
+          <div className="lg:col-span-2 sticky top-32 h-fit z-50">
             <h5 className="text-xs uppercase tracking-wide text-muted-foreground">Our Process</h5>
             <h2 className="mb-6 mt-4 text-3xl lg:text-4xl xl:text-5xl font-bold tracking-tight text-foreground">
               How we fill your{" "}
@@ -51,7 +52,7 @@ const Process = () => {
 
           {/* Right Column - Animated Cards */}
           <div className="lg:col-span-3 relative">
-            <ContainerScroll className="min-h-[160vh] space-y-8 pt-8 pb-8">
+            <ContainerScroll className="min-h-[140vh] space-y-8 pt-8 pb-32">
               {PROCESS_PHASES.map((phase, index) => (
                 <CardSticky
                   key={phase.id}
@@ -59,7 +60,8 @@ const Process = () => {
                   incrementY={20}
                   incrementZ={8}
                   baseOffset={160}
-                  className="rounded-xl border border-border p-6 lg:p-8 shadow-lg backdrop-blur-md bg-card/95 z-10"
+                  className="rounded-xl border border-border p-6 lg:p-8 shadow-lg backdrop-blur-md bg-card/95"
+                  style={{ zIndex: Math.max(1, 40 - index * 5) }}
                 >
                   <div className="flex items-start justify-between gap-4 mb-4">
                     <h3 className="text-xl lg:text-2xl xl:text-3xl font-bold tracking-tighter text-foreground flex-1">
@@ -81,7 +83,7 @@ const Process = () => {
         {/* Tablet Layout - Two Columns */}
         <div className="hidden md:grid lg:hidden md:grid-cols-2 gap-8">
           {/* Left Column - Sticky Header */}
-          <div className="sticky top-32 h-fit z-20">
+          <div className="sticky top-32 h-fit z-50">
             <h5 className="text-xs uppercase tracking-wide text-muted-foreground">Our Process</h5>
             <h2 className="mb-6 mt-4 text-3xl font-bold tracking-tight text-foreground">
               How we fill your{" "}
@@ -96,15 +98,16 @@ const Process = () => {
 
           {/* Right Column - Animated Cards */}
           <div className="relative">
-            <ContainerScroll className="min-h-[140vh] space-y-6 pt-8 pb-8">
+            <ContainerScroll className="min-h-[120vh] space-y-6 pt-8 pb-24">
               {PROCESS_PHASES.map((phase, index) => (
                 <CardSticky
                   key={phase.id}
                   index={index + 1}
-                  incrementY={8}
-                  incrementZ={4}
-                  baseOffset={300}
-                  className="rounded-xl border border-border p-6 shadow-lg backdrop-blur-md bg-card/95 z-10"
+                  incrementY={12}
+                  incrementZ={6}
+                  baseOffset={200}
+                  className="rounded-xl border border-border p-6 shadow-lg backdrop-blur-md bg-card/95"
+                  style={{ zIndex: Math.max(1, 35 - index * 4) }}
                 >
                   <div className="flex items-start justify-between gap-4 mb-4">
                     <h3 className="text-xl font-bold tracking-tighter text-foreground flex-1">
@@ -126,7 +129,7 @@ const Process = () => {
         {/* Mobile Layout - Single Column */}
         <div className="md:hidden">
           {/* Mobile Header - Sticky */}
-          <div className="sticky top-28 bg-background/95 backdrop-blur-md border-b border-border/50 pb-6 mb-8 z-30">
+          <div className="sticky top-28 bg-background/95 backdrop-blur-md border-b border-border/50 pb-6 mb-8 z-50">
             <h5 className="text-xs uppercase tracking-wide text-muted-foreground">Our Process</h5>
             <h2 className="mb-4 mt-2 text-2xl sm:text-3xl font-bold tracking-tight text-foreground">
               How we fill your{" "}
@@ -140,15 +143,16 @@ const Process = () => {
 
           {/* Mobile Cards */}
           <div className="relative">
-            <ContainerScroll className="min-h-[120vh] space-y-6 pt-40 pb-4">
+            <ContainerScroll className="min-h-[100vh] space-y-6 pt-8 pb-20">
               {PROCESS_PHASES.map((phase, index) => (
                 <CardSticky
                   key={phase.id}
                   index={index + 1}
-                  incrementY={6}
-                  incrementZ={3}
-                  baseOffset={400}
-                  className="rounded-xl border border-border p-6 shadow-lg backdrop-blur-md bg-card/95 z-10"
+                  incrementY={8}
+                  incrementZ={4}
+                  baseOffset={120}
+                  className="rounded-xl border border-border p-6 shadow-lg backdrop-blur-md bg-card/95"
+                  style={{ zIndex: Math.max(1, 30 - index * 3) }}
                 >
                   <div className="flex items-start justify-between gap-4 mb-4">
                     <h3 className="text-lg sm:text-xl font-bold tracking-tighter text-foreground flex-1">
