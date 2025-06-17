@@ -16,9 +16,9 @@ const ClosedDealsSection = () => {
   ];
 
   return (
-    <section className="relative py-16 bg-background overflow-hidden">      
-      <div className="container mx-auto px-6 relative z-10">
-        <div className="grid lg:grid-cols-2 gap-6 items-center max-w-7xl mx-auto">
+    <section className="relative py-12 bg-background overflow-hidden">      
+      <div className="container mx-auto px-8 lg:px-16 xl:px-24 relative z-10">
+        <div className="grid lg:grid-cols-2 gap-8 items-center max-w-6xl mx-auto">
           {/* Content Side */}
           <div className="space-y-6">
             <div className="space-y-4">
