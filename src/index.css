@@ -95,8 +95,8 @@
 
   .features-grid-subtle {
     background-image: 
-      linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+      linear-gradient(rgba(0, 0, 0, 0.015) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0, 0, 0, 0.015) 1px, transparent 1px);
     background-size: 32px 32px;
   }
   
@@ -125,5 +125,20 @@
 
   .animate-skew-scroll {
     animation: skew-scroll 20s linear infinite;
+  }
+  
+  /* Additional subtle grid patterns */
+  .hero-grid-subtle {
+    background-image: 
+      linear-gradient(rgba(0, 0, 0, 0.01) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0, 0, 0, 0.01) 1px, transparent 1px);
+    background-size: 40px 40px;
+  }
+  
+  .pricing-grid-subtle {
+    background-image: 
+      linear-gradient(rgba(0, 0, 0, 0.02) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0, 0, 0, 0.02) 1px, transparent 1px);
+    background-size: 28px 28px;
   }
 }
