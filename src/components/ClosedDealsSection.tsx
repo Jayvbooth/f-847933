@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { TiltedScroll } from '@/components/ui/tilted-scroll';
-import { DollarSign, Award, TrendingUp } from 'lucide-react';
+import { Award, TrendingUp } from 'lucide-react';
 
 const ClosedDealsSection = () => {
   const closedDeals = [
@@ -16,91 +16,74 @@ const ClosedDealsSection = () => {
   ];
 
   return (
-    <section className="relative py-24 bg-gradient-to-br from-background via-background to-muted/20 overflow-hidden">
-      {/* Background Pattern */}
-      <div className="absolute inset-0 cosmic-grid opacity-30"></div>
-      
-      <div className="container mx-auto px-4 relative z-10">
-        <div className="grid lg:grid-cols-2 gap-16 items-center">
+    <section className="relative py-32 bg-background overflow-hidden">      
+      <div className="container mx-auto px-6 relative z-10">
+        <div className="grid lg:grid-cols-2 gap-20 items-center max-w-7xl mx-auto">
           {/* Content Side */}
-          <div className="space-y-8">
-            <div className="space-y-4">
-              <div className="flex items-center gap-2 text-primary">
-                <Award className="h-6 w-6" />
-                <span className="text-sm font-medium uppercase tracking-wider">Success Stories</span>
+          <div className="space-y-10">
+            <div className="space-y-6">
+              <div className="flex items-center gap-3">
+                <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center">
+                  <Award className="h-4 w-4 text-primary" />
+                </div>
+                <span className="text-sm font-medium text-muted-foreground uppercase tracking-[0.2em]">
+                  Success Stories
+                </span>
               </div>
               
-              <h2 className="text-4xl md:text-5xl font-bold text-balance leading-tight">
+              <h2 className="text-5xl md:text-6xl font-light leading-[1.1] tracking-tight">
                 Closing Deals,
-                <span className="text-primary block">Collecting Results</span>
+                <br />
+                <span className="font-medium">Collecting Results</span>
               </h2>
               
-              <p className="text-lg text-muted-foreground text-balance max-w-lg">
+              <p className="text-xl text-muted-foreground leading-relaxed max-w-lg font-light">
                 Watch our track record of successful deal closures unfold in real-time. 
-                Every card represents millions in collected revenue and satisfied clients.
+                Every card represents millions in collected revenue.
               </p>
             </div>
 
-            {/* Stats Grid */}
-            <div className="grid grid-cols-2 gap-6">
-              <div className="cosmic-glass rounded-xl p-6 space-y-2">
-                <div className="flex items-center gap-2 text-primary">
-                  <DollarSign className="h-5 w-5" />
-                  <span className="text-sm font-medium">Total Collected</span>
-                </div>
-                <div className="text-2xl font-bold">$18.4M+</div>
-                <div className="text-sm text-muted-foreground">This quarter</div>
+            {/* Stats */}
+            <div className="grid grid-cols-2 gap-8 max-w-md">
+              <div className="space-y-3">
+                <div className="text-3xl font-medium">$18.4M+</div>
+                <div className="text-sm text-muted-foreground">Total Collected</div>
               </div>
               
-              <div className="cosmic-glass rounded-xl p-6 space-y-2">
-                <div className="flex items-center gap-2 text-primary">
-                  <TrendingUp className="h-5 w-5" />
-                  <span className="text-sm font-medium">Success Rate</span>
+              <div className="space-y-3">
+                <div className="flex items-baseline gap-1">
+                  <span className="text-3xl font-medium">94.7</span>
+                  <span className="text-xl text-muted-foreground">%</span>
                 </div>
-                <div className="text-2xl font-bold">94.7%</div>
-                <div className="text-sm text-muted-foreground">Deal closure</div>
+                <div className="text-sm text-muted-foreground">Success Rate</div>
               </div>
             </div>
 
-            <div className="flex flex-col sm:flex-row gap-4">
-              <button className="px-8 py-3 bg-primary text-primary-foreground rounded-lg font-medium hover:bg-primary/90 transition-colors">
+            <button className="group bg-foreground text-background px-8 py-4 rounded-xl font-medium transition-all duration-300 hover:bg-foreground/90 hover:scale-[1.02] active:scale-[0.98]">
+              <span className="flex items-center gap-2">
                 Start Your Deal
-              </button>
-              <button className="px-8 py-3 border border-border rounded-lg font-medium hover:bg-accent transition-colors">
-                View Case Studies
-              </button>
-            </div>
+                <TrendingUp className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+              </span>
+            </button>
           </div>
 
-          {/* Visual Side */}
+          {/* Visual Side - Clean TiltedScroll without container */}
           <div className="relative flex justify-center lg:justify-end">
             <div className="relative">
-              {/* Glow Effect */}
-              <div className="absolute inset-0 bg-gradient-to-r from-primary/20 to-accent/20 rounded-full blur-3xl scale-150 opacity-30"></div>
+              {/* Subtle background glow */}
+              <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-accent/5 rounded-[2rem] blur-3xl scale-150"></div>
               
-              {/* Component Container */}
-              <div className="relative cosmic-glass rounded-2xl p-8 backdrop-blur-sm">
+              {/* TiltedScroll component - no container */}
+              <div className="relative">
                 <TiltedScroll 
                   items={closedDeals}
-                  className="transform scale-110"
+                  className="scale-110"
                 />
-              </div>
-              
-              {/* Floating Elements */}
-              <div className="absolute -top-4 -right-4 w-12 h-12 bg-primary/20 rounded-full flex items-center justify-center animate-float">
-                <DollarSign className="h-6 w-6 text-primary" />
-              </div>
-              
-              <div className="absolute -bottom-6 -left-6 w-16 h-16 bg-accent/20 rounded-full flex items-center justify-center animate-float" style={{ animationDelay: '1s' }}>
-                <Award className="h-8 w-8 text-accent" />
               </div>
             </div>
           </div>
         </div>
       </div>
-
-      {/* Bottom Gradient Fade */}
-      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-background to-transparent"></div>
     </section>
   );
 };
