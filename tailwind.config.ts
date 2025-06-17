@@ -101,7 +101,15 @@ export default {
 				'spin': {
 					'0%': { transform: 'rotate(0deg)' },
 					'100%': { transform: 'rotate(360deg)' }
-				}
+				},
+				'skew-scroll': {
+					'0%': {
+						transform: 'rotateX(20deg) rotateZ(-20deg) skewX(20deg)',
+					},
+					'100%': {
+						transform: 'rotateX(20deg) rotateZ(-20deg) skewX(20deg) translateY(-100%)',
+					},
+				},
 			},
 			animation: {
 				'accordion-down': 'accordion-down 0.2s ease-out',
@@ -109,7 +117,8 @@ export default {
 				'float': 'float 6s ease-in-out infinite',
 				'pulse-slow': 'pulse-slow 4s ease-in-out infinite',
 				'gradient-shift': 'gradient-shift 8s ease infinite',
-				'spin': 'spin 3s linear infinite'
+				'spin': 'spin 3s linear infinite',
+				'skew-scroll': 'skew-scroll 20s linear infinite',
 			},
 			fontFamily: {
 				'inter': ['Inter', 'sans-serif']
