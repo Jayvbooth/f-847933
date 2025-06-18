@@ -17,11 +17,15 @@ const Index = () => {
   return (
     <div className="min-h-screen flex flex-col bg-background text-foreground">
       <Header />
-      <main>
+      <main className="pt-20">
         <HeroSection />
-        <Features />
-        <NewFeatures />
-        <Process />
+        <div id="features">
+          <Features />
+          <NewFeatures />
+        </div>
+        <div id="process">
+          <Process />
+        </div>
         <ClosedDealsSection />
         <AdvancedFeatures />
         <div id="case-studies">
@@ -29,7 +33,9 @@ const Index = () => {
         </div>
         <TrustedBrands />
         <FAQ />
-        <Pricing />
+        <div id="pricing">
+          <Pricing />
+        </div>
       </main>
       <Footer />
     </div>
