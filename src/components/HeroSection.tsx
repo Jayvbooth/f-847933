@@ -17,24 +17,16 @@ const HeroSection = () => {
 
   return (
     <section className="relative w-full py-12 md:py-20 px-6 md:px-12 flex flex-col items-center justify-center overflow-hidden bg-background">
-      {/* Background image */}
-      <div 
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-        style={{
-          backgroundImage: 'url("/lovable-uploads/399ca794-860a-4693-86bf-8967ca4adeb5.png")',
-        }}
-      />
-      
       {/* Cosmic particle effect (background dots) with fade to next section */}
-      <div className="absolute inset-0 cosmic-grid opacity-[0.015] z-10"></div>
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-background/80 z-20"></div>
+      <div className="absolute inset-0 cosmic-grid opacity-5"></div>
+      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-background/80"></div>
       
       {/* Gradient glow effect */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full z-30">
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full">
         <div className="w-full h-full opacity-10 bg-primary blur-[120px]"></div>
       </div>
       
-      <div className={`relative z-40 max-w-4xl text-center space-y-6 transition-all duration-700 transform ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+      <div className={`relative z-10 max-w-4xl text-center space-y-6 transition-all duration-700 transform ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
         <div className="flex justify-center">
           <span className="inline-flex items-center gap-2 px-3 py-1 text-xs font-medium rounded-full bg-muted text-primary">
             <span className="flex h-2 w-2 rounded-full bg-primary"></span>
@@ -89,7 +81,7 @@ const HeroSection = () => {
       </div>
       
       {/* Calendar UI integrated in hero section with glassmorphic effect */}
-      <div className={`w-full max-w-7xl mt-12 z-40 transition-all duration-1000 delay-500 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-20'}`}>
+      <div className={`w-full max-w-7xl mt-12 z-10 transition-all duration-1000 delay-500 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-20'}`}>
         <div className="cosmic-glow relative rounded-xl overflow-hidden border border-border backdrop-blur-sm bg-card shadow-lg">
           {/* Dashboard Header */}
           <div className="bg-card backdrop-blur-md w-full">
