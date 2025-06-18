@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { ChevronLeft, ChevronRight, Calendar as CalendarIcon, MapPin, Phone, Clock } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
@@ -9,7 +10,6 @@ interface CalendarEvent {
   date: Date;
   time: string;
   description?: string;
-  company?: string;
   location?: string;
 }
 
@@ -30,21 +30,21 @@ const Calendar = () => {
   const eventTypes = [
     { 
       type: 'qualified-lead', 
-      title: 'Qualified Lead Call', 
+      title: 'Leadea Call', 
       weight: 78, 
-      color: 'bg-green-500/20 border-green-500/40 text-green-600',
+      color: 'bg-primary/10 border-primary/20 text-primary',
       descriptions: [
-        'Tech startup looking for $50K+ solution',
-        'Fortune 500 company seeking enterprise package',
-        'Growing business ready to scale operations',
-        'High-intent prospect with immediate need'
+        'High-intent prospect with immediate need',
+        'Pre-qualified enterprise opportunity',
+        'Ready-to-buy prospect consultation',
+        'Qualified decision maker meeting'
       ]
     },
     { 
       type: 'referral', 
-      title: 'Referral Lead', 
+      title: 'Referral', 
       weight: 13, 
-      color: 'bg-blue-500/20 border-blue-500/40 text-blue-600',
+      color: 'bg-muted/50 border-border text-muted-foreground',
       descriptions: [
         'Referred by existing client',
         'Partner network introduction',
@@ -53,9 +53,9 @@ const Calendar = () => {
     },
     { 
       type: 'organic-search', 
-      title: 'Organic Search Lead', 
+      title: 'Organic Lead', 
       weight: 6, 
-      color: 'bg-purple-500/20 border-purple-500/40 text-purple-600',
+      color: 'bg-muted/50 border-border text-muted-foreground',
       descriptions: [
         'Found through Google search',
         'SEO-driven inquiry',
@@ -64,18 +64,16 @@ const Calendar = () => {
     },
     { 
       type: 'social-media', 
-      title: 'Social Media Lead', 
+      title: 'Social Lead', 
       weight: 3, 
-      color: 'bg-orange-500/20 border-orange-500/40 text-orange-600',
+      color: 'bg-muted/50 border-border text-muted-foreground',
       descriptions: [
         'LinkedIn connection',
-        'Facebook ad response',
-        'Twitter engagement'
+        'Social media engagement',
+        'Platform outreach'
       ]
     }
   ];
-
-  const companies = ['TechCorp Inc.', 'Digital Solutions LLC', 'Innovation Partners', 'Growth Dynamics', 'Future Systems', 'Peak Performance Co.'];
 
   const getWeightedEventType = () => {
     const random = Math.random() * 100;
@@ -102,8 +100,8 @@ const Calendar = () => {
     const startOfWeek = new Date(currentDate);
     startOfWeek.setDate(currentDate.getDate() - currentDate.getDay());
     
-    const daysToShow = isMobile ? 3 : 7;
-    const startDay = isMobile ? 1 : 0;
+    const daysToShow = isMobile ? 3 : 5;
+    const startDay = isMobile ? 1 : 1;
     
     for (let dayOffset = startDay; dayOffset < startDay + daysToShow; dayOffset++) {
       const day = new Date(startOfWeek);
@@ -111,7 +109,7 @@ const Calendar = () => {
       
       if (day.getDay() === 0 || day.getDay() === 6) continue;
       
-      const numEvents = Math.floor(Math.random() * 3) + 3;
+      const numEvents = Math.floor(Math.random() * 2) + 2;
       const usedTimes = new Set();
       
       for (let i = 0; i < numEvents; i++) {
@@ -135,7 +133,6 @@ const Calendar = () => {
             date: new Date(day),
             time,
             description: eventType.descriptions[Math.floor(Math.random() * eventType.descriptions.length)],
-            company: companies[Math.floor(Math.random() * companies.length)],
             location: eventType.type === 'qualified-lead' ? 'Video Call' : 'Phone Call'
           });
         }
@@ -159,8 +156,8 @@ const Calendar = () => {
     startOfWeek.setDate(currentDate.getDate() - currentDate.getDay());
     
     const days = [];
-    const daysToShow = isMobile ? 3 : 7;
-    const startDay = isMobile ? 1 : 0;
+    const daysToShow = isMobile ? 3 : 5;
+    const startDay = isMobile ? 1 : 1;
     
     for (let i = startDay; i < startDay + daysToShow; i++) {
       const day = new Date(startOfWeek);
@@ -206,91 +203,85 @@ const Calendar = () => {
     
     if (event.type === 'qualified-lead') {
       toast({
-        title: "🎯 Qualified Lead Details",
-        description: `${event.company} - ${event.description}`,
-        duration: 5000,
+        title: "Leadea Premium Lead",
+        description: event.description,
+        duration: 4000,
       });
     }
   };
 
   return (
-    <div className="w-full h-full bg-background rounded-lg overflow-hidden">
+    <div className="w-full bg-background rounded-lg overflow-hidden">
       {/* Calendar Header */}
-      <div className="flex items-center justify-between p-4 border-b border-border bg-card">
-        <div className="flex items-center gap-3 min-w-0">
-          <CalendarIcon className="h-5 w-5 text-foreground flex-shrink-0" />
-          <h3 className="text-lg font-medium text-foreground truncate">
+      <div className="flex items-center justify-between p-2 border-b border-border bg-card">
+        <div className="flex items-center gap-2 min-w-0">
+          <CalendarIcon className="h-4 w-4 text-foreground flex-shrink-0" />
+          <h3 className="text-sm font-medium text-foreground truncate">
             Week of {getWeekDays()[0].toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
           </h3>
         </div>
-        <div className="flex items-center gap-2 flex-shrink-0">
+        <div className="flex items-center gap-1 flex-shrink-0">
           <button
             onClick={previousWeek}
-            className="p-2 rounded-md hover:bg-muted transition-colors"
+            className="p-1 rounded hover:bg-muted transition-colors"
           >
-            <ChevronLeft className="h-4 w-4 text-foreground" />
+            <ChevronLeft className="h-3 w-3 text-foreground" />
           </button>
           <button
             onClick={nextWeek}
-            className="p-2 rounded-md hover:bg-muted transition-colors"
+            className="p-1 rounded hover:bg-muted transition-colors"
           >
-            <ChevronRight className="h-4 w-4 text-foreground" />
+            <ChevronRight className="h-3 w-3 text-foreground" />
           </button>
         </div>
       </div>
 
       {/* Day Headers */}
-      <div className={`grid ${isMobile ? 'grid-cols-3' : 'grid-cols-7'} border-b border-border bg-muted/30`}>
+      <div className={`grid ${isMobile ? 'grid-cols-3' : 'grid-cols-5'} border-b border-border bg-muted/30`}>
         {getWeekDays().map(day => (
-          <div key={day.getTime()} className={`p-3 text-center ${isToday(day) ? 'bg-green-500/10' : ''}`}>
-            <div className="text-sm font-medium text-foreground">
+          <div key={day.getTime()} className={`p-2 text-center ${isToday(day) ? 'bg-primary/5' : ''}`}>
+            <div className="text-xs font-medium text-foreground">
               {isMobile ? shortDayNames[day.getDay()] : dayNames[day.getDay()]}
             </div>
-            <div className={`text-lg font-semibold mt-1 ${isToday(day) ? 'text-green-600' : 'text-foreground'}`}>
+            <div className={`text-sm font-semibold mt-1 ${isToday(day) ? 'text-primary' : 'text-foreground'}`}>
               {day.getDate()}
             </div>
             {isToday(day) && (
-              <div className="w-1.5 h-1.5 bg-green-500 rounded-full mx-auto mt-1"></div>
+              <div className="w-1 h-1 bg-primary rounded-full mx-auto mt-1"></div>
             )}
           </div>
         ))}
       </div>
 
       {/* Calendar Grid */}
-      <div className={`grid ${isMobile ? 'grid-cols-3' : 'grid-cols-7'} h-full`}>
+      <div className={`grid ${isMobile ? 'grid-cols-3' : 'grid-cols-5'} min-h-[200px]`}>
         {getWeekDays().map(day => {
           const dayEvents = getEventsForDay(day);
           
           return (
             <div
               key={day.getTime()}
-              className={`border-r border-b border-border min-h-[400px] p-3 bg-background ${isToday(day) ? 'bg-green-500/5' : ''}`}
+              className={`border-r border-b border-border p-1 bg-background ${isToday(day) ? 'bg-primary/5' : ''}`}
             >
-              <div className="space-y-2">
+              <div className="space-y-1">
                 {dayEvents.map(event => (
                   <div
                     key={event.id}
                     onClick={() => handleEventClick(event)}
                     className={`
-                      px-3 py-2 rounded-md text-xs border cursor-pointer transition-all duration-200 
-                      hover:shadow-lg hover:-translate-y-1 hover:scale-105
+                      px-2 py-1 rounded text-xs border cursor-pointer transition-all duration-200 
+                      hover:shadow-sm hover:scale-102
                       ${getEventColor(event.type)}
-                      ${selectedEvent?.id === event.id ? 'shadow-lg transform -translate-y-1 scale-105 ring-2 ring-green-500/30' : ''}
-                      ${event.type === 'qualified-lead' ? 'border-2 border-green-500/60' : ''}
+                      ${selectedEvent?.id === event.id ? 'ring-1 ring-primary/30' : ''}
                     `}
                   >
-                    <div className="font-medium text-[11px] leading-tight">
-                      {event.company}
+                    <div className="font-medium text-[10px] leading-tight">
+                      {event.title}
                     </div>
-                    <div className="text-[10px] opacity-80 mt-1 flex items-center gap-1">
+                    <div className="text-[9px] opacity-80 mt-0.5 flex items-center gap-1">
                       <Clock className="h-2 w-2" />
                       {event.time}
                     </div>
-                    {event.type === 'qualified-lead' && (
-                      <div className="text-[9px] text-green-600 font-medium mt-1">
-                        💎 Leadea Premium
-                      </div>
-                    )}
                   </div>
                 ))}
               </div>
@@ -302,9 +293,9 @@ const Calendar = () => {
       {/* Event Details Modal */}
       {selectedEvent && (
         <div className="absolute inset-0 bg-black/50 flex items-center justify-center p-4 z-50" onClick={() => setSelectedEvent(null)}>
-          <div className="bg-card border border-border rounded-lg p-6 max-w-md w-full shadow-2xl" onClick={(e) => e.stopPropagation()}>
-            <div className="flex items-center justify-between mb-4">
-              <h3 className="font-semibold text-lg text-foreground">{selectedEvent.title}</h3>
+          <div className="bg-card border border-border rounded-lg p-4 max-w-sm w-full shadow-2xl" onClick={(e) => e.stopPropagation()}>
+            <div className="flex items-center justify-between mb-3">
+              <h3 className="font-semibold text-base text-foreground">{selectedEvent.title}</h3>
               <button 
                 onClick={() => setSelectedEvent(null)}
                 className="text-muted-foreground hover:text-foreground"
@@ -313,33 +304,32 @@ const Calendar = () => {
               </button>
             </div>
             
-            <div className="space-y-3">
+            <div className="space-y-2">
               <div className="flex items-center gap-2">
-                <div className="h-8 w-8 rounded-md bg-green-500/20 flex items-center justify-center">
-                  <Phone className="h-4 w-4 text-green-600" />
+                <div className="h-6 w-6 rounded bg-primary/20 flex items-center justify-center">
+                  <Phone className="h-3 w-3 text-primary" />
                 </div>
                 <div>
-                  <div className="font-medium text-foreground">{selectedEvent.company}</div>
                   <div className="text-sm text-muted-foreground">{selectedEvent.description}</div>
                 </div>
               </div>
               
               <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                <Clock className="h-4 w-4" />
+                <Clock className="h-3 w-3" />
                 {selectedEvent.time}
               </div>
               
               <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                <MapPin className="h-4 w-4" />
+                <MapPin className="h-3 w-3" />
                 {selectedEvent.location}
               </div>
               
               {selectedEvent.type === 'qualified-lead' && (
-                <div className="p-3 bg-green-500/10 border border-green-500/20 rounded-md">
-                  <div className="text-sm font-medium text-green-600 mb-1">
-                    🎯 Leadea Premium Lead
+                <div className="p-2 bg-primary/10 border border-primary/20 rounded">
+                  <div className="text-xs font-medium text-primary mb-1">
+                    Leadea Premium Lead
                   </div>
-                  <div className="text-xs text-green-600">
+                  <div className="text-xs text-primary">
                     Pre-qualified, high-intent prospect with verified budget and decision-making authority.
                   </div>
                 </div>

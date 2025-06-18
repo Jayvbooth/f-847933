@@ -8,7 +8,6 @@ import { useToast } from '@/hooks/use-toast';
 const HeroSection = () => {
   const [isVisible, setIsVisible] = useState(false);
   const [leadCount, setLeadCount] = useState(0);
-  const [isCountingUp, setIsCountingUp] = useState(false);
   const { toast } = useToast();
 
   useEffect(() => {
@@ -16,7 +15,6 @@ const HeroSection = () => {
       setIsVisible(true);
       // Start counting up animation after component loads
       setTimeout(() => {
-        setIsCountingUp(true);
         let count = 0;
         const targetCount = 23;
         const duration = 2000; // 2 seconds
@@ -92,76 +90,71 @@ const HeroSection = () => {
             </div>
           </div>
           
-          {/* Right Side - Dashboard */}
-          <div className="w-full lg:w-[500px] xl:w-[600px]">
-            <div className="cosmic-glow relative rounded-xl overflow-hidden border border-border backdrop-blur-sm bg-card shadow-2xl">
+          {/* Right Side - Compact Dashboard */}
+          <div className="w-full lg:w-[400px]">
+            <div className="relative rounded-xl overflow-hidden border border-border bg-card shadow-lg">
               {/* Dashboard Header */}
-              <div className="bg-card backdrop-blur-md w-full">
+              <div className="bg-card w-full">
                 <div className="flex items-center justify-between p-4 border-b border-border">
                   <div className="flex items-center gap-3">
-                    <div className="h-8 w-8 rounded-md bg-primary/20 flex items-center justify-center">
-                      <TrendingUp className="h-4 w-4 text-primary" />
+                    <div className="h-6 w-6 rounded-md bg-primary/20 flex items-center justify-center">
+                      <TrendingUp className="h-3 w-3 text-primary" />
                     </div>
-                    <span className="text-foreground font-medium">Lead Dashboard</span>
-                  </div>
-                  
-                  <div className="h-8 px-3 rounded-md bg-primary/20 border border-primary/30 flex items-center justify-center text-primary text-sm font-medium">
-                    <span className="w-2 h-2 bg-primary rounded-full animate-pulse mr-2"></span>
-                    Active
+                    <span className="text-foreground font-medium text-sm">Lead Dashboard</span>
                   </div>
                 </div>
                 
-                {/* Dashboard Content */}
-                <div className="p-6 space-y-6">
+                {/* Compact Dashboard Content */}
+                <div className="p-4 space-y-4">
                   {/* Lead Counter */}
-                  <div className="text-center space-y-3">
-                    <div className="text-sm text-muted-foreground uppercase tracking-wider">
+                  <div className="text-center space-y-2">
+                    <div className="text-xs text-muted-foreground uppercase tracking-wider">
                       Leads Generated This Week
                     </div>
-                    <div className="text-5xl font-bold text-primary">
+                    <div className="text-3xl font-bold text-foreground">
                       {leadCount}
                     </div>
                     <Button 
                       onClick={handleNewLead}
                       size="sm"
-                      className="bg-primary hover:bg-primary/90 text-primary-foreground"
+                      className="bg-primary hover:bg-primary/90 text-primary-foreground h-8 px-4 text-xs"
                     >
-                      <Plus className="h-4 w-4 mr-2" />
+                      <Plus className="h-3 w-3 mr-1" />
                       Generate Lead
                     </Button>
                   </div>
 
-                  {/* Lead Sources Comparison */}
-                  <div className="space-y-3">
-                    <div className="text-sm text-muted-foreground uppercase tracking-wider">
+                  {/* Compact Lead Sources */}
+                  <div className="space-y-2">
+                    <div className="text-xs text-muted-foreground uppercase tracking-wider">
                       Lead Sources
                     </div>
-                    <div className="grid grid-cols-2 gap-2 text-sm">
-                      <div className="flex items-center justify-between px-3 py-2 rounded-md bg-primary/10 border border-primary/20">
-                        <span className="text-primary">Leadea</span>
-                        <span className="font-medium text-primary">{Math.floor(leadCount * 0.78)}</span>
+                    <div className="grid grid-cols-2 gap-1 text-xs">
+                      <div className="flex items-center justify-between px-2 py-1 rounded bg-primary/10 border border-primary/20">
+                        <span className="text-primary font-medium">Leadea</span>
+                        <span className="font-semibold text-primary">{Math.floor(leadCount * 0.78)}</span>
                       </div>
-                      <div className="flex items-center justify-between px-3 py-2 rounded-md bg-muted/50 border border-border">
+                      <div className="flex items-center justify-between px-2 py-1 rounded bg-muted/30">
                         <span className="text-muted-foreground">Referrals</span>
                         <span className="font-medium text-muted-foreground">{Math.floor(leadCount * 0.13)}</span>
                       </div>
-                      <div className="flex items-center justify-between px-3 py-2 rounded-md bg-muted/50 border border-border">
+                      <div className="flex items-center justify-between px-2 py-1 rounded bg-muted/30">
                         <span className="text-muted-foreground">Organic</span>
                         <span className="font-medium text-muted-foreground">{Math.floor(leadCount * 0.06)}</span>
                       </div>
-                      <div className="flex items-center justify-between px-3 py-2 rounded-md bg-muted/50 border border-border">
+                      <div className="flex items-center justify-between px-2 py-1 rounded bg-muted/30">
                         <span className="text-muted-foreground">Social</span>
                         <span className="font-medium text-muted-foreground">{Math.floor(leadCount * 0.03)}</span>
                       </div>
                     </div>
                   </div>
                   
-                  {/* Calendar */}
-                  <div className="space-y-3">
-                    <div className="text-sm text-muted-foreground uppercase tracking-wider">
+                  {/* Compact Calendar */}
+                  <div className="space-y-2">
+                    <div className="text-xs text-muted-foreground uppercase tracking-wider">
                       Your Calendar
                     </div>
-                    <div className="bg-background rounded-lg p-3">
+                    <div className="bg-background rounded-lg p-2">
                       <Calendar />
                     </div>
                   </div>
