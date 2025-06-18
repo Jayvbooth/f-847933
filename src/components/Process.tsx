@@ -1,32 +1,42 @@
+
 import React, { useEffect, useRef, useState } from 'react';
 import { Search, Target, MessageSquare, BarChart3 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { motion } from 'motion/react';
+import { ContainerScroll, CardSticky } from '@/components/ui/cards-stack';
 
 const processSteps = [
   {
     id: 1,
     title: 'Targeted Prospecting',
     description: 'We identify and target the most relevant prospects for your business using advanced data analytics and market research.',
-    icon: Search
+    icon: Search,
+    metric: '500+',
+    metricLabel: 'Prospects Identified'
   },
   {
     id: 2,
     title: 'Multi-Channel Outreach',
     description: 'Engage prospects through personalized email campaigns, social media interactions, and direct outreach to maximize response rates.',
-    icon: Target
+    icon: Target,
+    metric: '85%',
+    metricLabel: 'Response Rate'
   },
   {
     id: 3,
     title: 'Lead Qualification',
     description: 'Our team qualifies leads based on predefined criteria, ensuring that only high-potential prospects are passed on to your sales team.',
-    icon: MessageSquare
+    icon: MessageSquare,
+    metric: '95%',
+    metricLabel: 'Quality Score'
   },
   {
     id: 4,
     title: 'Performance Tracking',
     description: 'We continuously monitor and optimize campaign performance, providing detailed analytics and reporting to drive continuous improvement.',
-    icon: BarChart3
+    icon: BarChart3,
+    metric: '300%',
+    metricLabel: 'ROI Increase'
   }
 ];
 
@@ -106,44 +116,61 @@ const Process = () => {
           </motion.p>
         </motion.div>
 
-        {/* Process Steps */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        {/* Stacking Cards */}
+        <ContainerScroll className="max-w-4xl mx-auto">
           {processSteps.map((step, index) => (
-            <ProcessStep key={step.id} step={step} index={index} isVisible={isVisible} />
+            <CardSticky 
+              key={step.id} 
+              index={index} 
+              incrementY={60} 
+              incrementZ={20}
+              className="bg-background border border-border rounded-2xl p-8 shadow-lg mb-8"
+            >
+              <ProcessCard step={step} index={index} />
+            </CardSticky>
           ))}
-        </div>
+        </ContainerScroll>
       </div>
     </section>
   );
 };
 
-interface ProcessStepProps {
+interface ProcessCardProps {
   step: {
     id: number;
     title: string;
     description: string;
     icon: React.ComponentType<any>;
+    metric: string;
+    metricLabel: string;
   };
   index: number;
-  isVisible: boolean;
 }
 
-const ProcessStep = ({ step, index, isVisible }: ProcessStepProps) => {
+const ProcessCard = ({ step, index }: ProcessCardProps) => {
   const Icon = step.icon;
 
   return (
-    <motion.div
-      className="flex flex-col items-center text-center"
-      initial={{ opacity: 0, y: 50 }}
-      animate={isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
-      transition={{ duration: 0.5, delay: index * 0.2 }}
-    >
-      <div className="w-16 h-16 rounded-full bg-primary/10 text-primary flex items-center justify-center mb-4">
-        <Icon className="w-8 h-8" />
+    <div className="flex items-start gap-6">
+      <div className="flex-shrink-0">
+        <div className="w-16 h-16 rounded-full bg-primary/10 text-primary flex items-center justify-center">
+          <Icon className="w-8 h-8" />
+        </div>
       </div>
-      <h3 className="text-xl font-semibold text-foreground mb-2">{step.title}</h3>
-      <p className="text-muted-foreground leading-relaxed">{step.description}</p>
-    </motion.div>
+      <div className="flex-1">
+        <div className="flex items-center gap-4 mb-4">
+          <span className="text-sm font-semibold text-primary bg-primary/10 px-3 py-1 rounded-full">
+            Step {step.id}
+          </span>
+          <div className="text-right">
+            <div className="text-2xl font-bold text-primary">{step.metric}</div>
+            <div className="text-sm text-muted-foreground">{step.metricLabel}</div>
+          </div>
+        </div>
+        <h3 className="text-2xl font-semibold text-foreground mb-3">{step.title}</h3>
+        <p className="text-muted-foreground leading-relaxed text-lg">{step.description}</p>
+      </div>
+    </div>
   );
 };
 
