@@ -7,6 +7,7 @@ import { Features as NewFeatures } from '@/components/ui/features-8';
 import { Features as AdvancedFeatures } from '@/components/ui/features-10';
 import Process from '@/components/Process';
 import TrustedBrands from '@/components/TrustedBrands';
+import StackingCardsSection from '@/components/StackingCardsSection';
 import ClosedDealsSection from '@/components/ClosedDealsSection';
 import CaseStudiesSection from '@/components/CaseStudiesSection';
 import FAQ from '@/components/FAQ';
@@ -23,6 +24,7 @@ const Index = () => {
         <NewFeatures />
         <TrustedBrands />
         <Process />
+        <StackingCardsSection />
         <ClosedDealsSection />
         <AdvancedFeatures />
         <div id="case-studies">
