@@ -1,19 +1,23 @@
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { ChevronLeft, ChevronRight, Calendar as CalendarIcon, MapPin, Phone, Clock } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 
 interface CalendarEvent {
   id: string;
   title: string;
-  type: 'qualified-lead' | 'referral' | 'organic-search' | 'social-media';
+  type: 'qualified-call' | 'referral' | 'organic-search' | 'social-media';
   date: Date;
   time: string;
   description?: string;
   location?: string;
 }
 
-const Calendar = () => {
+interface CalendarProps {
+  callCount: number;
+}
+
+const Calendar = ({ callCount }: CalendarProps) => {
   const [currentDate, setCurrentDate] = useState(new Date());
   const [selectedEvent, setSelectedEvent] = useState<CalendarEvent | null>(null);
   const [isMobile, setIsMobile] = useState(false);
@@ -29,7 +33,7 @@ const Calendar = () => {
 
   const eventTypes = [
     { 
-      type: 'qualified-lead', 
+      type: 'qualified-call', 
       title: 'Leadea Call', 
       weight: 78, 
       color: 'bg-primary/10 border-primary/20 text-primary',
@@ -42,7 +46,7 @@ const Calendar = () => {
     },
     { 
       type: 'referral', 
-      title: 'Referral', 
+      title: 'Referral Call', 
       weight: 13, 
       color: 'bg-muted/50 border-border text-muted-foreground',
       descriptions: [
@@ -53,7 +57,7 @@ const Calendar = () => {
     },
     { 
       type: 'organic-search', 
-      title: 'Organic Lead', 
+      title: 'Organic Call', 
       weight: 6, 
       color: 'bg-muted/50 border-border text-muted-foreground',
       descriptions: [
@@ -64,7 +68,7 @@ const Calendar = () => {
     },
     { 
       type: 'social-media', 
-      title: 'Social Lead', 
+      title: 'Social Call', 
       weight: 3, 
       color: 'bg-muted/50 border-border text-muted-foreground',
       descriptions: [
@@ -95,7 +99,8 @@ const Calendar = () => {
     return `${hour - 12}:00 PM`;
   };
 
-  const generateEvents = (): CalendarEvent[] => {
+  // Memoize events to prevent regeneration on every render
+  const events = useMemo((): CalendarEvent[] => {
     const events: CalendarEvent[] = [];
     const startOfWeek = new Date(currentDate);
     startOfWeek.setDate(currentDate.getDate() - currentDate.getDay());
@@ -103,13 +108,23 @@ const Calendar = () => {
     const daysToShow = isMobile ? 3 : 5;
     const startDay = isMobile ? 1 : 1;
     
+    // Use a seed based on the week to ensure consistent events for the same week
+    const weekSeed = Math.floor(startOfWeek.getTime() / (7 * 24 * 60 * 60 * 1000));
+    
     for (let dayOffset = startDay; dayOffset < startDay + daysToShow; dayOffset++) {
       const day = new Date(startOfWeek);
       day.setDate(startOfWeek.getDate() + dayOffset);
       
       if (day.getDay() === 0 || day.getDay() === 6) continue;
       
-      const numEvents = Math.floor(Math.random() * 2) + 2;
+      // Use seeded random for consistent events
+      const dayRandomSeed = weekSeed + dayOffset;
+      const seededRandom = () => {
+        const x = Math.sin(dayRandomSeed * 9999) * 10000;
+        return x - Math.floor(x);
+      };
+      
+      const numEvents = Math.floor(seededRandom() * 2) + 2;
       const usedTimes = new Set();
       
       for (let i = 0; i < numEvents; i++) {
@@ -117,7 +132,13 @@ const Calendar = () => {
         let attempts = 0;
         
         do {
-          hour = Math.floor(Math.random() * 8) + 9;
+          const eventSeed = dayRandomSeed + i + attempts;
+          const eventRandom = () => {
+            const x = Math.sin(eventSeed * 9999) * 10000;
+            return x - Math.floor(x);
+          };
+          
+          hour = Math.floor(eventRandom() * 8) + 9;
           time = formatTo12Hour(hour);
           attempts++;
         } while (usedTimes.has(time) && attempts < 10);
@@ -133,7 +154,7 @@ const Calendar = () => {
             date: new Date(day),
             time,
             description: eventType.descriptions[Math.floor(Math.random() * eventType.descriptions.length)],
-            location: eventType.type === 'qualified-lead' ? 'Video Call' : 'Phone Call'
+            location: eventType.type === 'qualified-call' ? 'Video Call' : 'Phone Call'
           });
         }
       }
@@ -147,9 +168,7 @@ const Calendar = () => {
       const timeB = parseInt(b.time.split(':')[0]) + (b.time.includes('PM') && !b.time.startsWith('12') ? 12 : 0);
       return timeA - timeB;
     });
-  };
-
-  const events = generateEvents();
+  }, [currentDate, isMobile]); // Only regenerate when week changes or mobile view changes
 
   const getWeekDays = () => {
     const startOfWeek = new Date(currentDate);
@@ -201,9 +220,9 @@ const Calendar = () => {
   const handleEventClick = (event: CalendarEvent) => {
     setSelectedEvent(event);
     
-    if (event.type === 'qualified-lead') {
+    if (event.type === 'qualified-call') {
       toast({
-        title: "Leadea Premium Lead",
+        title: "Leadea Premium Sales Call",
         description: event.description,
         duration: 4000,
       });
@@ -324,10 +343,10 @@ const Calendar = () => {
                 {selectedEvent.location}
               </div>
               
-              {selectedEvent.type === 'qualified-lead' && (
+              {selectedEvent.type === 'qualified-call' && (
                 <div className="p-2 bg-primary/10 border border-primary/20 rounded">
                   <div className="text-xs font-medium text-primary mb-1">
-                    Leadea Premium Lead
+                    Leadea Premium Sales Call
                   </div>
                   <div className="text-xs text-primary">
                     Pre-qualified, high-intent prospect with verified budget and decision-making authority.
