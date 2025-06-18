@@ -2,22 +2,55 @@
 import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import Calendar from './Calendar';
-import { Loader, TrendingUp, Users, Calendar as CalendarIcon } from 'lucide-react';
+import { Loader, TrendingUp, Plus, Bell } from 'lucide-react';
+import { useToast } from '@/hooks/use-toast';
 
 const HeroSection = () => {
   const [isVisible, setIsVisible] = useState(false);
+  const [leadCount, setLeadCount] = useState(0);
+  const [isCountingUp, setIsCountingUp] = useState(false);
+  const { toast } = useToast();
 
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsVisible(true);
+      // Start counting up animation after component loads
+      setTimeout(() => {
+        setIsCountingUp(true);
+        let count = 0;
+        const targetCount = 23;
+        const duration = 2000; // 2 seconds
+        const increment = targetCount / (duration / 50);
+        
+        const counter = setInterval(() => {
+          count += increment;
+          if (count >= targetCount) {
+            setLeadCount(targetCount);
+            clearInterval(counter);
+          } else {
+            setLeadCount(Math.floor(count));
+          }
+        }, 50);
+      }, 800);
     }, 300);
 
     return () => clearTimeout(timer);
   }, []);
 
+  const handleNewLead = () => {
+    const newCount = leadCount + Math.floor(Math.random() * 3) + 1; // Add 1-3 leads
+    setLeadCount(newCount);
+    
+    toast({
+      title: "🎉 New Leads Generated!",
+      description: `${newCount - leadCount} qualified leads from Leadea just booked calls`,
+      duration: 4000,
+    });
+  };
+
   return (
     <section className="relative w-full py-12 md:py-20 px-6 md:px-12 flex flex-col items-center justify-center overflow-hidden bg-background">
-      {/* Cosmic particle effect (background dots) */}
+      {/* Cosmic particle effect */}
       <div className="absolute inset-0 cosmic-grid opacity-30"></div>
       
       {/* Gradient glow effect */}
@@ -27,130 +60,144 @@ const HeroSection = () => {
       
       <div className={`relative z-10 max-w-4xl text-center space-y-6 transition-all duration-700 transform ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
         <div className="flex justify-center">
-          <span className="inline-flex items-center gap-2 px-3 py-1 text-xs font-medium rounded-full bg-muted text-primary">
-            <span className="flex h-2 w-2 rounded-full bg-primary"></span>
-            Launching new payment features
-            <Loader className="h-3 w-3 animate-spin text-primary" />
+          <span className="inline-flex items-center gap-2 px-3 py-1 text-xs font-medium rounded-full bg-green-500/20 text-green-600 border border-green-500/30">
+            <span className="flex h-2 w-2 rounded-full bg-green-500 animate-pulse"></span>
+            Live lead generation active
+            <Loader className="h-3 w-3 animate-spin text-green-600" />
           </span>
         </div>
         
         <h1 className="text-4xl md:text-6xl lg:text-7xl font-medium tracking-tighter text-balance text-foreground">
-          Financial operations for <span className="text-primary">growth</span> businesses
+          Your calendar filled with <span className="text-primary">qualified leads</span>
         </h1>
         
         <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto text-balance">
-          Streamline your financial workflows with our comprehensive fintech platform. Built for modern businesses who value efficiency, compliance, and scalable growth.
+          Watch your business grow with guaranteed qualified leads. Our AI-powered platform fills your calendar with high-intent prospects ready to buy.
         </p>
         
         <div className="flex flex-col sm:flex-row gap-4 justify-center pt-6 items-center">
           <Button 
             animated 
-            className="bg-primary text-primary-foreground hover:bg-primary/80 hover:text-primary-foreground text-base h-12 px-8 transition-all duration-200 min-h-[48px]"
+            className="bg-green-600 text-white hover:bg-green-700 text-base h-12 px-8 transition-all duration-200 min-h-[48px] shadow-lg hover:shadow-xl"
           >
-            Start for free
+            Start Generating Leads
           </Button>
           <Button variant="outline" className="border-border text-foreground hover:bg-accent hover:text-accent-foreground text-base h-12 px-8 transition-all duration-200 min-h-[48px]">
-            Book a demo
+            Watch Demo
           </Button>
         </div>
         
         <div className="pt-6 text-sm text-muted-foreground">
-          No credit card required • Free 14-day trial
+          No setup required • Guaranteed qualified leads • Free trial
         </div>
       </div>
       
-      {/* Calendar UI integrated in hero section with glassmorphic effect */}
+      {/* Dashboard UI */}
       <div className={`w-full max-w-7xl mt-12 z-10 transition-all duration-1000 delay-500 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-20'}`}>
-        <div className="cosmic-glow relative rounded-xl overflow-hidden border border-border backdrop-blur-sm bg-card shadow-lg">
+        <div className="cosmic-glow relative rounded-xl overflow-hidden border border-border backdrop-blur-sm bg-card shadow-2xl">
           {/* Dashboard Header */}
           <div className="bg-card backdrop-blur-md w-full">
-            <div className="flex flex-col md:flex-row items-start md:items-center justify-between p-3 md:p-4 border-b border-border gap-3 md:gap-4">
-              <div className="flex items-center gap-3 md:gap-4 min-w-0 flex-1">
-                <div className="h-6 w-6 md:h-8 md:w-8 rounded-md bg-green-500/20 flex items-center justify-center flex-shrink-0">
-                  <TrendingUp className="h-3 w-3 md:h-4 md:w-4 text-green-600" />
+            <div className="flex flex-col md:flex-row items-start md:items-center justify-between p-4 border-b border-border gap-4">
+              <div className="flex items-center gap-4 min-w-0 flex-1">
+                <div className="h-8 w-8 rounded-md bg-green-500/20 flex items-center justify-center flex-shrink-0">
+                  <TrendingUp className="h-4 w-4 text-green-600" />
                 </div>
-                <span className="text-foreground font-medium text-sm md:text-base truncate">Overview of Your Calendar With Us</span>
+                <span className="text-foreground font-medium text-base">Lead Generation Dashboard</span>
               </div>
               
-              <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2 md:gap-3 w-full md:w-auto">
-                <div className="flex flex-wrap items-center gap-2 text-xs md:text-sm text-muted-foreground">
-                  <div className="flex items-center gap-1">
-                    <div className="h-2 w-2 md:h-3 md:w-3 rounded bg-green-500"></div>
-                    <span className="whitespace-nowrap">Leads From Leadea</span>
-                  </div>
-                  <div className="flex items-center gap-1">
-                    <div className="h-2 w-2 md:h-3 md:w-3 rounded bg-blue-500"></div>
-                    <span className="whitespace-nowrap">Referrals</span>
-                  </div>
-                </div>
-                
-                <div className="h-6 md:h-8 px-2 md:px-3 rounded-md bg-green-500/20 border border-green-500/30 flex items-center justify-center text-green-600 text-xs md:text-sm font-medium whitespace-nowrap">
-                  Active Pipeline
+              <div className="flex items-center gap-3">
+                <div className="h-8 px-3 rounded-md bg-green-500/20 border border-green-500/30 flex items-center justify-center text-green-600 text-sm font-medium">
+                  <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse mr-2"></span>
+                  Active
                 </div>
               </div>
             </div>
             
             {/* Dashboard Content */}
-            <div className="flex flex-col lg:flex-row h-auto lg:h-[600px] overflow-hidden">
-              {/* Sidebar */}
-              <div className="w-full lg:w-64 border-b lg:border-b-0 lg:border-r border-border p-3 md:p-4 space-y-3 md:space-y-4 bg-card">
-                <div className="space-y-2">
-                  <div className="text-xs text-muted-foreground uppercase">Calendar Views</div>
-                  <div className="space-y-1">
-                    <div className="flex items-center gap-2 md:gap-3 px-2 md:px-3 py-1.5 md:py-2 rounded-md bg-green-500/10 text-green-600 border border-green-500/20">
-                      <CalendarIcon className="h-3 w-3" />
-                      <span className="text-xs md:text-sm">Calendar View</span>
+            <div className="flex flex-col lg:flex-row h-auto lg:h-[600px]">
+              {/* Left Sidebar - Counter & Stats */}
+              <div className="w-full lg:w-80 border-b lg:border-b-0 lg:border-r border-border p-6 space-y-6 bg-card">
+                {/* Lead Counter */}
+                <div className="text-center space-y-4">
+                  <div className="text-sm text-muted-foreground uppercase tracking-wider">
+                    Leads Generated This Week
+                  </div>
+                  <div className="relative">
+                    <div className={`text-6xl font-bold text-green-600 transition-all duration-500 ${isCountingUp ? 'animate-pulse' : ''}`}>
+                      {leadCount}
                     </div>
-                    <div className="flex items-center gap-2 md:gap-3 px-2 md:px-3 py-1.5 md:py-2 rounded-md text-muted-foreground hover:bg-muted/50">
-                      <Users className="h-3 w-3" />
-                      <span className="text-xs md:text-sm">Clients</span>
+                    <div className="absolute -inset-4 bg-green-500/10 rounded-full blur-xl"></div>
+                  </div>
+                  <div className="text-xs text-muted-foreground">
+                    +{Math.floor(leadCount * 0.15)} from last week
+                  </div>
+                </div>
+
+                {/* Generate New Lead Button */}
+                <Button 
+                  onClick={handleNewLead}
+                  className="w-full bg-green-600 hover:bg-green-700 text-white shadow-lg hover:shadow-xl transition-all duration-200 group"
+                >
+                  <Plus className="h-4 w-4 mr-2 group-hover:rotate-90 transition-transform duration-200" />
+                  Generate New Lead
+                </Button>
+
+                {/* Lead Sources */}
+                <div className="space-y-3">
+                  <div className="text-xs text-muted-foreground uppercase tracking-wider">
+                    Lead Sources (This Week)
+                  </div>
+                  <div className="space-y-2">
+                    <div className="flex items-center justify-between px-3 py-2 rounded-md bg-green-500/10 border border-green-500/20">
+                      <span className="text-sm text-green-600">Leadea Platform</span>
+                      <span className="text-sm font-medium text-green-600">{Math.floor(leadCount * 0.78)}</span>
+                    </div>
+                    <div className="flex items-center justify-between px-3 py-2 rounded-md bg-blue-500/10 border border-blue-500/20">
+                      <span className="text-sm text-blue-600">Referrals</span>
+                      <span className="text-sm font-medium text-blue-600">{Math.floor(leadCount * 0.13)}</span>
+                    </div>
+                    <div className="flex items-center justify-between px-3 py-2 rounded-md bg-purple-500/10 border border-purple-500/20">
+                      <span className="text-sm text-purple-600">Organic Search</span>
+                      <span className="text-sm font-medium text-purple-600">{Math.floor(leadCount * 0.06)}</span>
+                    </div>
+                    <div className="flex items-center justify-between px-3 py-2 rounded-md bg-orange-500/10 border border-orange-500/20">
+                      <span className="text-sm text-orange-600">Social Media</span>
+                      <span className="text-sm font-medium text-orange-600">{Math.floor(leadCount * 0.03)}</span>
                     </div>
                   </div>
                 </div>
-                
-                <div className="space-y-2 pt-2 md:pt-4">
-                  <div className="text-xs text-muted-foreground uppercase">Lead Quality</div>
-                  <div className="space-y-2">
-                    <div className="flex items-center justify-between px-2 md:px-3 py-1.5 md:py-2 rounded-md bg-green-500/10">
-                      <span className="text-xs md:text-sm text-green-600">Leads From Leadea</span>
-                      <span className="text-xs font-medium text-green-600">80%</span>
-                    </div>
-                    <div className="flex items-center justify-between px-2 md:px-3 py-1.5 md:py-2 rounded-md bg-blue-500/10">
-                      <span className="text-xs md:text-sm text-blue-600">Referrals</span>
-                      <span className="text-xs font-medium text-blue-600">12%</span>
-                    </div>
-                    <div className="flex items-center justify-between px-2 md:px-3 py-1.5 md:py-2 rounded-md bg-purple-500/10">
-                      <span className="text-xs md:text-sm text-purple-600">Organic</span>
-                      <span className="text-xs font-medium text-purple-600">5%</span>
-                    </div>
-                    <div className="flex items-center justify-between px-2 md:px-3 py-1.5 md:py-2 rounded-md bg-orange-500/10">
-                      <span className="text-xs md:text-sm text-orange-600">Social Media</span>
-                      <span className="text-xs font-medium text-orange-600">3%</span>
-                    </div>
+
+                {/* Conversion Rate */}
+                <div className="p-4 rounded-lg bg-gradient-to-r from-green-500/10 to-blue-500/10 border border-green-500/20">
+                  <div className="text-xs text-muted-foreground uppercase tracking-wider mb-2">
+                    Conversion Rate
+                  </div>
+                  <div className="text-2xl font-bold text-green-600">
+                    94.7%
+                  </div>
+                  <div className="text-xs text-muted-foreground">
+                    Leads that book calls
                   </div>
                 </div>
               </div>
               
-              {/* Main Content */}
-              <div className="flex-1 p-3 md:p-4 bg-background overflow-hidden">
-                {/* Calendar Header */}
-                <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-4 md:mb-6 gap-3 min-w-0">
-                  <div className="flex items-center gap-2 flex-shrink-0">
-                    <h3 className="font-medium text-foreground text-sm md:text-base">Your Calendar</h3>
-                    <span className="text-xs bg-green-500/20 text-green-600 px-2 py-1 rounded-full border border-green-500/30">Live</span>
+              {/* Right Content - Calendar */}
+              <div className="flex-1 p-6 bg-background">
+                <div className="flex items-center justify-between mb-6">
+                  <div className="flex items-center gap-3">
+                    <h3 className="font-medium text-foreground text-lg">Your Calendar</h3>
+                    <span className="text-xs bg-green-500/20 text-green-600 px-2 py-1 rounded-full border border-green-500/30 flex items-center gap-1">
+                      <Bell className="h-3 w-3" />
+                      Live Updates
+                    </span>
                   </div>
                   
-                  <div className="flex items-center gap-2 flex-shrink-0 w-full sm:w-auto">
-                    <div className="h-6 md:h-8 px-2 md:px-3 rounded-md bg-foreground text-background flex items-center justify-center text-xs md:text-sm font-medium whitespace-nowrap w-full sm:w-auto text-center">
-                      View All Leads
-                    </div>
+                  <div className="text-sm text-muted-foreground">
+                    Click on any lead to see details
                   </div>
                 </div>
                 
-                {/* Calendar Component */}
-                <div className="overflow-hidden">
-                  <Calendar />
-                </div>
+                <Calendar />
               </div>
             </div>
           </div>
