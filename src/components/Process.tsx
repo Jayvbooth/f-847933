@@ -1,177 +1,149 @@
+import React, { useEffect, useRef, useState } from 'react';
+import { Search, Target, MessageSquare, BarChart3 } from 'lucide-react';
+import { cn } from '@/lib/utils';
+import { motion } from 'motion/react';
 
-import React from 'react';
-import { ContainerScroll, CardSticky } from '@/components/ui/cards-stack';
-
-const PROCESS_PHASES = [
+const processSteps = [
   {
-    id: "process-1",
-    title: "Lead Discovery",
-    description: "We start by understanding your ideal customer profile and target market. Our team analyzes your industry, competitors, and market opportunities to identify the highest-quality prospects for your business.",
+    id: 1,
+    title: 'Targeted Prospecting',
+    description: 'We identify and target the most relevant prospects for your business using advanced data analytics and market research.',
+    icon: Search
   },
   {
-    id: "process-2",
-    title: "Multi-Channel Outreach",
-    description: "Using advanced lead generation strategies across LinkedIn, email, and other channels, we reach out to qualified prospects with personalized messaging that resonates with their specific needs and pain points.",
+    id: 2,
+    title: 'Multi-Channel Outreach',
+    description: 'Engage prospects through personalized email campaigns, social media interactions, and direct outreach to maximize response rates.',
+    icon: Target
   },
   {
-    id: "process-3",
-    title: "Lead Qualification",
-    description: "Every lead goes through our rigorous qualification process. We verify contact information, assess buying intent, and ensure each prospect meets your criteria before scheduling any meetings.",
+    id: 3,
+    title: 'Lead Qualification',
+    description: 'Our team qualifies leads based on predefined criteria, ensuring that only high-potential prospects are passed on to your sales team.',
+    icon: MessageSquare
   },
   {
-    id: "process-4",
-    title: "Calendar Integration",
-    description: "Qualified leads are seamlessly scheduled into your calendar using our automated booking system. We handle all the coordination, sending confirmations and reminders to ensure high show-up rates.",
-  },
-  {
-    id: "process-5",
-    title: "Continuous Optimization",
-    description: "We constantly monitor performance metrics and optimize our approach based on conversion rates, feedback, and market changes. Our process evolves to deliver increasingly better results for your business.",
-  },
+    id: 4,
+    title: 'Performance Tracking',
+    description: 'We continuously monitor and optimize campaign performance, providing detailed analytics and reporting to drive continuous improvement.',
+    icon: BarChart3
+  }
 ];
 
 const Process = () => {
+  const [isVisible, setIsVisible] = useState(false);
+  const sectionRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, []);
+
   return (
-    <section className="w-full pt-24 pb-12 md:pt-32 md:pb-20 px-6 md:px-12 bg-background relative">
-      <div className="max-w-7xl mx-auto">
-        {/* Desktop Layout - Two Columns */}
-        <div className="hidden lg:grid lg:grid-cols-5 gap-8 xl:gap-12">
-          {/* Left Column - Sticky Header */}
-          <div className="lg:col-span-2 sticky top-32 h-fit z-50">
-            <h5 className="text-xs uppercase tracking-wide text-muted-foreground">Our Process</h5>
-            <h2 className="mb-6 mt-4 text-3xl lg:text-4xl xl:text-5xl font-bold tracking-tight text-foreground">
-              How we fill your{" "}
-              <span className="text-primary">calendar with qualified leads</span>
-            </h2>
-            <p className="text-base lg:text-lg text-muted-foreground leading-relaxed">
-              Our proven 5-step process ensures you get a steady stream of high-quality leads 
-              that are ready to convert. From discovery to delivery, we handle everything 
-              so you can focus on closing deals.
-            </p>
+    <section ref={sectionRef} className="py-24 md:py-32 bg-muted/30">
+      <div className="container mx-auto px-6 lg:px-8">
+        {/* Header */}
+        <motion.div 
+          className={cn(
+            "text-center mb-20 transition-all duration-1000 ease-out",
+            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"
+          )}
+          initial={{ opacity: 0, y: 60 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+        >
+          <div className="inline-flex items-center gap-2 bg-background px-4 py-2 rounded-full border border-border mb-6">
+            <BarChart3 className="w-4 h-4 text-primary" />
+            <span className="text-sm font-medium text-muted-foreground">Our Process</span>
           </div>
+          <motion.h2 
+            className="text-4xl md:text-6xl font-bold mb-6 text-foreground leading-tight"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, delay: 0.3 }}
+          >
+            How we{" "}
+            <motion.span 
+              className="text-primary relative inline-block"
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8, delay: 0.8 }}
+            >
+              <em className="italic">deliver</em>
+              <motion.div
+                className="absolute bottom-0 left-0 h-1 bg-primary"
+                initial={{ width: 0 }}
+                whileInView={{ width: "100%" }}
+                viewport={{ once: true }}
+                transition={{ duration: 1.2, delay: 1.2, ease: "easeOut" }}
+              />
+            </motion.span>
+            {" "}results
+          </motion.h2>
+          <motion.p 
+            className="text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, delay: 0.5 }}
+          >
+            Our proven 4-step methodology that transforms prospects into qualified leads
+          </motion.p>
+        </motion.div>
 
-          {/* Right Column - Animated Cards */}
-          <div className="lg:col-span-3 relative">
-            <ContainerScroll className="min-h-[140vh] space-y-8 pt-8 pb-32">
-              {PROCESS_PHASES.map((phase, index) => (
-                <CardSticky
-                  key={phase.id}
-                  index={index + 1}
-                  incrementY={20}
-                  incrementZ={8}
-                  baseOffset={160}
-                  className="rounded-xl border border-border p-6 lg:p-8 shadow-lg backdrop-blur-md bg-card/95"
-                  style={{ zIndex: 10 + index }}
-                >
-                  <div className="flex items-start justify-between gap-4 mb-4">
-                    <h3 className="text-xl lg:text-2xl xl:text-3xl font-bold tracking-tighter text-foreground flex-1">
-                      {phase.title}
-                    </h3>
-                    <span className="text-lg lg:text-xl xl:text-2xl font-bold text-primary flex-shrink-0 bg-primary/10 rounded-full w-10 h-10 lg:w-12 lg:h-12 xl:w-14 xl:h-14 flex items-center justify-center">
-                      {String(index + 1).padStart(2, "0")}
-                    </span>
-                  </div>
-                  <p className="text-sm lg:text-base xl:text-lg text-muted-foreground leading-relaxed">
-                    {phase.description}
-                  </p>
-                </CardSticky>
-              ))}
-            </ContainerScroll>
-          </div>
-        </div>
-
-        {/* Tablet Layout - Two Columns */}
-        <div className="hidden md:grid lg:hidden md:grid-cols-2 gap-8">
-          {/* Left Column - Sticky Header */}
-          <div className="sticky top-32 h-fit z-50">
-            <h5 className="text-xs uppercase tracking-wide text-muted-foreground">Our Process</h5>
-            <h2 className="mb-6 mt-4 text-3xl font-bold tracking-tight text-foreground">
-              How we fill your{" "}
-              <span className="text-primary">calendar with qualified leads</span>
-            </h2>
-            <p className="text-base text-muted-foreground leading-relaxed">
-              Our proven 5-step process ensures you get a steady stream of high-quality leads 
-              that are ready to convert. From discovery to delivery, we handle everything 
-              so you can focus on closing deals.
-            </p>
-          </div>
-
-          {/* Right Column - Animated Cards */}
-          <div className="relative">
-            <ContainerScroll className="min-h-[120vh] space-y-6 pt-8 pb-24">
-              {PROCESS_PHASES.map((phase, index) => (
-                <CardSticky
-                  key={phase.id}
-                  index={index + 1}
-                  incrementY={12}
-                  incrementZ={6}
-                  baseOffset={250}
-                  className="rounded-xl border border-border p-6 shadow-lg backdrop-blur-md bg-card/95"
-                  style={{ zIndex: 10 + index }}
-                >
-                  <div className="flex items-start justify-between gap-4 mb-4">
-                    <h3 className="text-xl font-bold tracking-tighter text-foreground flex-1">
-                      {phase.title}
-                    </h3>
-                    <span className="text-lg font-bold text-primary flex-shrink-0 bg-primary/10 rounded-full w-10 h-10 flex items-center justify-center">
-                      {String(index + 1).padStart(2, "0")}
-                    </span>
-                  </div>
-                  <p className="text-sm text-muted-foreground leading-relaxed">
-                    {phase.description}
-                  </p>
-                </CardSticky>
-              ))}
-            </ContainerScroll>
-          </div>
-        </div>
-
-        {/* Mobile Layout - Single Column */}
-        <div className="md:hidden">
-          {/* Mobile Header - Sticky */}
-          <div className="sticky top-28 bg-background/95 backdrop-blur-md border-b border-border/50 pb-6 mb-8 z-50">
-            <h5 className="text-xs uppercase tracking-wide text-muted-foreground">Our Process</h5>
-            <h2 className="mb-4 mt-2 text-2xl sm:text-3xl font-bold tracking-tight text-foreground">
-              How we fill your{" "}
-              <span className="text-primary">calendar with qualified leads</span>
-            </h2>
-            <p className="text-base text-muted-foreground leading-relaxed">
-              Our proven 5-step process ensures you get a steady stream of high-quality leads 
-              that are ready to convert.
-            </p>
-          </div>
-
-          {/* Mobile Cards */}
-          <div className="relative">
-            <ContainerScroll className="min-h-[100vh] space-y-6 pt-8 pb-20">
-              {PROCESS_PHASES.map((phase, index) => (
-                <CardSticky
-                  key={phase.id}
-                  index={index + 1}
-                  incrementY={8}
-                  incrementZ={4}
-                  baseOffset={400}
-                  className="rounded-xl border border-border p-6 shadow-lg backdrop-blur-md bg-card/95"
-                  style={{ zIndex: 10 + index }}
-                >
-                  <div className="flex items-start justify-between gap-4 mb-4">
-                    <h3 className="text-lg sm:text-xl font-bold tracking-tighter text-foreground flex-1">
-                      {phase.title}
-                    </h3>
-                    <span className="text-lg font-bold text-primary flex-shrink-0 bg-primary/10 rounded-full w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center">
-                      {String(index + 1).padStart(2, "0")}
-                    </span>
-                  </div>
-                  <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
-                    {phase.description}
-                  </p>
-                </CardSticky>
-              ))}
-            </ContainerScroll>
-          </div>
+        {/* Process Steps */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          {processSteps.map((step, index) => (
+            <ProcessStep key={step.id} step={step} index={index} isVisible={isVisible} />
+          ))}
         </div>
       </div>
     </section>
+  );
+};
+
+interface ProcessStepProps {
+  step: {
+    id: number;
+    title: string;
+    description: string;
+    icon: React.ComponentType<any>;
+  };
+  index: number;
+  isVisible: boolean;
+}
+
+const ProcessStep = ({ step, index, isVisible }: ProcessStepProps) => {
+  const Icon = step.icon;
+
+  return (
+    <motion.div
+      className="flex flex-col items-center text-center"
+      initial={{ opacity: 0, y: 50 }}
+      animate={isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
+      transition={{ duration: 0.5, delay: index * 0.2 }}
+    >
+      <div className="w-16 h-16 rounded-full bg-primary/10 text-primary flex items-center justify-center mb-4">
+        <Icon className="w-8 h-8" />
+      </div>
+      <h3 className="text-xl font-semibold text-foreground mb-2">{step.title}</h3>
+      <p className="text-muted-foreground leading-relaxed">{step.description}</p>
+    </motion.div>
   );
 };
 

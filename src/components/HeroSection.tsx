@@ -1,8 +1,8 @@
-
 import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import Calendar from './Calendar';
 import { Loader, TrendingUp, Users, Calendar as CalendarIcon } from 'lucide-react';
+import { motion } from 'motion/react';
 
 const HeroSection = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -35,9 +35,29 @@ const HeroSection = () => {
           </span>
         </div>
         
-        <h1 className="text-4xl md:text-6xl lg:text-7xl font-medium tracking-tighter text-balance text-foreground">
-          Financial operations for <span className="text-primary">growth</span> businesses
-        </h1>
+        <motion.h1 
+          className="text-4xl md:text-6xl lg:text-7xl font-medium tracking-tighter text-balance text-foreground"
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.3 }}
+        >
+          Financial operations for{" "}
+          <motion.span 
+            className="text-primary relative inline-block"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.8, delay: 0.8 }}
+          >
+            <em className="italic">growth</em>
+            <motion.div
+              className="absolute bottom-0 left-0 h-1 bg-primary"
+              initial={{ width: 0 }}
+              animate={{ width: "100%" }}
+              transition={{ duration: 1.2, delay: 1.2, ease: "easeOut" }}
+            />
+          </motion.span>
+          {" "}businesses
+        </motion.h1>
         
         <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto text-balance">
           Streamline your financial workflows with our comprehensive fintech platform. Built for modern businesses who value efficiency, compliance, and scalable growth.

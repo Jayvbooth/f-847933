@@ -1,8 +1,8 @@
-
 import React, { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, TrendingUp, Building2, ArrowUpRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { motion } from 'motion/react';
 
 interface CaseStudy {
   id: string;
@@ -144,21 +144,56 @@ const CaseStudiesSection = () => {
 
       <div className="container mx-auto px-6 lg:px-8 relative z-10">
         {/* Header */}
-        <div className={cn(
-          "text-center mb-20 transition-all duration-1000 ease-out",
-          isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"
-        )}>
+        <motion.div 
+          className={cn(
+            "text-center mb-20 transition-all duration-1000 ease-out",
+            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"
+          )}
+          initial={{ opacity: 0, y: 60 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+        >
           <div className="inline-flex items-center gap-2 bg-muted px-4 py-2 rounded-full border border-border/50 mb-6">
             <TrendingUp className="w-4 h-4 text-primary" />
             <span className="text-sm font-medium text-muted-foreground">Case Studies</span>
           </div>
-          <h2 className="text-4xl md:text-6xl font-bold mb-6 text-foreground leading-tight">
-            Practical reads to help you move <em className="italic">faster</em>.
-          </h2>
-          <p className="text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
+          <motion.h2 
+            className="text-4xl md:text-6xl font-bold mb-6 text-foreground leading-tight"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, delay: 0.3 }}
+          >
+            Practical reads to help you move{" "}
+            <motion.span 
+              className="text-primary relative inline-block"
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8, delay: 0.8 }}
+            >
+              <em className="italic">faster</em>
+              <motion.div
+                className="absolute bottom-0 left-0 h-1 bg-primary"
+                initial={{ width: 0 }}
+                whileInView={{ width: "100%" }}
+                viewport={{ once: true }}
+                transition={{ duration: 1.2, delay: 1.2, ease: "easeOut" }}
+              />
+            </motion.span>
+            .
+          </motion.h2>
+          <motion.p 
+            className="text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, delay: 0.5 }}
+          >
             Real results from businesses that transformed their growth with data-driven lead generation strategies
-          </p>
-        </div>
+          </motion.p>
+        </motion.div>
 
         {/* Featured Case Study */}
         <div className="mb-16">
