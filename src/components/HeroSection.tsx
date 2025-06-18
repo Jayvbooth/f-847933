@@ -1,8 +1,8 @@
+
 import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import Calendar from './Calendar';
 import { Loader, TrendingUp, Users, Calendar as CalendarIcon } from 'lucide-react';
-import { motion } from 'motion/react';
 
 const HeroSection = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -17,9 +17,8 @@ const HeroSection = () => {
 
   return (
     <section className="relative w-full py-12 md:py-20 px-6 md:px-12 flex flex-col items-center justify-center overflow-hidden bg-background">
-      {/* Cosmic particle effect (background dots) with fade to next section */}
-      <div className="absolute inset-0 cosmic-grid opacity-5"></div>
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-background/80"></div>
+      {/* Cosmic particle effect (background dots) */}
+      <div className="absolute inset-0 cosmic-grid opacity-30"></div>
       
       {/* Gradient glow effect */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full">
@@ -35,29 +34,9 @@ const HeroSection = () => {
           </span>
         </div>
         
-        <motion.h1 
-          className="text-4xl md:text-6xl lg:text-7xl font-medium tracking-tighter text-balance text-foreground"
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.3 }}
-        >
-          Financial operations for{" "}
-          <motion.span 
-            className="text-primary relative inline-block"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.8, delay: 0.8 }}
-          >
-            <em className="italic">growth</em>
-            <motion.div
-              className="absolute bottom-0 left-0 h-1 bg-primary"
-              initial={{ width: 0 }}
-              animate={{ width: "100%" }}
-              transition={{ duration: 1.2, delay: 1.2, ease: "easeOut" }}
-            />
-          </motion.span>
-          {" "}businesses
-        </motion.h1>
+        <h1 className="text-4xl md:text-6xl lg:text-7xl font-medium tracking-tighter text-balance text-foreground">
+          Financial operations for <span className="text-primary">growth</span> businesses
+        </h1>
         
         <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto text-balance">
           Streamline your financial workflows with our comprehensive fintech platform. Built for modern businesses who value efficiency, compliance, and scalable growth.

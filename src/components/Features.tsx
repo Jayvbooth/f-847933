@@ -1,156 +1,111 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { Zap, Target, BarChart3, Users, Shield, Rocket } from 'lucide-react';
-import { cn } from '@/lib/utils';
-import { motion } from 'motion/react';
 
-const features = [
-  {
-    id: 1,
-    icon: Zap,
-    title: 'Lead Prioritization',
-    description: 'Automatically identify and prioritize high-potential leads based on behavior, demographics, and engagement metrics.',
-  },
-  {
-    id: 2,
-    icon: Target,
-    title: 'Precision Targeting',
-    description: 'Refine your outreach with laser-focused targeting, ensuring you connect with the right prospects at the right time.',
-  },
-  {
-    id: 3,
-    icon: BarChart3,
-    title: 'Performance Analytics',
-    description: 'Gain actionable insights with comprehensive analytics, tracking lead generation performance and ROI in real-time.',
-  },
-  {
-    id: 4,
-    icon: Users,
-    title: 'Team Collaboration',
-    description: 'Streamline teamwork with shared dashboards, collaborative workflows, and integrated communication tools.',
-  },
-  {
-    id: 5,
-    icon: Shield,
-    title: 'Data Security',
-    description: 'Protect sensitive data with enterprise-grade security measures, ensuring compliance and maintaining customer trust.',
-  },
-  {
-    id: 6,
-    icon: Rocket,
-    title: 'Scalable Automation',
-    description: 'Automate repetitive tasks and scale your lead generation efforts without sacrificing quality or personalization.',
-  },
-];
+import React, { useState } from 'react';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
+import { ChevronDown, Layers, Grid3x3, ListCheck, BookOpen, Star, LayoutDashboard } from "lucide-react";
 
 const Features = () => {
-  const [isVisible, setIsVisible] = useState(false);
-  const sectionRef = useRef<HTMLElement>(null);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-        }
-      },
-      { threshold: 0.1 }
-    );
-
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
+  const [openFeature, setOpenFeature] = useState<number | null>(null);
+  
+  const features = [
+    {
+      title: "Payment Automation",
+      description: "Automate payment processing and reconciliation to reduce manual errors and improve efficiency.",
+      expandedDescription: "Set up automated payment workflows with custom approval chains. Schedule recurring payments, automate invoice processing, and create conditional rules for different transaction types. Reduce manual intervention and ensure compliance with financial regulations.",
+      icon: (
+        <Layers size={24} className="text-cosmic-accent" />
+      )
+    },
+    {
+      title: "Real-time Analytics",
+      description: "Monitor financial performance with real-time dashboards and comprehensive reporting.",
+      expandedDescription: "Track key financial metrics with customizable dashboards. Monitor cash flow, payment volumes, and transaction success rates in real-time. Generate detailed reports for stakeholders and identify trends before they impact your business.",
+      icon: (
+        <Grid3x3 size={24} className="text-cosmic-accent" />
+      )
+    },
+    {
+      title: "Risk Management",
+      description: "Advanced fraud detection and risk assessment tools to protect your business.",
+      expandedDescription: "Utilize machine learning algorithms to detect suspicious transactions and prevent fraud. Set up custom risk rules, monitor transaction patterns, and receive instant alerts for unusual activity. Protect your business with enterprise-grade security measures.",
+      icon: (
+        <LayoutDashboard size={24} className="text-cosmic-accent" />
+      )
+    },
+    {
+      title: "Compliance Tools",
+      description: "Built-in compliance features to meet regulatory requirements effortlessly.",
+      expandedDescription: "Stay compliant with financial regulations across multiple jurisdictions. Automated KYC/AML checks, transaction monitoring, and regulatory reporting. Generate audit trails and maintain documentation to meet compliance standards.",
+      icon: (
+        <ListCheck size={24} className="text-cosmic-accent" />
+      )
+    },
+    {
+      title: "Multi-currency Support",
+      description: "Process payments in multiple currencies with real-time exchange rates.",
+      expandedDescription: "Accept and process payments in over 150 currencies with competitive exchange rates. Automatic currency conversion, hedging tools, and multi-currency accounting. Expand your business globally with seamless international payment processing.",
+      icon: (
+        <Star size={24} className="text-cosmic-accent" />
+      )
+    },
+    {
+      title: "API Integration",
+      description: "Powerful APIs for seamless integration with your existing financial systems.",
+      expandedDescription: "Connect with your ERP, accounting software, and banking systems through our comprehensive APIs. Real-time webhooks, detailed documentation, and SDKs for popular programming languages. Build custom integrations that fit your unique business needs.",
+      icon: (
+        <BookOpen size={24} className="text-cosmic-accent" />
+      )
     }
-
-    return () => observer.disconnect();
-  }, []);
-
+  ];
+  
+  const toggleFeature = (index: number) => {
+    setOpenFeature(openFeature === index ? null : index);
+  };
+  
   return (
-    <section ref={sectionRef} className="py-24 md:py-32 bg-background relative overflow-hidden">
-      {/* Subtle background pattern */}
-      <div className="absolute inset-0 opacity-[0.02]">
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-background/50 to-background"></div>
-        <div className="features-grid-subtle absolute inset-0"></div>
-      </div>
-
-      <div className="container mx-auto px-6 lg:px-8 relative z-10">
-        {/* Header */}
-        <motion.div 
-          className={cn(
-            "text-center mb-20 transition-all duration-1000 ease-out",
-            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"
-          )}
-          initial={{ opacity: 0, y: 60 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
-        >
-          <div className="inline-flex items-center gap-2 bg-muted px-4 py-2 rounded-full border border-border/50 mb-6">
-            <Zap className="w-4 h-4 text-primary" />
-            <span className="text-sm font-medium text-muted-foreground">Core Features</span>
-          </div>
-          <motion.h2 
-            className="text-4xl md:text-6xl font-bold mb-6 text-foreground leading-tight"
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, delay: 0.3 }}
-          >
-            Everything you need to{" "}
-            <motion.span 
-              className="text-primary relative inline-block"
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8, delay: 0.8 }}
-            >
-              <em className="italic">scale</em>
-              <motion.div
-                className="absolute bottom-0 left-0 h-1 bg-primary"
-                initial={{ width: 0 }}
-                whileInView={{ width: "100%" }}
-                viewport={{ once: true }}
-                transition={{ duration: 1.2, delay: 1.2, ease: "easeOut" }}
-              />
-            </motion.span>
-            {" "}your business
-          </motion.h2>
-          <motion.p 
-            className="text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, delay: 0.5 }}
-          >
-            Powerful tools and intelligent automation to transform your lead generation process
-          </motion.p>
-        </motion.div>
-
-        {/* Features grid */}
+    <section id="features" className="w-full py-12 md:py-16 px-6 md:px-12">
+      <div className="max-w-7xl mx-auto space-y-12">
+        <div className="text-center space-y-3 max-w-3xl mx-auto">
+          <h2 className="text-3xl md:text-4xl font-medium tracking-tighter">
+            Everything your business needs
+          </h2>
+          <p className="text-cosmic-muted text-lg">
+            Comprehensive fintech solutions to streamline your financial operations and drive growth
+          </p>
+        </div>
+        
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {features.map((feature, index) => (
-            <motion.div
-              key={feature.id}
-              className={cn(
-                "bg-card border border-border/50 rounded-2xl p-6 md:p-8 transition-all duration-500 hover:border-primary/30 hover:shadow-xl hover:shadow-primary/5",
-                "transform transition-all duration-700 ease-out",
-                isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-16"
-              )}
-              style={{ transitionDelay: `${index * 100}ms` }}
-              initial={{ opacity: 0, y: 50 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-50px" }}
-              transition={{
-                duration: 0.6,
-                delay: index * 0.1,
-                type: "spring",
-                stiffness: 100
-              }}
+            <Collapsible
+              key={index}
+              open={openFeature === index}
+              onOpenChange={() => toggleFeature(index)}
+              className={`rounded-xl border ${openFeature === index ? 'border-cosmic-light/40' : 'border-cosmic-light/20'} cosmic-gradient transition-all duration-300`}
             >
-              <div className="mb-4">
-                <feature.icon className="w-6 h-6 text-primary" />
-              </div>
-              <h3 className="text-lg font-semibold text-foreground mb-2">{feature.title}</h3>
-              <p className="text-sm text-muted-foreground leading-relaxed">{feature.description}</p>
-            </motion.div>
+              <CollapsibleTrigger className="w-full text-left p-6 flex flex-col">
+                <div className="flex justify-between items-start">
+                  <div className="h-16 w-16 rounded-full bg-cosmic-light/10 flex items-center justify-center mb-6">
+                    {feature.icon}
+                  </div>
+                  <ChevronDown
+                    className={`h-5 w-5 text-cosmic-muted transition-transform duration-200 ${
+                      openFeature === index ? 'rotate-180' : ''
+                    }`}
+                  />
+                </div>
+                <h3 className="text-xl font-medium tracking-tighter mb-3">{feature.title}</h3>
+                <p className="text-cosmic-muted">{feature.description}</p>
+              </CollapsibleTrigger>
+              <CollapsibleContent className="px-6 pb-6 pt-2">
+                <div className="pt-3 border-t border-cosmic-light/10">
+                  <p className="text-cosmic-muted">{feature.expandedDescription}</p>
+                  <div className="mt-4 flex justify-end">
+                    <button className="text-cosmic-accent hover:text-cosmic-accent/80 text-sm font-medium">
+                      Learn more →
+                    </button>
+                  </div>
+                </div>
+              </CollapsibleContent>
+            </Collapsible>
           ))}
         </div>
       </div>

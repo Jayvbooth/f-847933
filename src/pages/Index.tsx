@@ -6,10 +6,9 @@ import Features from '@/components/Features';
 import { Features as NewFeatures } from '@/components/ui/features-8';
 import { Features as AdvancedFeatures } from '@/components/ui/features-10';
 import Process from '@/components/Process';
-import TrustedBrands from '@/components/TrustedBrands';
-import StackingCardsSection from '@/components/StackingCardsSection';
 import ClosedDealsSection from '@/components/ClosedDealsSection';
 import CaseStudiesSection from '@/components/CaseStudiesSection';
+import Testimonials from '@/components/Testimonials';
 import FAQ from '@/components/FAQ';
 import Pricing from '@/components/Pricing';
 import Footer from '@/components/Footer';
@@ -22,14 +21,13 @@ const Index = () => {
         <HeroSection />
         <Features />
         <NewFeatures />
-        <TrustedBrands />
         <Process />
-        <StackingCardsSection />
         <ClosedDealsSection />
         <AdvancedFeatures />
         <div id="case-studies">
           <CaseStudiesSection />
         </div>
+        <Testimonials />
         <FAQ />
         <Pricing />
       </main>

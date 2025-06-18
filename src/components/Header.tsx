@@ -10,22 +10,18 @@ import { Switch } from '@/components/ui/switch';
 const Header = () => {
   const [activePage, setActivePage] = useState('features');
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [isDarkMode, setIsDarkMode] = useState(false);
+  const [isDarkMode, setIsDarkMode] = useState(false); // Default to light mode
   
   useEffect(() => {
-    // Check for saved theme preference or default to light mode
-    const savedTheme = localStorage.getItem('theme');
-    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    const shouldBeDark = savedTheme === 'dark' || (!savedTheme && prefersDark);
-    
-    setIsDarkMode(shouldBeDark);
-    
-    if (shouldBeDark) {
-      document.documentElement.classList.add('dark');
+    // Apply the theme to the document when it changes
+    if (isDarkMode) {
+      document.documentElement.classList.remove('light-mode');
+      document.documentElement.classList.add('dark-mode');
     } else {
-      document.documentElement.classList.remove('dark');
+      document.documentElement.classList.remove('dark-mode');
+      document.documentElement.classList.add('light-mode');
     }
-  }, []);
+  }, [isDarkMode]);
   
   const handleNavClick = (page: string) => (e: React.MouseEvent) => {
     e.preventDefault();
@@ -42,16 +38,7 @@ const Header = () => {
   };
 
   const toggleTheme = () => {
-    const newTheme = !isDarkMode;
-    setIsDarkMode(newTheme);
-    
-    if (newTheme) {
-      document.documentElement.classList.add('dark');
-      localStorage.setItem('theme', 'dark');
-    } else {
-      document.documentElement.classList.remove('dark');
-      localStorage.setItem('theme', 'light');
-    }
+    setIsDarkMode(!isDarkMode);
   };
 
   return (
@@ -143,12 +130,13 @@ const Header = () => {
               <div className="flex items-center justify-between px-3 py-2">
                 <span className="text-sm text-muted-foreground">Theme</span>
                 <div className="flex items-center gap-2">
-                  <Sun size={16} className={`${!isDarkMode ? 'text-primary' : 'text-muted-foreground'}`} />
-                  <Switch 
-                    checked={isDarkMode} 
-                    onCheckedChange={toggleTheme} 
-                  />
                   <Moon size={16} className={`${isDarkMode ? 'text-primary' : 'text-muted-foreground'}`} />
+                  <Switch 
+                    checked={!isDarkMode} 
+                    onCheckedChange={toggleTheme} 
+                    className="data-[state=checked]:bg-primary"
+                  />
+                  <Sun size={16} className={`${!isDarkMode ? 'text-primary' : 'text-muted-foreground'}`} />
                 </div>
               </div>
             </div>
@@ -158,12 +146,13 @@ const Header = () => {
         <div className="hidden md:flex items-center gap-4">
           {/* Theme toggle for desktop */}
           <div className="flex items-center gap-2 rounded-full px-3 py-2">
-            <Sun size={18} className={`${!isDarkMode ? 'text-primary' : 'text-muted-foreground'}`} />
-            <Switch 
-              checked={isDarkMode} 
-              onCheckedChange={toggleTheme} 
-            />
             <Moon size={18} className={`${isDarkMode ? 'text-primary' : 'text-muted-foreground'}`} />
+            <Switch 
+              checked={!isDarkMode} 
+              onCheckedChange={toggleTheme} 
+              className="data-[state=checked]:bg-primary"
+            />
+            <Sun size={18} className={`${!isDarkMode ? 'text-primary' : 'text-muted-foreground'}`} />
           </div>
           <div className="rounded-2xl">
             <Button variant="ghost" className="text-muted-foreground hover:text-foreground hover:bg-muted">Log in</Button>

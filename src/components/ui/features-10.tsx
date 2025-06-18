@@ -1,4 +1,3 @@
-
 import { Card, CardContent, CardHeader } from '@/components/ui/card'
 import { cn } from '@/lib/utils'
 import { Calendar, LucideIcon, MapIcon } from 'lucide-react'
@@ -27,29 +26,19 @@ export function Features() {
 
     return (
         <section ref={sectionRef} className="bg-background py-16 md:py-32 relative overflow-hidden">
-            {/* Subtle grid background with very low opacity */}
-            <div className="absolute inset-0 opacity-[0.015] dark:opacity-[0.04]">
-                <div className="absolute inset-0 bg-gradient-to-b from-transparent via-background/40 to-background"></div>
+            {/* Subtle grid background with gradient overlay */}
+            <div className="absolute inset-0 opacity-30">
+                <div className="absolute inset-0 bg-gradient-to-b from-transparent via-background/50 to-background"></div>
                 <div 
                     className="absolute inset-0"
                     style={{
                         backgroundImage: `
-                            linear-gradient(rgba(0,0,0,0.02) 1px, transparent 1px),
-                            linear-gradient(90deg, rgba(0,0,0,0.02) 1px, transparent 1px)
+                            linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                            linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px)
                         `,
-                        backgroundSize: '32px 32px'
+                        backgroundSize: '40px 40px'
                     }}
                 ></div>
-            </div>
-
-            {/* Animated meteors/stars */}
-            <div className="absolute inset-0 overflow-hidden pointer-events-none">
-                <div className="absolute top-32 left-20 w-1 h-1 bg-foreground/8 rounded-full animate-pulse" style={{ animationDelay: '0.5s', animationDuration: '4s' }}></div>
-                <div className="absolute top-60 right-32 w-0.5 h-0.5 bg-foreground/12 rounded-full animate-pulse" style={{ animationDelay: '1.5s', animationDuration: '3s' }}></div>
-                <div className="absolute bottom-40 left-1/3 w-1 h-1 bg-foreground/10 rounded-full animate-pulse" style={{ animationDelay: '2.5s', animationDuration: '5s' }}></div>
-                <div className="absolute top-80 right-1/4 w-0.5 h-0.5 bg-foreground/15 rounded-full animate-pulse" style={{ animationDelay: '3.5s', animationDuration: '3.5s' }}></div>
-                <div className="absolute bottom-60 right-16 w-1 h-1 bg-foreground/8 rounded-full animate-pulse" style={{ animationDelay: '4.5s', animationDuration: '4.5s' }}></div>
-                <div className="absolute top-96 left-1/2 w-0.5 h-0.5 bg-foreground/12 rounded-full animate-pulse" style={{ animationDelay: '5.5s', animationDuration: '3.8s' }}></div>
             </div>
 
             {/* Animated heading */}
@@ -58,7 +47,7 @@ export function Features() {
                     "text-center transition-all duration-1000 ease-out",
                     isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
                 )}>
-                    <h2 className="text-4xl md:text-6xl font-bold text-foreground mb-4 bg-gradient-to-r from-foreground via-foreground to-foreground bg-clip-text leading-tight">
+                    <h2 className="text-4xl md:text-6xl font-bold text-foreground mb-4 bg-gradient-to-r from-foreground via-primary to-foreground bg-clip-text text-transparent animate-gradient-shift bg-300% leading-tight">
                         Advanced Fleet Management
                     </h2>
                     <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
@@ -68,8 +57,7 @@ export function Features() {
             </div>
 
             <div className="mx-auto max-w-2xl px-6 lg:max-w-5xl relative z-10">
-                <div className="mx-auto grid gap-6 lg:grid-cols-2 lg:grid-rows-2">
-                    {/* First card - top left */}
+                <div className="mx-auto grid gap-6 lg:grid-cols-2">
                     <AnimatedFeatureCard delay={200}>
                         <CardHeader className="pb-3">
                             <CardHeading
@@ -79,7 +67,7 @@ export function Features() {
                             />
                         </CardHeader>
 
-                        <div className="relative mb-6 border-t border-dashed border-border sm:mb-0">
+                        <div className="relative mb-6 border-t border-dashed sm:mb-0">
                             <div className="absolute inset-0 bg-gradient-to-b from-muted/20 via-muted/10 to-transparent"></div>
                             <div className="aspect-[76/59] p-1 px-6">
                                 <DualModeImage
@@ -93,7 +81,6 @@ export function Features() {
                         </div>
                     </AnimatedFeatureCard>
 
-                    {/* Second card - top right */}
                     <AnimatedFeatureCard delay={400}>
                         <CardHeader className="pb-3">
                             <CardHeading
@@ -119,11 +106,10 @@ export function Features() {
                         </CardContent>
                     </AnimatedFeatureCard>
 
-                    {/* Third card - expanded to span bottom row */}
                     <AnimatedFeatureCard className="p-6 lg:col-span-2" delay={600}>
-                        <p className="mx-auto my-6 max-w-md text-balance text-center text-2xl font-semibold text-foreground">Smart scheduling with automated reminders for maintenance.</p>
+                        <p className="mx-auto my-6 max-w-md text-balance text-center text-2xl font-semibold">Smart scheduling with automated reminders for maintenance.</p>
 
-                        <div className="flex justify-center gap-4 md:gap-6 overflow-hidden flex-wrap">
+                        <div className="flex justify-center gap-6 overflow-hidden">
                             <CircularUI
                                 label="Inclusion"
                                 circles={[{ pattern: 'border' }, { pattern: 'border' }]}
@@ -136,7 +122,7 @@ export function Features() {
 
                             <CircularUI
                                 label="Join"
-                                circles={[{ pattern: 'gray' }, { pattern: 'none' }]}
+                                circles={[{ pattern: 'blue' }, { pattern: 'none' }]}
                             />
 
                             <CircularUI
@@ -219,7 +205,7 @@ const CardHeading = ({ icon: Icon, title, description }: CardHeadingProps) => (
             <Icon className="size-4" />
             {title}
         </span>
-        <p className="mt-8 text-2xl font-semibold text-foreground">{description}</p>
+        <p className="mt-8 text-2xl font-semibold">{description}</p>
     </div>
 )
 
@@ -252,7 +238,7 @@ const DualModeImage = ({ darkSrc, lightSrc, alt, width, height, className }: Dua
 )
 
 interface CircleConfig {
-    pattern: 'none' | 'border' | 'primary' | 'gray'
+    pattern: 'none' | 'border' | 'primary' | 'blue'
 }
 
 interface CircularUIProps {
@@ -272,7 +258,7 @@ const CircularUI = ({ label, circles, className }: CircularUIProps) => (
                             'border-primary': circle.pattern === 'none',
                             'border-primary bg-[repeating-linear-gradient(-45deg,hsl(var(--border)),hsl(var(--border))_1px,transparent_1px,transparent_4px)]': circle.pattern === 'border',
                             'border-primary bg-background bg-[repeating-linear-gradient(-45deg,hsl(var(--primary)),hsl(var(--primary))_1px,transparent_1px,transparent_4px)]': circle.pattern === 'primary',
-                            'bg-background z-1 border-muted-foreground bg-[repeating-linear-gradient(-45deg,hsl(var(--muted-foreground)),hsl(var(--muted-foreground))_1px,transparent_1px,transparent_4px)]': circle.pattern === 'gray',
+                            'bg-background z-1 border-blue-500 bg-[repeating-linear-gradient(-45deg,theme(colors.blue.500),theme(colors.blue.500)_1px,transparent_1px,transparent_4px)]': circle.pattern === 'blue',
                         })}></div>
                 ))}
             </div>

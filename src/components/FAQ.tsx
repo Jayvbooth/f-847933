@@ -136,19 +136,17 @@ const FAQ = () => {
             Got{" "}
             <motion.span 
               className="text-primary relative inline-block"
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8, delay: 0.8 }}
+              whileInView={{
+                backgroundSize: ["0% 3px", "100% 3px"],
+              }}
+              transition={{ duration: 1.2, delay: 0.8 }}
+              style={{
+                backgroundImage: "linear-gradient(to right, hsl(var(--primary)), hsl(var(--primary)))",
+                backgroundRepeat: "no-repeat",
+                backgroundPosition: "bottom left",
+              }}
             >
-              <em className="italic">questions</em>
-              <motion.div
-                className="absolute bottom-0 left-0 h-1 bg-primary"
-                initial={{ width: 0 }}
-                whileInView={{ width: "100%" }}
-                viewport={{ once: true }}
-                transition={{ duration: 1.2, delay: 1.2, ease: "easeOut" }}
-              />
+              questions
             </motion.span>
             ?
           </motion.h2>
