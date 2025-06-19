@@ -32,6 +32,28 @@ const Header = () => {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  // Close mobile menu when clicking outside or on overlay
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      const target = event.target as HTMLElement;
+      if (mobileMenuOpen && !target.closest('[data-mobile-menu]')) {
+        setMobileMenuOpen(false);
+      }
+    };
+
+    if (mobileMenuOpen) {
+      document.addEventListener('click', handleClickOutside);
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+
+    return () => {
+      document.removeEventListener('click', handleClickOutside);
+      document.body.style.overflow = 'unset';
+    };
+  }, [mobileMenuOpen]);
   
   const handleNavClick = (page: string) => (e: React.MouseEvent) => {
     e.preventDefault();
@@ -43,7 +65,8 @@ const Header = () => {
     setMobileMenuOpen(false);
   };
 
-  const toggleMobileMenu = () => {
+  const toggleMobileMenu = (e: React.MouseEvent) => {
+    e.stopPropagation();
     setMobileMenuOpen(!mobileMenuOpen);
   };
 
@@ -53,7 +76,7 @@ const Header = () => {
 
   return (
     <>
-      {/* Single header with glassmorphism - no nested containers */}
+      {/* Header with glassmorphism */}
       <header className={cn(
         "fixed top-4 left-4 right-4 z-50 transition-all duration-500",
         "py-3 md:py-4 px-4 md:px-6 lg:px-8 flex items-center justify-between rounded-3xl",
@@ -63,9 +86,9 @@ const Header = () => {
           <Logo />
         </div>
         
-        {/* Mobile controls with dark mode toggle always visible */}
+        {/* Mobile controls */}
         <div className="md:hidden flex items-center gap-3">
-          {/* Theme toggle for mobile - always visible */}
+          {/* Theme toggle for mobile */}
           <div className={cn(
             "flex items-center gap-2 rounded-full px-2 py-1 transition-all duration-300",
             "backdrop-blur-xl bg-background/10 border border-white/15"
@@ -87,6 +110,7 @@ const Header = () => {
               "backdrop-blur-xl bg-background/10 border border-white/15"
             )}
             onClick={toggleMobileMenu}
+            data-mobile-menu="trigger"
           >
             {mobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
           </button>
@@ -183,22 +207,26 @@ const Header = () => {
         </div>
       </header>
 
-      {/* Mobile navigation overlay - highest z-index */}
+      {/* Mobile navigation overlay */}
       {mobileMenuOpen && (
-        <div className="md:hidden fixed inset-0 z-60">
+        <div className="md:hidden fixed inset-0 z-[100]" data-mobile-menu="overlay">
           {/* Backdrop */}
           <div 
-            className="absolute inset-0 bg-black/20 backdrop-blur-sm"
+            className="absolute inset-0 bg-black/50 backdrop-blur-sm"
             onClick={() => setMobileMenuOpen(false)}
           />
           
-          {/* Mobile menu - compact size and uniform glass design */}
-          <div className={cn(
-            "absolute top-20 left-4 right-4 rounded-3xl transition-all duration-500 transform",
-            "backdrop-blur-2xl bg-background/10 border border-white/15 shadow-[0_20px_60px_rgba(0,0,0,0.2)]",
-            "animate-in slide-in-from-top-4 fade-in-0 duration-300"
-          )}>
-            <div className="p-3 space-y-1">
+          {/* Mobile menu */}
+          <div 
+            className={cn(
+              "absolute top-20 left-4 right-4 rounded-3xl transition-all duration-300",
+              "backdrop-blur-2xl bg-background/95 border border-white/20 shadow-[0_20px_60px_rgba(0,0,0,0.3)]",
+              "transform translate-y-0 opacity-100"
+            )}
+            data-mobile-menu="menu"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="p-4 space-y-2">
               {[
                 { id: 'features', icon: CircleDot, label: 'Features' },
                 { id: 'process', icon: Zap, label: 'Process' },
@@ -206,11 +234,10 @@ const Header = () => {
                 { id: 'dashboard', icon: LayoutDashboard, label: 'Dashboard' },
                 { id: 'pricing', icon: DollarSign, label: 'Pricing' }
               ].map(({ id, icon: Icon, label }) => (
-                <a 
+                <button 
                   key={id}
-                  href={`#${id}`}
                   className={cn(
-                    "flex items-center px-3 py-2 text-sm rounded-2xl transition-all duration-300",
+                    "w-full flex items-center px-4 py-3 text-sm rounded-2xl transition-all duration-300",
                     "backdrop-blur-sm hover:bg-white/10 hover:scale-[1.02] hover:shadow-lg",
                     activePage === id 
                       ? 'bg-white/15 text-foreground shadow-[0_4px_20px_rgba(0,0,0,0.1)]' 
@@ -218,17 +245,17 @@ const Header = () => {
                   )}
                   onClick={handleNavClick(id)}
                 >
-                  <Icon size={16} className="mr-2.5" />
+                  <Icon size={18} className="mr-3" />
                   {label}
-                </a>
+                </button>
               ))}
               
               {/* Login button for mobile */}
-              <div className="pt-2 mt-2 border-t border-white/10">
+              <div className="pt-3 mt-3 border-t border-white/10">
                 <Button 
                   variant="ghost" 
                   className={cn(
-                    "w-full text-foreground/80 hover:text-foreground rounded-2xl py-2",
+                    "w-full text-foreground/80 hover:text-foreground rounded-2xl py-3",
                     "backdrop-blur-sm hover:bg-white/10 hover:scale-[1.02] transition-all duration-300"
                   )}
                 >
