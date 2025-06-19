@@ -207,64 +207,63 @@ const Header = () => {
         </div>
       </header>
 
-      {/* Mobile navigation overlay */}
+      {/* Mobile navigation - uniform with header */}
       {mobileMenuOpen && (
-        <div className="md:hidden fixed inset-0 z-[100]" data-mobile-menu="overlay">
-          {/* Backdrop */}
-          <div 
-            className="absolute inset-0 bg-black/50 backdrop-blur-sm"
-            onClick={() => setMobileMenuOpen(false)}
-          />
-          
-          {/* Mobile menu */}
-          <div 
-            className={cn(
-              "absolute top-20 left-4 right-4 rounded-3xl transition-all duration-300",
-              "backdrop-blur-2xl bg-background/95 border border-white/20 shadow-[0_20px_60px_rgba(0,0,0,0.3)]",
-              "transform translate-y-0 opacity-100"
-            )}
-            data-mobile-menu="menu"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <div className="p-4 space-y-2">
-              {[
-                { id: 'features', icon: CircleDot, label: 'Features' },
-                { id: 'process', icon: Zap, label: 'Process' },
-                { id: 'case-studies', icon: FileText, label: 'Case Studies' },
-                { id: 'dashboard', icon: LayoutDashboard, label: 'Dashboard' },
-                { id: 'pricing', icon: DollarSign, label: 'Pricing' }
-              ].map(({ id, icon: Icon, label }) => (
-                <button 
-                  key={id}
-                  className={cn(
-                    "w-full flex items-center px-4 py-3 text-sm rounded-2xl transition-all duration-300",
-                    "backdrop-blur-sm hover:bg-white/10 hover:scale-[1.02] hover:shadow-lg",
-                    activePage === id 
-                      ? 'bg-white/15 text-foreground shadow-[0_4px_20px_rgba(0,0,0,0.1)]' 
-                      : 'text-foreground/70 hover:text-foreground'
-                  )}
-                  onClick={handleNavClick(id)}
-                >
-                  <Icon size={18} className="mr-3" />
-                  {label}
-                </button>
-              ))}
-              
-              {/* Login button for mobile */}
-              <div className="pt-3 mt-3 border-t border-white/10">
-                <Button 
-                  variant="ghost" 
-                  className={cn(
-                    "w-full text-foreground/80 hover:text-foreground rounded-2xl py-3",
-                    "backdrop-blur-sm hover:bg-white/10 hover:scale-[1.02] transition-all duration-300"
-                  )}
-                >
-                  Log in
-                </Button>
-              </div>
+        <div 
+          className={cn(
+            "md:hidden fixed top-20 left-4 right-4 z-40 transition-all duration-300",
+            "backdrop-blur-xl bg-background/8 border border-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.1)]",
+            "rounded-3xl py-4 px-4"
+          )}
+          data-mobile-menu="menu"
+          onClick={(e) => e.stopPropagation()}
+        >
+          <div className="space-y-1">
+            {[
+              { id: 'features', icon: CircleDot, label: 'Features' },
+              { id: 'process', icon: Zap, label: 'Process' },
+              { id: 'case-studies', icon: FileText, label: 'Case Studies' },
+              { id: 'dashboard', icon: LayoutDashboard, label: 'Dashboard' },
+              { id: 'pricing', icon: DollarSign, label: 'Pricing' }
+            ].map(({ id, icon: Icon, label }) => (
+              <button 
+                key={id}
+                className={cn(
+                  "w-full flex items-center px-4 py-3 text-sm rounded-2xl transition-all duration-300",
+                  "backdrop-blur-sm hover:bg-white/10 hover:scale-[1.02]",
+                  activePage === id 
+                    ? 'bg-white/15 text-foreground shadow-[0_4px_20px_rgba(0,0,0,0.1)]' 
+                    : 'text-foreground/70 hover:text-foreground'
+                )}
+                onClick={handleNavClick(id)}
+              >
+                <Icon size={18} className="mr-3" />
+                {label}
+              </button>
+            ))}
+            
+            {/* Login button for mobile */}
+            <div className="pt-3 mt-3 border-t border-white/10">
+              <Button 
+                variant="ghost" 
+                className={cn(
+                  "w-full text-foreground/80 hover:text-foreground rounded-2xl py-3",
+                  "backdrop-blur-sm hover:bg-white/10 hover:scale-[1.02] transition-all duration-300"
+                )}
+              >
+                Log in
+              </Button>
             </div>
           </div>
         </div>
+      )}
+
+      {/* Backdrop overlay */}
+      {mobileMenuOpen && (
+        <div 
+          className="md:hidden fixed inset-0 z-30 bg-black/20 backdrop-blur-sm"
+          onClick={() => setMobileMenuOpen(false)}
+        />
       )}
     </>
   );
