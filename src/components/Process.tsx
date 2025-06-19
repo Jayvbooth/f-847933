@@ -36,8 +36,8 @@ const Process = () => {
       <div className="max-w-7xl mx-auto">
         {/* Desktop Layout - Two Columns */}
         <div className="hidden lg:grid lg:grid-cols-5 gap-8 xl:gap-12">
-          {/* Left Column - Sticky Header */}
-          <div className="lg:col-span-2 sticky top-32 h-fit z-50">
+          {/* Left Column - Sticky Header with lower z-index */}
+          <div className="lg:col-span-2 sticky top-32 h-fit z-40">
             <h5 className="text-xs uppercase tracking-wide text-muted-foreground">Our Process</h5>
             <h2 className="mb-6 mt-4 text-3xl lg:text-4xl xl:text-5xl font-bold tracking-tight text-foreground">
               How we fill your{" "}
@@ -50,7 +50,7 @@ const Process = () => {
             </p>
           </div>
 
-          {/* Right Column - Animated Cards */}
+          {/* Right Column - Animated Cards with higher z-index */}
           <div className="lg:col-span-3 relative">
             <ContainerScroll className="min-h-[140vh] space-y-8 pt-8 pb-32">
               {PROCESS_PHASES.map((phase, index) => (
@@ -61,7 +61,7 @@ const Process = () => {
                   incrementZ={8}
                   baseOffset={160}
                   className="rounded-xl border border-border p-6 lg:p-8 shadow-lg backdrop-blur-md bg-card/95"
-                  style={{ zIndex: 10 + index }}
+                  style={{ zIndex: 45 + index }}
                 >
                   <div className="flex items-start justify-between gap-4 mb-4">
                     <h3 className="text-xl lg:text-2xl xl:text-3xl font-bold tracking-tighter text-foreground flex-1">
@@ -82,8 +82,8 @@ const Process = () => {
 
         {/* Tablet Layout - Two Columns */}
         <div className="hidden md:grid lg:hidden md:grid-cols-2 gap-8">
-          {/* Left Column - Sticky Header */}
-          <div className="sticky top-32 h-fit z-50">
+          {/* Left Column - Sticky Header with lower z-index */}
+          <div className="sticky top-32 h-fit z-40">
             <h5 className="text-xs uppercase tracking-wide text-muted-foreground">Our Process</h5>
             <h2 className="mb-6 mt-4 text-3xl font-bold tracking-tight text-foreground">
               How we fill your{" "}
@@ -96,7 +96,7 @@ const Process = () => {
             </p>
           </div>
 
-          {/* Right Column - Animated Cards */}
+          {/* Right Column - Animated Cards with higher z-index */}
           <div className="relative">
             <ContainerScroll className="min-h-[120vh] space-y-6 pt-8 pb-24">
               {PROCESS_PHASES.map((phase, index) => (
@@ -107,7 +107,7 @@ const Process = () => {
                   incrementZ={6}
                   baseOffset={250}
                   className="rounded-xl border border-border p-6 shadow-lg backdrop-blur-md bg-card/95"
-                  style={{ zIndex: 10 + index }}
+                  style={{ zIndex: 45 + index }}
                 >
                   <div className="flex items-start justify-between gap-4 mb-4">
                     <h3 className="text-xl font-bold tracking-tighter text-foreground flex-1">
@@ -128,8 +128,8 @@ const Process = () => {
 
         {/* Mobile Layout - Single Column */}
         <div className="md:hidden">
-          {/* Mobile Header - Sticky */}
-          <div className="sticky top-28 bg-background/95 backdrop-blur-md border-b border-border/50 pb-6 mb-8 z-50">
+          {/* Mobile Header - Sticky with lower z-index */}
+          <div className="sticky top-28 bg-background/95 backdrop-blur-md border-b border-border/50 pb-6 mb-8 z-40">
             <h5 className="text-xs uppercase tracking-wide text-muted-foreground">Our Process</h5>
             <h2 className="mb-4 mt-2 text-2xl sm:text-3xl font-bold tracking-tight text-foreground">
               How we fill your{" "}
@@ -141,7 +141,7 @@ const Process = () => {
             </p>
           </div>
 
-          {/* Mobile Cards */}
+          {/* Mobile Cards with higher z-index */}
           <div className="relative">
             <ContainerScroll className="min-h-[100vh] space-y-6 pt-8 pb-20">
               {PROCESS_PHASES.map((phase, index) => (
@@ -152,7 +152,7 @@ const Process = () => {
                   incrementZ={4}
                   baseOffset={400}
                   className="rounded-xl border border-border p-6 shadow-lg backdrop-blur-md bg-card/95"
-                  style={{ zIndex: 10 + index }}
+                  style={{ zIndex: 45 + index }}
                 >
                   <div className="flex items-start justify-between gap-4 mb-4">
                     <h3 className="text-lg sm:text-xl font-bold tracking-tighter text-foreground flex-1">
